@@ -1,0 +1,221 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<title>优意座标™职业生涯全纪录</title>
+<meta name="keywords" content="中国优秀文创人,文创人,文创机构,媒体人,优意座标,职业生涯,演员,模特,设计师,创意,平面,产品设计,视觉,建筑,空间设计" />
+<meta name="description" content="为中国优秀文创人提供媒体助力，为媒体人提供新鲜文创业动态汇集，为中国文创机构提供合作空间。" />
+<meta name="author" content="优意座标™|YOEZ.CC团队" />
+<meta name="copyright" content="Copyright优意座标™" />
+<!--[if lt IE 9]><script src="http://www.html5china.com/templets/html5/scripts/html5.js"></script><![endif]-->
+<link rel="stylesheet" type="text/css" href="{{static_url('CSS/common.css')}}">
+<link rel="stylesheet" type="text/css" href="{{static_url('CSS/index.css')}}">
+<script type="text/javascript" src="{{static_url('JS/jquery-1.6.4.js')}}"></script>
+<script type="text/javascript" src="{{static_url('JS/jquery.form-2.67.js')}}"></script>
+<script type="text/javascript" src="{{static_url('JS/common.js')}}"></script>
+<script type="text/javascript" src="{{static_url('JS/content.js')}}"></script>
+</head>
+<body>
+<!--header begain-->
+{{modules.Header(cuser,request.uri)}}
+<!--header end-->
+<!--TOP BEGAIN-->
+<div class="yz-idx-top wp1000 mgt40">
+	<div class="z cl">
+	<a href="#" target="_blank"><img src="{{static_url('img/common/adds1.jpg')}}" alt="广告描述" width="460" height="90"/></a>
+	</div>
+	<div class="y cl">
+	<a href="#" target="_blank"><img src="{{static_url('img/common/addr.jpg')}}" alt="BAIDU广告"/></a>
+	</div>
+</div>
+<!--TOP END-->
+<!--SEARCH BEGAIN-->
+<div class="yz-idx-showct wp1000">
+<div class="z cl mgt40 ue-maintitle">
+	<a href="#" class="z cl yz-idx-showct-name chs">{{row.account}}</a><span class="z cl yz-idx-showct-title chs">作品展示</span>
+</div>
+<div class="yz-search y cl mgt40">
+	<div class="z cl">
+        <ul class="yz-search-type z cl">
+				<li  style="top: 0px;">
+					<a class="yz-search-type-wk" title="搜作品"></a>
+				</li>
+				<li  style="top: 30px;">
+					<a class="yz-search-type-rcd" title="搜记录"></a>
+				</li>
+				<li  style="top: 60px;">
+					<a class="yz-search-type-usr" title="搜用户"></a>
+				</li>
+			</ul>
+	<input class="yz-search-text z" type="text" onKeyDown="if (event.keyCode==13) {}" onBlur="if(this.value=='')value='- 搜搜你感兴趣的标签 -';" onFocus="if(this.value=='- 搜搜你感兴趣的标签 -')value='';" value="- 搜搜你感兴趣的标签 -"/>
+	<input class="yz-search-sub z" type="submit" value="">
+	</div>
+</div>
+</div>
+<!--SEARCH LINE END-->
+<!--SHOW BEGAIN-->
+<div class="yz-idx-body z cl">
+	<div class="wp1000 cl ue-all mgt40">
+<!--左侧内容-->
+<div class="w200 z cl ue-left">
+            	{{modules.UeDescribe()}}
+                <div class="yz-idx-share w200">
+					<p><span class="z cl">分享到</span><a href="#" class="z yz-csina cl" rel="nofollow"></a><a href="#" class="z cl yz-ctencent" rel="nofollow"></a></p>
+				</div>
+        </div>
+		<div class="w640 z cl ue-middle">
+<!--展示内容-->
+			<div class="w640 z cl showct-ctbody">
+				<div class="showct-ct-title w640 z cl">
+					<p class="showct-ct-title-p z cl chs">{{row.title}}</p>
+				</div>
+				<div class="z cl showct-ct">
+                                    {% for one in row.content.split(";") %}
+					<div class="showct-ct-tupian z cl">
+						<a href="#">
+							<img src="{{one.split('&')[0]}}" alt="文章名或备注" class="showct-ct-tupianimg">
+						</a>
+						<p class="z cl showct-ct-direction">{{one.split('&')[1]}}</p>
+					</div>
+                                    {% end%}
+					<div class="z cl showct-ct-direction mgt20">
+						{{row.wdescribe}}
+					</div>
+	<!--TEST END-->
+				</div>
+				<div class="showct-ct-surpot z cl mgt40">
+					<span class="z cl showct-ct-surpot-num en">{{row.support}}</span>
+						<a class="y cl showct-ct-surpot-icon-on"></a>
+				</div>
+			</div>
+<!--AD-->
+			<div class="z cl yz-ad-640-60 mgt20">
+				<img src="../../static/img/common/79b4c46696320828efe7e6b5aaf5e669.jpg"/>
+			</div>
+
+<!--评论-->
+			<div class="yz-idx-module-discus z cl mgt20 w640">
+				<div class="yz-idx-body-title w640 z cl">
+					<p class="yz-idx-body-title-p z cl chs">COMMENTS</p>
+				</div>
+				<div class="z cl yz-idx-module-discusbox">
+                                    <form method="post" action="" id="event-review-f">
+                                        {{xsrf_form_html()}}
+					<div class="yz-idx-module-discus-ta z cl">
+					<textarea class="inputtxtnum z cl" onKeyDown="if (event.keyCode==13) {}" onBlur="if(this.value=='')value='GOOD JOB!';" onFocus="if(this.value=='GOOD JOB!')value='';" value="GOOD JOB!" id="review-content-tx" name="rcontent">GOOD JOB!</textarea>
+					</div>
+					<span class="yz-idx-module-discus-wn">还可以输入<i class="en">140</i>个字</span>
+					<input type="submit" value="发言" class="yz-idx-module-discus-sub br5 mgt10 y cl">
+                                    </form>
+				</div>
+                                {% if not reviews %}
+                                <div class="yz-idx-module-discus-none z cl mgt40">
+				  <i class="en1">No Comments</i>
+				</div>
+                                {% else %}
+				<ul class="yz-idx-module-discus-ul z cl mgt40">
+                                 {% for one in reviews %}
+				    {{modules.UserReview(one)}}				
+				 {% end %}
+				</ul>
+                                {% end %}
+			</div>
+			<a href="#" class="yz-idx-module-discus-more z cl">
+				<p>更多评论</p>
+				<span></span>
+			</a>
+		</div>
+<!--右侧边栏-->
+		<div class="w336 y cl">
+			<div class="z cl yz-idx-right">
+				<div class="w336 yz-idx-title z cl">
+					<p class="z cl en1">Project By</p>
+				</div>
+				<div class="yz-idx-by z cl mgt20">
+					<a href="/{{row.uid}}" target="_blank" class="y cl">
+						<img src="{{row.img}}" alt="{{row.account}}" width="100px" height="100px"/>
+					</a>
+					<a href="/{{row.uid}}" target="_blank" class="z cl yz-idx-by1">{{row.account}}</a>
+					<span class="z cl yz-idx-by2">人像摄影+广告摄影+图片后期</span>
+					<p class="z cl yz-idx-by-ver">Professional Org.</p>
+				</div>
+				<div class="z cl">
+					<a href="#" class="z cl yz-idx-right-button ue-remember-people" title="记住Ta">
+					</a>
+				</div>
+                                </div>
+                                <div class="z cl yz-idx-right">
+				<div class="w336 yz-idx-title z cl">
+					<p class="z cl en1">About Project</p>
+				</div>
+                                <div class="z cl mgt20 yz-idx-info">
+					<p class="z cl yz-idx-info-view">阅览<span class="y cl">{{row.view}}</span></p>
+					<p class="z cl yz-idx-info-follow">关注<span class="y cl">0</span></p>
+					<p class="z cl yz-idx-info-surpot">支持<span class="y cl">{{row.support}}</span></p>
+					<p class="z cl yz-idx-info-discus">评论<span class="y cl">{{row.review}}</span></p>
+					<p class="z cl yz-idx-info-cc">授权<span class="y cl"><a href="#" target="_blank">{{copysign}}</a></span></p>
+					<p class="z cl yz-idx-info-tags">标签
+                                         <span class="y cl">{% for lb in row.lable.split(",") %}<a href="/works?lable={{url_escape(lb)}}" target="_blank">#{{lb}}</a>{% end %}</span>
+				</div>
+				<div class="z cl">
+				<a href="#" class="z cl yz-idx-right-button ue-remember-work" title="记住这个作品">
+				</a>
+				</div>
+			</div>
+				<div class="z cl yz-idx-right">
+				<div class="w336 yz-idx-title">
+					<p class="z cl en1">MORE</p>
+				</div>
+				<div class="mgt20 ue-work-more">
+					<ul class="cl">
+                    	<li class="ue-more-pic">
+                        	<a href="#">
+                            	<img src="../../static/img/common/show3.jpg" width="145" alt="作品名称">
+                            </a>
+                            <p>文章名称一行</p>
+                        </li>
+                        <li class="ue-more-video">
+                        	<a href="#">
+                            	<img src="../../static/img/common/show3.jpg" width="145" alt="作品名称">
+                                <span></span>
+                            </a>
+                            <p>文章名称一行文章名称一行文章名称一行文章名称一行</p>
+                        </li>
+                        <li class="ue-more-txt">
+                        	<a href="#">
+                            	<p>范玮琪（Fan Fan/Christine）本名范伟琪，美籍华裔歌手、基督教徒。出生于美国俄亥俄州。范玮琪于六岁时返回台湾念书，曾在台中晓明女中就读国中，至高中又返回美国继续学业，开始在洛杉矶波莫纳大学主修税法，之后至大学二年级转学到哈佛社</p>
+                            </a>
+                            <p>文章名称一行</p>
+                        </li>
+                        <li class="ue-more-voice">
+                        	<a href="#">
+                            	<span></span>
+                            </a>
+                            <p>文章名称一行</p>
+                        </li>
+                        
+                    </ul>
+				</div>
+			</div>
+<!--AD-->
+			<div class="z cl yz-ad-336-280 mgt20">
+				<img src="../../static/img/common/imgad.jpg">
+			</div>
+			<div class="z cl yz-ad-336-280 mgt20">
+				<img src="../../static/img/common/imgad (1).jpg">
+			</div>
+			<div class="z cl yz-ad-336-280 mgt20">
+				<img src="../../static/img/common/T1P8YZXb4fXXb1upjX.jpg">
+			</div>
+<!--AD-->
+		</div>
+	</div>
+</div>
+<!--SHOW END-->
+
+<div class="cl"></div>
+<!--footer begain-->
+{{modules.MainFooter()}}
+<!--footer end-->
+</body>
+</html>

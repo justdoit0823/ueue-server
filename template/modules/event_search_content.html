@@ -1,0 +1,32 @@
+<li>
+                    	<div class="yz-record-list">
+                        	<div class="yz-record-info z cl">
+                            	<p class="yz-record-title"><span>{{type}}</span>{{row.title}}</p>
+                                <p class="yz-record-tags">
+				    {% for one in row.lable.split(",") %}
+											<a href="/records?lable={{url_escape(one)}}" target="_blank">#{{one}}</a>
+								                        {% end %}
+                                </p>
+                                <p class="yz-record-by">
+                                	<a href="/{{row.uid}}" target="_blank">
+                                    	<img src="{{row.img}}" height="25" width="25" alt="{{row.account}}"/>
+                                    </a>
+                                    <a href="/{{row.uid}}" target="_blank">{{row.account}}</a>
+                                    <span>{{row.time[:10]}}</span>
+                                </p>
+                            </div>
+			    {% if j %}
+                            <div class="yz-record-enter-havepic y cl">
+                            	<a href="/record/{{row.eid}}" target="_blank">
+				  <img src="{{row.picture[0]}}" height="149" width="149" alt="{{row.title}}"/>
+                                    <span></span>
+                                </a>
+                            </div>
+			    {% else %}
+			    <div class="yz-record-enter-nopic y cl">
+                            	<a href="/record/{{row.eid}}" target="_blank">
+                                </a>
+                            </div>
+			    {% end %}
+                        </div>
+                    </li>

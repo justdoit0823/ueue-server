@@ -1,0 +1,527 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<title>管理中心 | 优意座标™</title>
+<meta name="keywords" content="中国优秀文创人,文创人,机构,媒体人,优意座标,演员,模特,设计师,创意,平面,产品设计,视觉,建筑,空间设计" />
+<meta name="description" content="为中国优秀文创人提供媒体助力，为媒体人提供新鲜文创业动态汇集，为中国文创机构提供合作空间。" />
+<meta name="author" content="优意座标™|YOEZ.CC团队" />
+<meta name="copyright" content="Copyright优意座标™" />
+<link rel="stylesheet" type="text/css" href="{{static_url('CSS/common.css')}}">
+<link rel="stylesheet" type="text/css" href="{{static_url('CSS/user.css')}}">
+<script type="text/javascript" src="{{static_url('JS/jquery-1.6.4.js')}}"></script>
+<script type="text/javascript" src="{{static_url('JS/common.js')}}"></script>
+<script type="text/javascript" src="{{static_url('JS/user.js')}}"></script>
+</head>
+<body class="user-body">
+  {{modules.SettingHeader(cuser,request.uri)}}
+<div class="w1000">
+	<div class="user-1-bd z cl mgt100">
+		<div class="user-left z cl mgt40">
+			<div class="user-1-type z cl">
+				<p class="z cl user-1-tt">姓名/绰号</p>
+                                <div class="z cl user-normal-div">
+				     <input type="text" id="user-name" class="z cl user-normal" onKeyDown="if (event.keyCode==13) {}" value="{% if info.uname and info.uname != '--' %}{{info.uname}}{% end %}"/>
+                                     <span>- 填写真实姓名或绰号 -</span>
+                                </div>
+				<p class="user-1-explain z cl">
+					如果有与昵称不一致的称呼填写一下也许是个好的选择。
+				</p>
+			</div>
+			<div class="user-1-type z cl">
+				<p class="z cl user-1-tt">所在地</p>
+				<span class="z cl" id="user-area1">{% if not info.area or info.area=="--" %}请选择省份{% else %}{{info.area}}{% end %}</span>
+				<div class="user-area1 y cl" style="display:none;">
+					<p class="z cl">
+						<a>北京</a>
+						<a>上海</a>
+						<a>天津</a>
+						<a>重庆</a>
+					</p>
+					<p class="z cl">
+                                                <a>安徽</a>
+                                                <a>福建</a>
+						<a>广东</a>
+                                                <a>甘肃</a>
+						<a>广西</a>
+                                                <a>贵州</a>
+                                                <a>河北</a>
+                                                <a>湖北</a>
+                                                <a>黑龙江</a>
+                                                <a>海南</a>
+						<a>河南</a>
+						<a>湖南</a>
+                                                <a>吉林</a>
+                                                <a>江苏</a>
+						<a>江西</a>
+                                                <a>辽宁</a>
+                                                <a>四川</a>
+                                                <a>山东</a>
+                                                <a>山西</a>
+                                                <a>陕西</a>
+						<a>内蒙古</a>
+						<a>宁夏</a>
+						<a>青海</a>
+						<a>新疆</a>
+						<a>西藏</a>
+						<a>云南</a>
+						<a>浙江</a>
+						<a>台湾</a>
+						<a>香港</a>
+						<a>澳门</a>
+						<a>海外</a>
+					</p>
+				</div>
+				<p class="user-1-explain z cl">
+					点击文字修改
+				</p>
+			</div>
+			<div class="user-1-type z cl" onselectstart="return false;">
+			  <div class="z cl" style="padding-bottom:20px;">
+						<p class="z cl user-1-tt">我的职业</p>
+						{% for i in range(0,jobnum) %}
+				<span class="user-career z cl" id="{{jobid[i]}}">{% if i < joblen and info.job %}{{info.job[i]}}{% else %}{{joborder[i]}}{% end %}</span>
+                                {% end %}
+					</div>
+				<div class="y cl user-career-list js-list-1" style="display:none;">
+					<div class="user-career-list-title">
+							<a id="tab-1" class="">演员模特</a>
+							<a class="" id="tab-2">影视幕后</a>
+							<a class="user-career-list-title-on" id="tab-3">音乐制作</a>
+							<a class="" id="tab-4">摄影造型</a>
+							<a id="tab-5">设计创意</a>
+							<a id="tab-6">广告传媒</a>
+							<a id="tab-7">更多行业</a>
+						</div>
+					<div class="tab-list">		
+						<div style="display: none;" class="tab-1">
+							<a>不选择</a>	
+							<a>影视表演</a>
+							<a>话剧表演</a>
+							<a>时装模特</a>
+							<a>平面模特</a>
+							<a>车模</a>
+							<a>舞蹈表演</a>
+							<a>曲艺表演</a>
+							<a>魔术表演</a>
+							<a>杂技表演</a>
+							<a>表演相关</a>
+							<a>模特相关</a>
+						</div>
+						<div style="display: none;" class="tab-2">
+							<a>不选择</a>	
+							<a>影视导演</a>
+							<a>制片</a>
+							<a>影视监制</a>
+							<a>出品发行</a>
+							<a>编剧</a>
+							<a>影视摄像</a>
+							<a>后期特效</a>
+							<a>影视美术</a>
+							<a>场景设计</a>
+							<a>配音</a>
+							<a>字幕</a>
+							<a>影视相关</a>
+						</div>
+						<div class="tab-3">
+							<a>不选择</a>	
+							<a>歌手</a>
+							<a>乐手</a>
+							<a>乐队</a>
+							<a>音乐制作</a>
+							<a>DJ</a>
+							<a>词曲/编曲</a>
+							<a>录音/混音</a>
+							<a>音乐后期</a>
+							<a>音乐相关</a>
+						</div>
+						<div style="display: none;" class="tab-4">
+							<a>不选择</a>	
+							<a>时装摄影</a>
+							<a>人像摄影</a>
+							<a>广告摄影</a>
+							<a>风光摄影</a>
+							<a>纪实摄影</a>
+							<a>图片后期</a>
+							<a>化妆</a>
+							<a>服装造型</a>
+							<a>发型</a>
+							<a>摄影相关</a>
+							<a>造型相关</a>
+						</div>
+						<div style="display: none;" class="tab-5">
+							<a>不选择</a>	
+							<a>平面设计</a>
+							<a>三维设计</a>
+							<a>视觉设计</a>
+							<a>工业设计</a>
+							<a>游戏设计</a>
+							<a>动漫设计</a>
+							<a>UI/UE</a>
+							<a>建筑设计</a>
+							<a>景观设计</a>
+							<a>空间设计</a>
+							<a>视频设计</a>
+							<a>服装设计</a>
+							<a>珠宝设计</a>
+							<a>插画设计</a>
+							<a>纹身设计</a>
+							<a>创意执行</a>
+							<a>设计相关</a>
+						</div>
+						<div style="display: none;" class="tab-6">
+							<a>不选择</a>	
+							<a>广告创意</a>
+							<a>美术顾问</a>
+							<a>策略/文案</a>
+							<a>活动策划</a>
+							<a>活动执行</a>
+							<a>主编</a>
+							<a>编辑</a>
+							<a>美术编辑</a>
+							<a>采编</a>
+							<a>记者</a>
+							<a>广告相关</a>
+							<a>媒体相关</a>
+						</div>
+						<div style="display: none;" class="tab-7">
+							<a>不选择</a>	
+							<a>经纪人</a>
+							<a>练习生</a>
+							<a>学生</a>
+							<a>旅游体验</a>
+							<a>写作</a>
+							<a>绘画</a>
+							<a>书法</a>
+							<a>雕塑</a>
+							<a>戏剧</a>
+							<a>收藏鉴定</a>
+							<a>行为艺术</a>
+							<a>视觉艺术</a>
+							<a>艺术相关</a>
+							<a>其他行业</a>
+						</div>
+					</div>
+				</div>
+				<p class="user-1-explain z cl">
+					点击文字修改
+				</p>
+			</div>
+			<div class="user-1-type z cl">
+				<p class="z cl user-1-tt">所属机构</p>
+                                <div class="z cl user-normal-div">
+                                     <input type="text" id="user-organ" class="z cl user-normal" onKeyDown="if (event.keyCode==13) {}" value="{% if info.organ and info.organ[0] %}{{info.organ[0]}}{% end %}" />
+                                     <span>- 机构名称 -</span>
+                                </div>  
+				<p class="y cl user-secrecy bs" style="z-index: 5">
+                                        {% if info.organ and info.organ[1] %}
+					<b class="auth-val" option={{info.organ[1]}}>{{options[info.organ[1]]}}</b> ▼
+                                        {% else %}
+                                        <b class="auth-val" option=0>{{options["0"]}}</b> ▼
+                                        {% end %}
+					<span class="authorize-options">
+						<a>授权公开</a>
+						<a>仅对我关注的人公开</a>
+						<a>保密</a>
+					</span>
+				</p>
+			</div>
+			<div class="user-1-type z cl">
+				<p class="z cl user-1-tt">生日</p>
+                                <div class="z cl user-normal-div">
+                                     <input type="text" id="user-birth" class="z cl user-normal" onKeyDown="if (event.keyCode==13) {}" value="{% if info.birth and info.birth[0] %}{{info.birth[0]}}{% end %}" />
+                                     <span>2011-10-10</span>
+                                </div>           
+				<p class="y cl user-secrecy bs" style="z-index: 4">
+                                        {% if info.birth and info.birth[1] %}
+					<b class="auth-val" option={{info.birth[1]}}>{{options[info.birth[1]]}}</b> ▼
+                                        {% else %}
+                                        <b class="auth-val" option=0>{{options["0"]}}</b> ▼
+                                        {% end %}
+					<span class="authorize-options">
+						<a option=0>授权公开</a>
+						<a option=1>仅对我关注的人公开</a>
+						<a option=2>保密</a>
+					</span>
+				</p>
+				<p class="user-1-explain z cl">
+					格式 : 2011-10-10
+				</p>
+			</div>
+			<div class="user-1-type z cl">
+				<p class="z cl user-1-tt">身高</p>
+                                <div class="z cl user-normal-div">
+                                     <input type="text" id="user-height" class="z cl user-normal" onKeyDown="if (event.keyCode==13) {}" value="{% if info.height and info.height[0] %}{{info.height[0]}}{% end %}"/>
+                                     <span>- 填写您的身高 -</span>
+                                </div>
+				<p class="y cl user-secrecy bs" style="z-index: 3">
+                                        {% if info.height and info.height[1] %}
+					<b class="auth-val" option={{info.height[1]}}>{{options[info.height[1]]}}</b> ▼
+                                        {% else %}
+                                        <b class="auth-val" option=0>{{options["0"]}}</b> ▼
+                                        {% end %}
+					<span class="authorize-options">
+						<a option=0>授权公开</a>
+						<a option=1>仅对我关注的人公开</a>
+						<a option=2>保密</a>
+					</span>
+				</p>
+				<span class="z cl user-explain">cm</span>
+				<p class="user-1-explain z cl">
+					单位 : cm
+				</p>
+			</div>
+			<div class="user-1-type z cl">
+				<p class="z cl user-1-tt">体重</p>
+                                <div class="z cl user-normal-div">
+                                     <input type="text" id="user-weight" class="z cl user-normal" onKeyDown="if (event.keyCode==13) {}" value="{% if info.weight and info.weight[0] %}{{info.weight[0]}}{% end %}"/>
+                                     <span>- 填写您的体重 -</span>
+                                </div>
+				<p class="y cl user-secrecy bs" style="z-index: 2">
+                                        {% if info.weight and info.weight[1] %}
+					<b class="auth-val" option={{info.weight[1]}}>{{options[info.weight[1]]}}</b> ▼
+                                        {% else %}
+                                        <b class="auth-val" option=0>{{options["0"]}}</b> ▼
+                                        {% end %}
+					<span class="authorize-options">
+						<a option=0>授权公开</a>
+						<a option=1>仅对我关注的人公开</a>
+						<a option=2>保密</a>
+					</span>
+				</p>
+				<span class="z cl user-explain">Kg</span>
+				<p class="user-1-explain z cl">
+					单位 : Kg
+				</p>
+			</div>
+                        {% if is_woman %}
+			<div class="user-1-type z cl" id="user-women">
+				<p class="z cl user-1-tt">三围</p>
+				<span class="z cl user-explain">胸围</span>
+				<input type="text" class="z cl user-bust" id="user-xwei" value=""/>
+				<span class="z cl user-explain">cm</span>
+				<span class="z cl user-explain">腰围</span>
+				<input type="text" class="z cl user-bust" id="user-ywei" value=""/>
+				<span class="z cl user-explain">cm</span>
+				<span class="z cl user-explain">臀围</span>
+				<input type="text" class="z cl user-bust" id="user-twei" value=""/>
+				<span class="z cl user-explain">cm</span>
+				<p class="y cl user-secrecy bs" style="z-index: 1">
+                                        {% if info.extend and info.extend[1] %}
+				        <b class="auth-val" option={{info.extend[1]}}>{{options[info.extend[1]]}}</b> ▼
+                                        {% else %}
+                                        <b class="auth-val" option=0>{{options["0"]}}</b> ▼
+                                        {% end %}
+					<span class="authorize-options">
+						<a option=0>授权公开</a>
+						<a option=1>仅对我关注的人公开</a>
+						<a option=2>保密</a>
+					</span>
+				</p>
+				<p class="user-1-explain z cl">
+					单位 : cm
+				</p>
+			</div>
+                        {% end %}
+			<div class="user-1-type z cl">
+					<p class="z cl user-1-tt">鞋码</p>
+					<input type="text" class="z cl user-normal" onKeyDown="if (event.keyCode==13) {}" onBlur="if(this.value=='')value='- 填写您的鞋码 -';" onFocus="if(this.value=='- 填写您的鞋码 -')value='';" value="- 填写您的鞋码 -"/>
+					<p class="y cl user-secrecy" style="z-index: 1">
+						<b class="auth-val" option=0>授权公开</b> ▼
+						<span class="authorize-options">
+							<a option=0>授权公开</a>
+							<a option=1>仅对我记住的用户公开</a>
+							<a option=2>保密</a>
+						</span>
+					</p>
+					<p class="user-1-explain z cl">
+						标准 : 欧洲码，成人鞋码通常介于34-49之间
+					</p>
+				</div>
+				<div class="user-1-type z cl">
+					<p class="z cl user-1-tt">介绍自己</p>
+					<div class="z cl user-introducebox">
+						<textarea class="z cl user-introduce"/></textarea>
+					</div>
+					<p class="user-1-explain z cl">
+						对自己的介绍将显示在个人主页右侧边栏中。
+					</p>
+				</div>
+				<div class="user-button z cl">
+				  {{ xsrf_form_html() }}
+					<input type="button" value="SAVE"/>
+				</div>
+		</div>
+		<div class="user-1-right y cl mgt40">
+		  {{modules.Setlist()}}
+		</div>
+	</div>
+	<p class="user-copyright y cl">© UEUE.CC | 优意座标™</p>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){
+   $(".user-button input").click(function(){
+       var jobwhich="#user-job-first";
+       var name=$("#user-name").val();
+       var area=$("#user-area1").text();
+       var organ=$("#user-organ").val()+"&"+$("#user-organ").parent().next().find(".auth-val").attr("option");
+       var job,fjob,sjob,tjob;
+       job="";
+       fjob=$("#user-job-first").text();
+       sjob=$("#user-job-second").text();
+       tjob=$("#user-job-third").text();
+       var defjob={z:"不选择",f:"第一职业",s:"第二职业",t:"第三职业"};
+       if(fjob!=defjob.z && fjob!=defjob.f) job=fjob;
+       if(sjob!=defjob.z && sjob!=defjob.s){
+          if(job) job+="+"+sjob;
+          else job=sjob;
+       }
+       if(tjob!=defjob.z && tjob!=defjob.t){
+          if(job) job+="+"+tjob;
+          else job=tjob;
+       }
+       var height=$("#user-height").val()+"&"+$("#user-height").parent().next().find(".auth-val").attr("option");
+       var weight=$("#user-weight").val()+"&"+$("#user-weight").parent().next().find(".auth-val").attr("option");
+       var birth=$("#user-birth").val()+"&"+$("#user-birth").parent().next().find(".auth-val").attr("option");
+       var sanwei="";
+       if($("#user-women").text()){
+           sanwei=$("#user-xwei").val()+"-"+$("#user-ywei").val()+"-"+$("#user-twei").val()+"&"+$("#user-women").parent().find(".auth-val").attr("option");
+       }
+       //alert(sanwei);
+       var settings={
+              url:"/user/set-basic",
+              type:"post",
+              dataType:"json",
+              data:{name:name,area:area,organ:organ,job:job,height:height,weight:weight,birth:birth,extend:sanwei,_xsrf:$("input[name='_xsrf']").val()},
+              error:function(jq,data,errorThrow){
+                     if(data) alert(data);
+                   },
+              success:function(result){
+                         if(result.status){
+                            alert("设置成功");
+                         }
+                         else{
+                            alert("设置出错");
+                         }
+                   }
+             }
+        $.ajax(settings);
+              
+   })
+})
+</script>
+<script>
+$(document).ready(function() {
+	var userAreaActive = false;
+	var careerAreaActive = new Array; careerAreaActive[0] = careerAreaActive[1] = careerAreaActive[2] = false;
+	var myCareer = new Array();
+	var defaultArray = new Array("第一职业", "第二职业", "第三职业", "不选择");
+	$(".user-1-type .user-career").each(function(index) {
+		myCareer[index] = $(this).text();
+	});
+	// 所在地触发
+	$(".user-area1").hide();
+	$("#user-area1").click(function(event) {
+		event.preventDefault();
+		userAreaActive = !userAreaActive;
+		$(".user-area1").fadeToggle("fast", "linear");
+
+		if (userAreaActive) {
+			$(".user-1-explain.area").show();
+		} else {
+			$(".user-1-explain.area").hide();
+		};
+	});
+	$(".user-area1 a").click(function(event) {
+		if (userAreaActive) {
+			$("#user-area1").html($(this).html());
+			userAreaActive = !userAreaActive;
+			$(".user-area1").fadeToggle("fast", "linear");
+		};
+	});
+	$(document).click(function(e) {
+		// e.preventDefault();
+		e = window.event || e;
+		obj = $(e.srcElement || e.target);
+		if (!($(obj).is(".user-area1, #user-area1")) && userAreaActive) {
+			userAreaActive = false;
+			$(".user-area1").fadeToggle("fast", "linear");
+		};
+	});
+
+	// “我的职业”
+	// $(".user-career-list").hide();
+	$(".user-1-type .user-career").click(function(e) {
+		e.preventDefault();
+		var careerIndex = $(this).index(".user-1-type .user-career");
+		if ($(this).hasClass("user-career-active")) {
+			$(".user-career-list").fadeToggle("fast", "linear");
+			careerAreaActive[careerIndex] = !careerAreaActive[careerIndex];
+			// alert(careerAreaActive[careerIndex]);
+		} else {
+			$(".user-1-type span").removeClass("user-career-active");
+			$(this).addClass("user-career-active");
+			$(".user-career-list").fadeOut(200).fadeIn(200);
+			careerAreaActive[careerIndex] = !careerAreaActive[careerIndex];
+			// alert(careerAreaActive[careerIndex]);
+		};
+	});
+	$('.user-career-list-title a').mouseover(function() {
+		$(this).addClass("user-career-list-title-on").siblings().removeClass();
+		$("."+$(this).attr("id")).show().siblings().hide();
+	});
+
+	$(".tab-list a").click(function(argument) {
+		var currentCareerIndex = $(".user-career-active").index() -1;
+		$(".user-career-active").text($(this).text());
+		myCareer[currentCareerIndex] = $(".user-career-active").text();
+		// alert("myCareer[" + currentCareerIndex + "] = " + myCareer[currentCareerIndex]);
+		var currentText = defaultArray[currentCareerIndex];
+		switch(currentCareerIndex)
+		{
+			case 0:
+				switch(myCareer[0]){
+					case defaultArray[3]:
+						$(".user-1-type .user-career").eq(0).text(currentText); myCareer[0] = currentText; break;
+					case myCareer[1]:
+						$(".user-1-type .user-career").eq(1).text(defaultArray[1]); myCareer[1] = defaultArray[1]; break;
+					case myCareer[2]:
+						$(".user-1-type .user-career").eq(2).text(defaultArray[2]); myCareer[2] = defaultArray[2]; break;
+				}
+			break;
+			case 1:
+				switch(myCareer[1]){
+					case defaultArray[3]:
+						$(".user-1-type .user-career").eq(1).text(currentText); myCareer[1] = currentText; break;
+					case myCareer[0]:
+						$(".user-1-type .user-career").eq(0).text(defaultArray[0]); myCareer[0] = defaultArray[0]; break;
+					case myCareer[2]:
+						$(".user-1-type .user-career").eq(2).text(defaultArray[2]); myCareer[2] = defaultArray[2]; break;
+				}
+			break;
+			case 2:
+				switch(myCareer[2]){
+					case defaultArray[3]:
+						$(".user-1-type .user-career").eq(2).text(currentText); myCareer[2] = currentText; break;
+					case myCareer[1]:
+						$(".user-1-type .user-career").eq(1).text(defaultArray[1]); myCareer[1] = defaultArray[1]; break;
+					case myCareer[0]:
+						$(".user-1-type .user-career").eq(0).text(defaultArray[0]); myCareer[0] = defaultArray[0]; break;
+				}
+			break;
+		};
+		$(".user-1-type .user-career").eq([currentCareerIndex]).removeClass("user-career-active");
+	});
+	$(document).click(function(e) {
+		// e.preventDefault();
+		e = window.event || e;
+		obj = $(e.srcElement || e.target);
+		if (!($(obj).is(".user-career, .user-career-list")) && (careerAreaActive[0] || careerAreaActive[1] || careerAreaActive[2])) {
+			careerAreaActive[0] = careerAreaActive[1] = careerAreaActive[2] = false;
+			$(".user-career-list").fadeToggle("fast", "linear");
+		};
+	});
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,24 @@
+{% if cuser %}
+{% if level %}
+<a href="/{{cuser.uid}}" hidefocus="true" class="z yz-avt"><img src="{{cuser.img}}" width="46" height="46"/></a>
+<div class="y yz-meb-btn cl">
+<a hidefocus="true" class="yz-meb-btn1" title="快捷导航"></a>
+<a href="/user/setting" hidefocus="true" class="yz-meb-btn2" title="设置"></a>
+<a href="/user/message" hidefocus="true" class="yz-meb-btn3" title="消息">
+{% if msg %}<span class="yz-newmsg">{{msg}}</span>{% end %}
+</a>
+<a href="/user/action/logout?next={{wh}}" hidefocus="true" class="yz-meb-btn4" title="登出"></a>
+</div>
+{% else %}
+<p class="y cl">WELCOME {{cuser.account}}</p>
+<a class="y cl" href="/user/action/logout?next={{wh}}">登出</a>
+<a class="y cl" href="/user/action/init">开启生涯记录</a>
+{% end %}
+{% else %}
+<div class="y yz-meb-btn cl">
+<a href="/user/action/login?next={{wh}}" hidefocus="true" class="yz-meb-btn5" title="登入优意座标"></a>
+<a href="/user/action/signup" hidefocus="true" class="yz-meb-btn6" title="注册"></a>
+<a target="_blank" href="http://e.weibo.com/youyizuobiao" hidefocus="true" class="yz-meb-btn7" title="新浪微博帐号登入"></a>
+<a target="_blank" href="http://t.qq.com/youyizuobiao" hidefocus="true" class="yz-meb-btn8" title="QQ帐号登入"></a>
+</div>
+{% end %}

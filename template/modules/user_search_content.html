@@ -1,0 +1,11 @@
+<li>
+						<a href="/{{row.uid}}" target="_blank" class="ue-user-bg z cl">
+							<div class="z cl ue-user-img">
+								<img src="{{row.img}}" height="193" width="193"/>
+							</div>
+							<div class="ue-user-info">
+								<p class="z cl ue-user-info-name">{{row.account}}</p>
+								<p class="z cl ue-user-area">{% if row.job %}{{row.job}}{% else %}{{deftxt}}{% end %}</p>
+							</div>
+						</a>
+					</li>

@@ -1,0 +1,25 @@
+<li>
+                    	<div class="yz-record-list">
+                        	<div class="yz-record-info z cl">
+                            	<p class="yz-record-title">
+                                	<span>{{type}}</span>
+					{{row.title}}
+									<i class="hp-record-off" title="非公开记录"></i>
+                                </p>
+                                <p class="yz-record-tags">
+				  {% for i in row.lable.split(",") %}<a href="/records?lable={{url_escape(i)}}" target="_blank">#{{i}}</a>{% end %}
+                                </p>
+                                <p class="yz-record-by">
+                                    <span>2013.03.24</span>
+				    {% if userself %}
+									<a href="#" class="hp-show-on z cl">设置为公开</a>
+									<a href="/record/delete?delrid={{row.eid}}" class="hp-show-del z cl">删除</a>
+									{% end %}
+                                </p>
+                            </div>
+                            <div class="yz-record-enter-nopic y cl">
+                            	<a href="/record/{{row.eid}}" target="_blank" title="查看更详尽内容">
+                                </a>
+                            </div>
+                        </div>
+                    </li>

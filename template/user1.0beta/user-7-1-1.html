@@ -1,0 +1,120 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<title>管理中心 | 优意座标™</title>
+<meta name="keywords" content="中国优秀文创人,文创人,机构,媒体人,优意座标,演员,模特,设计师,创意,平面,产品设计,视觉,建筑,空间设计" />
+<meta name="description" content="为中国优秀文创人提供媒体助力，为媒体人提供新鲜文创业动态汇集，为中国文创机构提供合作空间。" />
+<meta name="author" content="优意座标™|YOEZ.CC团队" />
+<meta name="copyright" content="Copyright优意座标™" />
+<link rel="stylesheet" type="text/css" href="{{static_url('CSS/common.css')}}">
+<link rel="stylesheet" type="text/css" href="{{static_url('CSS/user.css')}}">
+<script type="text/javascript" src="{{static_url('JS/jquery-1.6.4.js')}}"></script>
+<script type="text/javascript" src="{{static_url('JS/common.js')}}"></script>
+<script type="text/javascript" src="{{static_url('JS/user.js')}}"></script>
+<script>
+	$(document).ready(function(){
+			
+			$('.user-7-upload').click(function(){
+				$('#user-7-upload').trigger("click")
+			});
+			$('.user-7-upload1').click(function(){
+				$('#user-7-upload1').trigger("click")
+			});
+	});
+</script>
+</head>
+<body class="user-body">
+  {{modules.SettingHeader(cuser,request.uri)}}
+<div class="w1000">
+	  <div class="user-1-bd z cl mgt100">
+			<div class="user-left z cl mgt40">
+				<div class="user-1-type z cl">
+					<div class="user-7-headtitle z cl">
+						<p class="z cl user-1-tt1 z cl">关联微博认证</p>
+						<p class="z cl user-1-explain">申请前请确认您的微博得到了官方加V认证</p>
+					</div>					
+					<div class="user-7-type z cl">
+						<p class="z cl user-renzheng user-shequ-sina">新浪微博<a href="">绑定</a></p>
+						<p class="z cl user-renzheng user-shequ-tencent">腾讯微博<span></span></p>												
+						<p class="user-1-explain z cl">
+							至少绑定一个微博以供UE团队进行认证审核。
+						</p>
+					</div>
+					<div class="user-7-type z cl">
+						<p class="z cl user-1-tt">姓名</p>
+						<input type="text" class="z cl user-normal"/>						
+						<p class="user-1-explain z cl">
+							请保证填写姓名与您的身份证件一致。
+						</p>
+					</div>
+					<div class="user-7-type z cl">
+						<p class="z cl user-1-tt">认证文字</p>
+						<div class="z cl user-addressbox">
+						<textarea class="z cl user-address"/></textarea>
+						</div>
+						<p class="user-1-explain z cl">
+							填写你希望得到的认证文字，同时我们不保证完全采用以上文字。
+						</p>
+					</div>
+				</div>
+				<div class="user-button z cl">
+					<input type="button" value="提交申请"/>
+				</div>
+			</div>
+		<div class="user-1-right y cl mgt40">
+		  {{modules.Setlist()}}
+		</div>
+	</div>
+	<p class="user-copyright y cl">© UEUE.CC | 优意座标™</p>
+</div>
+<script type="text/javascript">
+  $(document).ready(function(){
+     $("#user-7-upload").change(function(){
+        $("#confirmform").ajaxSubmit({
+          dataType:"json",
+          beforeSubmit:function(a,f,o){
+                          var file=$("#user-7-upload").val();
+                          if(!file){
+                             alert("请先选择要上传的文件");
+                             return false;
+                          }
+                        },
+          success:function(result){
+                     if(result.status){
+                         //alert(result.path);
+                         $("").attr("src",result.path);
+                         $("#upface").show();
+                     }
+                     else{
+                         alert(result.code);
+                     }
+                  }
+         })
+     })
+     $("#user-7-upload1").change(function(){
+        $("#confirmform").ajaxSubmit({
+          dataType:"json",
+          beforeSubmit:function(a,f,o){
+                          var file=$("#user-7-upload1").val();
+                          if(!file){
+                             alert("请先选择要上传的文件");
+                             return false;
+                          }
+                        },
+          success:function(result){
+                     if(result.status){
+                         //alert(result.path);
+                         $("").attr("src",result.path);
+                         $("#updown").show();
+                     }
+                     else{
+                         alert(result.code);
+                     }
+                  }
+         })
+     })
+  })
+</script>
+</body>
+</html>

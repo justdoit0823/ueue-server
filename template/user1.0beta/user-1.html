@@ -1,0 +1,115 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<title>管理中心 | 优意座标™</title>
+<meta name="keywords" content="中国优秀文创人,文创人,机构,媒体人,优意座标,演员,模特,设计师,创意,平面,产品设计,视觉,建筑,空间设计" />
+<meta name="description" content="为中国优秀文创人提供媒体助力，为媒体人提供新鲜文创业动态汇集，为中国文创机构提供合作空间。" />
+<meta name="author" content="优意座标™|YOEZ.CC团队" />
+<meta name="copyright" content="Copyright优意座标™" />
+<link rel="stylesheet" type="text/css" href="{{static_url('CSS/user.css')}}">
+<script type="text/javascript" src="{{static_url('JS/jquery-1.6.4.js')}}"></script>
+<script type="text/javascript" src="{{static_url('JS/common.js')}}"></script>
+<script type="text/javascript" src="{{static_url('JS/user.js')}}"></script>
+<script type="text/javascript" src="{{static_url('JS/jquery.form-2.67.js')}}"></script>
+<script>
+	$(document).ready(function(){
+			
+			$('.user-1-avr-btn1').click(function(){
+				$('#user-1-avr-btn1').trigger("click")
+			});
+	});
+</script>
+<style type="text/css">
+ #editor-form-pic {width: 260px; height: 40px; position: absolute; bottom: 0; left: 262px;}
+.editor-add-pic { height: 40px; width: 120px; line-height: 40px; font-size: 14px; text-shadow: -1px -1px 1px rgba(51, 51, 51, 0.8); color: #FFF; cursor: pointer; position: relative; overflow: hidden; text-align: center; background: url(/static/img/editor.png) -8px -1017px no-repeat;}
+			a.editor-add-pic:hover { background: url(/static/img/editor.png) -8px -1059px no-repeat;}
+	.editor-add-pic span { display: block; height: 40px; width: 200px; height: 50px; position: absolute; top: 0px; right: 0px;}
+	.editor-pic-addbtn { cursor: pointer; outline: none; border: solid; border-width: 0 0 100px 100px; color: #FFF; position: absolute; top: 0; right: 0;  opacity: 0; filter:alpha(opacity=0);}
+
+</style>
+</head>
+<body class="user-body">
+  {{modules.SettingHeader(cuser,request.uri)}}
+<div class="w1000">
+	<div class="user-1-bd z cl mgt100">
+		<div class="user-left z cl mgt40">
+			<div class="user-1-avr z cl">
+				<div class="user-1-avr-span" style="border: 1px solid #fff;">
+					<img src="{{cuser.img}}" class="user-1-avr-move" style="position:relative;"/>
+                                        <!--<div class="user-1-avr-hover"></div>-->
+				</div>
+                                <form id="editor-form-pic" action="/user/works/picupload" method="POST" enctype="multipart/form-data" name="file">
+                                        {{ xsrf_form_html() }}
+					<input type="file" id="user-1-avr-btn1" title="上传头像" name="avrfile" style="display:none;"/>
+					<input type="button" value="更改头像" class="user-1-avr-btn1"/>
+					<input type="button" value="保存头像" class="user-1-avr-btn2"/>
+                                </form>
+				<div class="user-1-avr-text">
+				  <span>换个头像，换个心情 ^.^</span><br>
+						<p>
+							注 : 图片宽高均须大于200px，我们欣赏并更愿意接受视觉感受良好的图片作为头像，同时不会欢迎出现文字广告的头像。
+						</p>
+				</div>
+			</div>
+		</div>
+                
+		<div class="user-1-right y cl mgt40">
+		  {{modules.Setlist()}}
+		</div>
+	</div>
+	<p class="user-copyright y cl">© UEUE.CC | 优意座标™</p>
+</div>
+<script type="text/javascript">
+
+$(document).ready(function(){
+    $("#user-1-avr-btn1").bind("change",function(){ 
+      $("#editor-form-pic").ajaxSubmit({
+      dataType:"json",
+      beforeSubmit:function(a,f,o){
+          var file=$("#user-1-avr-btn1").val();
+          if(!file){
+            alert("请先选择要上传的文件");
+            return false;
+          }
+      },
+      error:function(jq,data,errorThrow){
+                     alert(data);
+      },
+      success:function(result){
+          if(result.status){
+               $(".user-1-avr-move").attr("src",result.path);
+               //$(".user-1-avr-text span").text("恭喜您 ! 拥有了一枚新的头像 ^.^");
+          }
+          else{
+               alert(result.code);
+          }
+      }
+   })
+  })
+  $(".user-1-avr-btn2").click(function(){
+      var img=$(".user-1-avr-move").attr("src").split("?")[0];
+      var settings={
+                url:"/user/set-avatar",
+                type:"post",
+                dataType:"json",
+                data:{"avatar":img,"_xsrf":$("input[name='_xsrf']").val()},
+                error:function(jq,data,errorThrow){
+                     alert(data);
+                },
+                success:function(result){
+                          if(result.status){
+                              $(".user-1-avr-text span").text("修改头像成功！");
+                          }
+                          else{
+                              alert("修改头像出错:"+result.code); 
+                          }
+                        }
+                          
+          }
+      $.ajax(settings);
+  })
+})
+</script>
+</body>
+</html>

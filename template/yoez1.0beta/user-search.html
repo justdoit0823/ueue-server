@@ -1,0 +1,621 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<title>优意座标™专注于文创行业发展！</title>
+<meta name="keywords" content="中国优秀文创人,文创人,机构,媒体人,优意座标,演员,模特,设计师,创意,平面,产品设计,视觉,建筑,空间设计" />
+<meta name="description" content="为中国优秀文创人提供媒体助力，为媒体人提供新鲜文创业动态汇集，为中国文创机构提供合作空间。" />
+<meta name="author" content="优意座标™|YOEZ.CC团队" />
+<meta name="copyright" content="Copyright优意座标™" />
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8"> 
+<!--[if lt IE 9]><script src="http://www.html5china.com/templets/html5/scripts/html5.js"></script><![endif]-->
+<link rel="stylesheet" type="text/css" href="{{static_url('CSS/common.css')}}">
+<link rel="stylesheet" type="text/css" href="{{static_url('CSS/index.css')}}">
+<script type="text/javascript" src="{{static_url('JS/jquery-1.6.4.js')}}"></script>
+<script type="text/javascript" src="{{static_url('JS/index.js')}}"></script>
+<script type="text/javascript" src="{{static_url('JS/jquery.form-2.67.js')}}"></script>
+<script type="text/javascript" src="{{static_url('JS/common.js')}}"></script>
+<script src="http://tjs.sjs.sinajs.cn/open/api/js/wb.js" type="text/javascript" charset="utf-8"></script>
+</head>
+<body>
+<!--header begain-->
+{{modules.Header(cuser,request.uri)}}
+<!--header end-->
+<!--TOP BEGAIN-->
+	<div class="yz-idx-top wp1000 mgt40">
+		<div class="z cl">
+			<a href="#" target="_blank">
+				<img src="{{static_url('img/common/adds1.jpg')}}" alt="广告描述" width="460" height="90"/>
+			</a>
+		</div>
+		<div class="y cl">
+			<a href="#" target="_blank">
+				<img src="{{static_url('img/common/addr.jpg')}}" alt="BAIDU广告"/>
+			</a>
+		</div>
+	</div>
+</div>
+<!--TOP END-->
+<!--SEARCH BEGAIN-->
+
+<div class="yz-idx-search wp1000">
+	<ul class="yz-idx-show-search-tag z cl mgt40">
+		<li class="yz-idx-show-search-tag4 z cl js-list">
+			<span class="chs"><i class="yz-idx-clickicon"></i>用户类型</span>
+			<div class="yz-idx-show-search-tag4-list js-list-1">
+				<a href="/professional?usertype=-1" class="show-icon11">全部用户</a>
+				<a href="/professional?usertype=0" class="show-icon12">我记忆的</a>
+				<a href="/professional?usertype=1" class="show-icon13">文创人</a>
+				<a href="/professional?usertype=2" class="show-icon14">媒体人</a>
+				<a href="/professional?usertype=3" class="show-icon15">机构</a>
+			</div>
+		</li>
+
+		<li class="yz-idx-show-search-tag2 z cl js-list">
+			<span class="chs"><i class="yz-idx-clickicon"></i>行业领域</span>
+			<div class="yz-idx-show-search-tag2-list js-list-1">
+				<div class="yz-idx-show-search-tag2-list-title">
+					<a id="tab-1" class="yz-idx-show-search-tag2-list-title-on">演员模特</a>
+					<a id="tab-2">影视幕后</a>
+					<a id="tab-3">音乐制作</a>
+					<a id="tab-4">摄影造型</a>
+					<a id="tab-5">设计创意</a>
+					<a id="tab-6">广告传媒</a>
+					<a id="tab-7">更多行业</a>
+				</div>
+				<div class="tab-list">		
+					<div class="tab-1">
+						<!--<a href="#">全部行业</a>-->
+                                                <a href="/professional?trade=0">影视表演</a>
+						<a href="/professional?trade=1">话剧表演</a>
+						<a href="/professional?trade=2">时装模特</a>
+						<a href="/professional?trade=3">平面模特</a>
+						<a href="/professional?trade=4">车模</a>
+						<a href="/professional?trade=5">舞蹈表演</a>
+						<a href="/professional?trade=6">曲艺表演</a>
+						<a href="/professional?trade=7">魔术表演</a>
+						<a href="/professional?trade=8">杂技表演</a>
+						<a href="/professional?trade=9">表演相关</a>
+						<a href="/professional?trade=10">模特相关</a>
+					</div>
+					<div class="tab-2">
+						<!--<a href="#">全部行业</a>-->	
+                                                <a href="/professional?trade=12">影视导演</a>
+						<a href="/professional?trade=13">制片</a>
+						<a href="/professional?trade=14">影视监制</a>
+						<a href="/professional?trade=15">出品发行</a>
+						<a href="/professional?trade=16">编剧</a>
+						<a href="/professional?trade=17">影视摄像</a>
+						<a href="/professional?trade=18">后期特效</a>
+						<a href="/professional?trade=19">影视美术</a>
+						<a href="/professional?trade=20">场景设计</a>
+						<a href="/professional?trade=21">配音</a>
+						<a href="/professional?trade=22">字幕</a>
+						<a href="/professional?trade=23">影视相关</a>
+					</div>
+					<div class="tab-3">
+                                                <!--<a href="#">全部行业</a>-->	
+						<a href="/professional?trade=24">歌手</a>
+						<a href="/professional?trade=25">乐手</a>
+						<a href="/professional?trade=26">乐队</a>
+						<a href="/professional?trade=27">音乐制作</a>
+						<a href="/professional?trade=28">DJ</a>
+						<a href="/professional?trade=29">词曲/编曲</a>
+						<a href="/professional?trade=30">录音/混音</a>
+						<a href="/professional?trade=31">音乐后期</a>
+						<a href="/professional?trade=31">音乐相关</a>
+					</div>
+					<div class="tab-4">
+                                                <!--<a href="#">全部行业</a>-->	
+						<a href="/professional?trade=32">时装摄影</a>
+						<a href="/professional?trade=33">人像摄影</a>
+						<a href="/professional?trade=34">广告摄影</a>
+						<a href="/professional?trade=35">风光摄影</a>
+						<a href="/professional?trade=36">纪实摄影</a>
+						<a href="/professional?trade=37">图片后期</a>
+						<a href="/professional?trade=38">化妆</a>
+						<a href="/professional?trade=39">服装造型</a>
+						<a href="/professional?trade=40">发型</a>
+						<a href="/professional?trade=41">摄影相关</a>
+						<a href="/professional?trade=42">造型相关</a>
+					</div>
+					<div class="tab-5">
+                                                <!--<a href="#">全部行业</a>-->	
+						<a href="/professional?trade=43">平面设计</a>
+						<a href="/professional?trade=44">三维设计</a>
+						<a href="/professional?trade=45">视觉设计</a>
+						<a href="/professional?trade=46">工业设计</a>
+						<a href="/professional?trade=47">游戏设计</a>
+						<a href="/professional?trade=48">动漫设计</a>
+						<a href="/professional?trade=49">UI/UE</a>
+						<a href="/professional?trade=50">建筑设计</a>
+						<a href="/professional?trade=51">景观设计</a>
+						<a href="/professional?trade=52">空间设计</a>
+						<a href="/professional?trade=53">视频设计</a>
+						<a href="/professional?trade=54">服装设计</a>
+						<a href="/professional?trade=55">珠宝设计</a>
+						<a href="/professional?trade=56">插画设计</a>
+						<a href="/professional?trade=57">纹身设计</a>
+						<a href="/professional?trade=58">创意执行</a>
+						<a href="/professional?trade=59">设计相关</a>
+					</div>
+					<div class="tab-6">
+                                                <!--<a href="#">全部行业</a>-->	
+						<a href="/professional?trade=60">广告创意</a>
+						<a href="/professional?trade=61">美术顾问</a>
+						<a href="/professional?trade=62">策略/文案</a>
+						<a href="/professional?trade=63">活动策划</a>
+						<a href="/professional?trade=64">活动执行</a>
+						<a href="/professional?trade=65">主编</a>
+						<a href="/professional?trade=66">编辑</a>
+						<a href="/professional?trade=67">美术编辑</a>
+						<a href="/professional?trade=68">采编</a>
+						<a href="/professional?trade=69">记者</a>
+						<a href="/professional?trade=70">广告相关</a>
+						<a href="/professional?trade=71">媒体相关</a>
+					</div>
+					<div class="tab-7">
+                                                <a href="/professional?trade=86">公益</a>
+						<a href="/professional?trade=72">经纪人</a>
+						<a href="/professional?trade=73">练习生</a>
+						<a href="/professional?trade=74">学生</a>
+						<a href="/professional?trade=75">旅游体验</a>
+						<a href="/professional?trade=76">写作</a>
+						<a href="/professional?trade=77">绘画</a>
+						<a href="/professional?trade=78">书法</a>
+						<a href="/professional?trade=79">雕塑</a>
+						<a href="/professional?trade=80">戏剧</a>
+						<a href="/professional?trade=81">收藏鉴定</a>
+						<a href="/professional?trade=82">行为艺术</a>
+						<a href="/professional?trade=83">视觉艺术</a>
+						<a href="/professional?trade=84">艺术相关</a>
+						<a href="/professional?trade=85">其他行业</a>
+					</div>
+				</div>
+		</div>
+		</li>
+		<li class="yz-idx-show-search-tag6 z cl js-list">
+			<span class="chs"><i class="yz-idx-clickicon"></i>所在地区</span>
+			<div class="yz-idx-show-search-tag6-list js-list-1">
+						<a href="/professional?area=0">北京</a>
+						<a href="/professional?area=1">上海</a>
+						<a href="/professional?area=2">天津</a>
+						<a href="/professional?area=3">重庆</a>
+						<a href="/professional?area=4">安徽</a>
+						<a href="/professional?area=5">福建</a>
+						<a href="/professional?area=6">广东</a>
+						<a href="/professional?area=7">甘肃</a>
+						<a href="/professional?area=8">广西</a>
+						<a href="/professional?area=9">贵州</a>
+						<a href="/professional?area=10">河北</a>
+						<a href="/professional?area=11">湖北</a>
+						<a href="/professional?area=12">黑龙江</a>
+						<a href="/professional?area=13">海南</a>
+						<a href="/professional?area=14">河南</a>
+						<a href="/professional?area=15">湖南</a>
+						<a href="/professional?area=16">吉林</a>
+						<a href="/professional?area=17">江苏</a>
+						<a href="/professional?area=18">江西</a>
+						<a href="/professional?area=19">辽宁</a>
+						<a href="/professional?area=20">四川</a>
+						<a href="/professional?area=21">山东</a>
+						<a href="/professional?area=22">山西</a>
+						<a href="/professional?area=23">陕西</a>
+						<a href="/professional?area=24">内蒙古</a>
+						<a href="/professional?area=25">宁夏</a>
+						<a href="/professional?area=26">青海</a>
+						<a href="/professional?area=27">新疆</a>
+						<a href="/professional?area=28">西藏</a>
+						<a href="/professional?area=29">云南</a>
+						<a href="/professional?area=30">浙江</a>
+						<a href="/professional?area=31">台湾</a>
+						<a href="/professional?area=32">香港</a>
+						<a href="/professional?area=33">澳门</a>
+						<a href="/professional?area=34">海外</a>
+		</div>
+		</li>
+		
+		<li class="yz-idx-show-search-tag3 z cl js-list">
+			<span class="chs"><i class="yz-idx-clickicon"></i>指数排序</span>
+			<div class="yz-idx-show-search-tag3-list js-list-1">
+				<a href="/professional?index=work" class="show-icon6">作品数量</a>
+				<a href="/professional?index=record" class="event-icon6">记录数量</a>
+				<a href="/professional?index=media" class="event-icon10">媒体指数</a>
+				<a href="/professional?index=tranmit" class="user-icon9">传播指数</a>
+				<a href="/professional?index=pub" class="user-icon10">公益指数</a>
+			</div>
+		</li>
+	</ul>
+	<div class="yz-search y cl mgt40">
+		<div class="z cl">
+			<ul class="yz-search-type z cl">
+				<li  style="top: 0px;">
+                                        <a class="yz-search-type-usr" title="搜用户"></a>
+				</li>
+				<li  style="top: 30px;">
+					<a class="yz-search-type-rcd" title="搜记录"></a>
+				</li>
+				<li  style="top: 60px;">
+					<a class="yz-search-type-wk" title="搜作品"></a>
+				</li>
+			</ul>
+			<input class="yz-search-text z cl" type="text" onKeyDown="if (event.keyCode==13) {}" onBlur="if(this.value=='')value='- 搜搜你感兴趣的 -';" onFocus="if(this.value=='- 搜搜你感兴趣的 -')value='';" value="- 搜搜你感兴趣的 -"/>
+			<input class="yz-search-sub z cl" type="submit" value="">
+		</div>
+	</div>
+</div>
+<!--SEARCH LINE END-->
+<div class="yz-idx-line z cl" style="display:none;">
+	<div class="wp1000">
+		<!--<div class="z cl yz-idx-line-p">
+		</div>-->
+	</div>
+</div>
+<!--SHOW BEGAIN-->
+<div class="yz-idx-body z cl">
+	<div class="wp1000 cl ue-all mgt40">
+	  <div class="w200 z cl ue-left">
+	    {{modules.UeDescribe()}}
+	    <div style="padding-top: 25px;border-top:1px solid #ccc;">
+			<wb:follow-button uid="2707118293" type="red_2" width="136" height="24" ></wb:follow-button>
+		</div>
+        </div>
+		<div class="w640 z cl ue-middle">
+			<div class="yz-idx-body-body w640 z cl">
+				<div class="yz-idx-body-title w640 z cl">
+					<p class="yz-idx-body-title-p z cl chs">机构&人才</p>
+				</div>
+				<ul class="ue-user-list z cl">
+				{% for row in rows %}
+                                    {{modules.UserSearch(row)}}
+                                {% end %}
+				</ul>
+				<div class="z cl yz-idx-page">
+					<a>
+					查看更多<br>
+					<span>VIEW MORE</span>
+					</a>
+				</div>
+			</div>
+<!--AD-->
+			<!--<div class="z cl yz-ad-640-60 mgt20">
+				<img src="../../static/img/common/79b4c46696320828efe7e6b5aaf5e669.jpg"/>
+			</div>
+			<div class="yz-idx-module3 z cl mgt20 w640">
+				<div class="yz-idx-body-title w640 z cl">
+					<p class="yz-idx-body-title-p z cl chs">ACTIVE USER</p>
+				</div>
+				<div class="yz-user-module3-left z cl">
+					<ul>
+						<li class="z cl yz-idx-module3-right-1">
+							<a href="#" target="_blank" class="z cl yz-idx-module3-right-2">
+								<img src="../../static/img/common/show2.jpg" alt="标题名称"/>
+							</a>
+							<a href="#" target="_blank" class="z cl yz-idx-module3-right-3">
+								一组景观园林设计
+							</a>
+							<span class="z cl yz-idx-module3-right-4">
+								来自<a href="#" target="_blank">Face.Design工作室</a>作品
+							</span>
+						</li>
+						<li class="z cl yz-idx-module3-right-1">
+							<a href="#" target="_blank" class="z cl yz-idx-module3-right-2">
+								<img src="../../static/img/common/show1.jpg" alt="标题名称"/>
+							</a>
+							<a href="#" target="_blank" class="z cl yz-idx-module3-right-3">
+								美食挡不住的诱惑
+							</a>
+							<span class="z cl yz-idx-module3-right-4">
+								来自<a href="#" target="_blank">聚焦摄影</a>作品
+							</span>
+						</li>
+						<li class="z cl yz-idx-module3-right-1">
+							<a href="#" target="_blank" class="z cl yz-idx-module3-right-2">
+								<img src="../../static/img/common/show4.jpg" alt="标题名称"/>
+							</a>
+							<a href="#" target="_blank" class="z cl yz-idx-module3-right-3">
+								COSCO广告大片
+							</a>
+							<span class="z cl yz-idx-module3-right-4">
+								来自<a href="#" target="_blank">云想象摄影</a>作品
+							</span>
+						</li>
+						<li class="z cl yz-idx-module3-right-1">
+							<a href="#" target="_blank" class="z cl yz-idx-module3-right-2">
+								<img src="../../static/img/common/show5.jpg" alt="标题名称"/>
+							</a>
+							<a href="#" target="_blank" class="z cl yz-idx-module3-right-3">
+								笑过之后
+							</a>
+							<span class="z cl yz-idx-module3-right-4">
+								来自<a href="#" target="_blank">手绘的Jeavi</a>作品
+							</span>
+						</li>
+						<li class="z cl yz-idx-module3-right-1">
+							<a href="#" target="_blank" class="z cl yz-idx-module3-right-2">
+								<img src="../../static/img/common/show6.jpg" alt="标题名称"/>
+							</a>
+							<a href="#" target="_blank" class="z cl yz-idx-module3-right-3">
+								名字。
+							</a>
+							<span class="z cl yz-idx-module3-right-4">
+								来自<a href="#" target="_blank">作者</a>作品
+							</span>
+						</li>
+					</ul>
+				</div>
+				<div class="yz-user-module3-right y cl">
+					<ul>
+						<li class="z cl yz-idx-module3-right-1">
+							<a href="#" target="_blank" class="z cl yz-idx-module3-right-2">
+								<img src="../../static/img/common/show2.jpg" alt="标题名称"/>
+							</a>
+							<a href="#" target="_blank" class="z cl yz-idx-module3-right-3">
+								一组景观园林设计
+							</a>
+							<span class="z cl yz-idx-module3-right-4">
+								来自<a href="#" target="_blank">Face.Design工作室</a>记录
+							</span>
+						</li>
+						<li class="z cl yz-idx-module3-right-1">
+							<a href="#" target="_blank" class="z cl yz-idx-module3-right-2">
+								<img src="../../static/img/common/show1.jpg" alt="标题名称"/>
+							</a>
+							<a href="#" target="_blank" class="z cl yz-idx-module3-right-3">
+								美食挡不住的诱惑
+							</a>
+							<span class="z cl yz-idx-module3-right-4">
+								来自<a href="#" target="_blank">聚焦摄影</a>记录
+							</span>
+						</li>
+						<li class="z cl yz-idx-module3-right-1">
+							<a href="#" target="_blank" class="z cl yz-idx-module3-right-2">
+								<img src="../../static/img/common/show4.jpg" alt="标题名称"/>
+							</a>
+							<a href="#" target="_blank" class="z cl yz-idx-module3-right-3">
+								COSCO广告大片
+							</a>
+							<span class="z cl yz-idx-module3-right-4">
+								来自<a href="#" target="_blank">云想象摄影</a>记录
+							</span>
+						</li>
+						<li class="z cl yz-idx-module3-right-1">
+							<a href="#" target="_blank" class="z cl yz-idx-module3-right-2">
+								<img src="../../static/img/common/show5.jpg" alt="标题名称"/>
+							</a>
+							<a href="#" target="_blank" class="z cl yz-idx-module3-right-3">
+								笑过之后
+							</a>
+							<span class="z cl yz-idx-module3-right-4">
+								来自<a href="#" target="_blank">手绘的Jeavi</a>记录
+							</span>
+						</li>
+						<li class="z cl yz-idx-module3-right-1">
+							<a href="#" target="_blank" class="z cl yz-idx-module3-right-2">
+								<img src="../../static/img/common/show6.jpg" alt="标题名称"/>
+							</a>
+							<a href="#" target="_blank" class="z cl yz-idx-module3-right-3">
+								名字。
+							</a>
+							<span class="z cl yz-idx-module3-right-4">
+								来自<a href="#" target="_blank">作者</a>记录
+							</span>
+						</li>
+					</ul>
+				</div>
+			</div>-->
+		</div>
+		<div class="w336 y cl">
+			<div class="z cl yz-idx-goodwork w336">
+				<div class="w336 yz-idx-title cl">
+					<p class="z cl en1">THEY ARE HERE</p>
+				</div>
+				<div class="ue-user-right-list">
+					<ul>
+						<li>
+							<a href="#">
+								<img src="../../static/img/common/avt1.jpg" width="50" height="50" alt="姓名" title="姓名"/>
+							</a>
+						</li>
+						<li>
+							<a href="#">
+								<img src="../../static/img/common/avt2.jpg" width="50" height="50" alt="姓名" title="姓名"/>
+							</a>
+						</li>
+						<li>
+							<a href="#">
+								<img src="../../static/img/common/avt3.jpg" width="50" height="50" alt="姓名" title="姓名"/>
+							</a>
+						</li>
+						<li>
+							<a href="#">
+								<img src="../../static/img/common/avt4.jpg" width="50" height="50" alt="姓名" title="姓名"/>
+							</a>
+						</li>
+						<li>
+							<a href="#">
+								<img src="../../static/img/common/avt5.jpg" width="50" height="50" alt="姓名" title="姓名"/>
+							</a>
+						</li>
+						<li>
+							<a href="#">
+								<img src="../../static/img/common/avt6.jpg" width="50" height="50" alt="姓名" title="姓名"/>
+							</a>
+						</li>
+						<li>
+							<a href="#">
+								<img src="../../static/img/common/avt1.jpg" width="50" height="50" alt="姓名" title="姓名"/>
+							</a>
+						</li>
+						<li>
+							<a href="#">
+								<img src="../../static/img/common/avt2.jpg" width="50" height="50" alt="姓名" title="姓名"/>
+							</a>
+						</li>
+						<li>
+							<a href="#">
+								<img src="../../static/img/common/avt3.jpg" width="50" height="50" alt="姓名" title="姓名"/>
+							</a>
+						</li>
+						<li>
+							<a href="#">
+								<img src="../../static/img/common/avt4.jpg" width="50" height="50" alt="姓名" title="姓名"/>
+							</a>
+						</li>
+						<li>
+							<a href="#">
+								<img src="../../static/img/common/avt5.jpg" width="50" height="50" alt="姓名" title="姓名"/>
+							</a>
+						</li>
+						<li>
+							<a href="#">
+								<img src="../../static/img/common/avt6.jpg" width="50" height="50" alt="姓名" title="姓名"/>
+							</a>
+						</li>
+						<li>
+							<a href="#">
+								<img src="../../static/img/common/avt1.jpg" width="50" height="50" alt="姓名" title="姓名"/>
+							</a>
+						</li>
+						<li>
+							<a href="#">
+								<img src="../../static/img/common/avt2.jpg" width="50" height="50" alt="姓名" title="姓名"/>
+							</a>
+						</li>
+						<li>
+							<a href="#">
+								<img src="../../static/img/common/avt3.jpg" width="50" height="50" alt="姓名" title="姓名"/>
+							</a>
+						</li>
+						<li>
+							<a href="#">
+								<img src="../../static/img/common/avt4.jpg" width="50" height="50" alt="姓名" title="姓名"/>
+							</a>
+						</li>
+						<li>
+							<a href="#">
+								<img src="../../static/img/common/avt5.jpg" width="50" height="50" alt="姓名" title="姓名"/>
+							</a>
+						</li>
+						<li>
+							<a href="#">
+								<img src="../../static/img/common/avt6.jpg" width="50" height="50" alt="姓名" title="姓名"/>
+							</a>
+						</li>
+						<li>
+							<a href="#">
+								<img src="../../static/img/common/avt.jpg" width="50" height="50" alt="姓名" title="姓名"/>
+							</a>
+						</li>
+						<li>
+							<a href="#">
+								<img src="../../static/img/common/avt8.jpg" width="50" height="50" alt="姓名" title="姓名"/>
+							</a>
+						</li>
+						<li>
+							<a href="#">
+								<img src="../../static/img/common/avt3.jpg" width="50" height="50" alt="姓名" title="姓名"/>
+							</a>
+						</li>
+						<li>
+							<a href="#">
+								<img src="../../static/img/common/avt7.jpg" width="50" height="50" alt="姓名" title="姓名"/>
+							</a>
+						</li>
+						<li>
+							<a href="#">
+								<img src="../../static/img/common/avt5.jpg" width="50" height="50" alt="姓名" title="姓名"/>
+							</a>
+						</li>
+						<li>
+							<a href="#">
+								<img src="../../static/img/common/avt6.jpg" width="50" height="50" alt="姓名" title="姓名"/>
+							</a>
+						</li>
+						<li>
+							<a href="#">
+								<img src="../../static/img/common/avt.jpg" width="50" height="50" alt="姓名" title="姓名"/>
+							</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+				<!--AD-->
+			<div class="z cl yz-ad-336-280 mgt20">
+				<img src="../../static/img/common/imgad.jpg">
+			</div>
+			<div class="z cl yz-ad-336-280 mgt20">
+				<img src="../../static/img/common/imgad (1).jpg">
+			</div>
+			<div class="z cl yz-ad-336-280 mgt20">
+				<img src="../../static/img/common/T1P8YZXb4fXXb1upjX.jpg">
+			</div>
+				<!--AD-->
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+
+<!--SHOW END-->
+
+<div class="cl"></div>
+<div class="ue-bottomnav wp1000">
+	<a href="/works">作品云集 / WORKS SHOW</a>
+	<a href="/records">记录 / RECORDS</a>
+	<a href="/professional">机构&amp;人才 / Inc.&amp;PRO.</a>
+	<a href="/album">专辑 / ALBUM</a>
+	<a href="/vane">风向标 / UE VANE</a>
+	
+	</div>
+<!--footer begain-->
+{{modules.MainFooter()}}		
+<!--footer end-->
+
+<script type="text/javascript">
+
+$(".yz-idx-show-search-tag li a").click(function(event){
+        event.preventDefault();
+        $(".yz-idx-line").show();
+        if(!$(".yz-idx-line").find(".yz-idx-line-p").text()) $(".yz-idx-line").children().append("<div class='z cl yz-idx-line-p'></div>");
+        var url=$(this).attr("href");
+        var text=$(this).text();
+        var data=url.split("?")[1];
+        var which=data.split("=")[0];
+        var cls="yz-work-lable-"+which;
+        var ncls="."+cls;
+        if($(".yz-idx-line-p").find(ncls).text()){
+            $(ncls).text(text);
+            $(ncls).next().attr("data",data);
+            eventrqturl=eventrqturl.replace(which+"=([0-9]+)",data);
+        }
+        else{
+            var lable="<p>\
+		                <span class='"+cls+"'>"+text+"</span>\
+				<a data='"+data+"'></a>\
+		       </p>";
+            $(lable).appendTo(".yz-idx-line-p");
+            $(".yz-idx-line-p p a").last().bind("click",labledel);
+            if(eventrqturl.indexOf("?")==-1) eventrqturl+="?"+data;
+            else eventrqturl+="&"+data;
+        }
+        var settings={
+            url:eventrqturl,
+            type:"get",
+            dataType:"json",
+            success:function(result){
+                     if(result.status){
+                       $(".yz-work-ul").html(result.data);
+                     }
+                     else alert("加载失败，请重试");
+                     }
+        }
+        $.ajax(settings);
+     })
+
+
+</script>
+</body>
+</html>

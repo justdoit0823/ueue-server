@@ -1,0 +1,377 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<title>优意座标™职业生涯全纪录</title>
+<meta name="keywords" content="中国优秀文创人,文创人,文创机构,媒体人,优意座标,职业生涯,演员,模特,设计师,创意,平面,产品设计,视觉,建筑,空间设计" />
+<meta name="description" content="为中国优秀文创人提供媒体助力，为媒体人提供新鲜文创业动态汇集，为中国文创机构提供合作空间。" />
+<meta name="author" content="优意座标™|YOEZ.CC团队" />
+<meta name="copyright" content="Copyright优意座标™" />
+<!--[if lt IE 9]><script src="http://www.html5china.com/templets/html5/scripts/html5.js"></script><![endif]-->
+<link rel="stylesheet" type="text/css" href="{{static_url('CSS/common.css')}}">
+<link rel="stylesheet" type="text/css" href="{{static_url('CSS/index.css')}}">
+<script type="text/javascript" src="{{static_url('JS/jquery-1.6.4.js')}}"></script>
+<script type="text/javascript" src="{{static_url('JS/jquery.form-2.67.js')}}"></script>
+<script type="text/javascript" src="{{static_url('JS/common.js')}}"></script>
+<script>
+	$(document).ready(function(){
+			
+			$('#event-img a img').click(function(){
+			if($("#event-img").hasClass("eventct-ct-img1"))
+
+				$("#event-img").removeClass("eventct-ct-img1").addClass("eventct-ct-img2");
+		    else $("#event-img").removeClass("eventct-ct-img2").addClass("eventct-ct-img1");
+
+			});
+			
+
+			$("#event-img a").click(function(){
+				var href = $(this).attr("href");
+				var pos = $(this).offset().top;
+				$("html,body").animate({scrollTop: pos}, 1000);
+				return false;
+			});
+	});
+	
+//测试
+/*
+* @author 愚人码头
+* 【jQuery插件】图片垂直水平缩放显示
+* 更多
+
+(function($){
+    $.fn.VMiddleImg = function(options) {
+        var defaults={
+            "width":null,
+            "height":null
+        };
+        var opts = $.extend({},defaults,options);
+        return $(this).each(function() {
+            var $this = $(this);
+            var objHeight = $this.height(); //图片高度
+            var objWidth = $this.width(); //图片宽度
+            var parentHeight = opts.height||$this.parent().height(); //图片父容器高度
+            var parentWidth = opts.width||$this.parent().width(); //图片父容器宽度
+            var ratio = objHeight / objWidth;
+            if (objHeight > parentHeight && objWidth > parentWidth) {
+                if (objHeight > objWidth) { //赋值宽高
+                    $this.width(parentWidth);
+                    $this.height(parentWidth * ratio);
+                } else {
+                    $this.height(parentHeight);
+                    $this.width(parentHeight / ratio);
+                }
+                objHeight = $this.height(); //重新获取宽高
+                objWidth = $this.width();
+                if (objHeight > objWidth) {
+                    $this.css("top", (parentHeight - objHeight) / 2);
+                    //定义top属性
+                } else {
+                    //定义left属性
+                    $this.css("left", (parentWidth - objWidth) / 2);
+                }
+            }
+            else {
+                if (objWidth > parentWidth) {
+                    $this.css("left", (parentWidth - objWidth) / 2);
+                }
+                $this.css("top", (parentHeight - objHeight) / 2);
+            }
+        });
+    };
+});*/
+
+
+</script>
+
+</head>
+<body screen_capture_injected="true">
+<!--header begain-->
+{{ modules.Header(cuser,request.uri) }}
+<!--header end-->
+<!--TOP BEGAIN-->
+<div class="yz-idx-top wp1000 mgt40">
+	<div class="z cl">
+		<a href="#" target="_blank"><img src="{{static_url('img/common/adds1.jpg')}}" alt="广告描述" width="460" height="90"/></a>
+	</div>
+	<div class="y cl">
+		<a href="#" target="_blank"><img src="{{static_url('img/common/addr.jpg')}}" alt="BAIDU广告"/></a>
+	</div>
+</div>
+<!--TOP END-->
+<!--SEARCH BEGAIN-->
+<div class="yz-idx-showct wp1000">
+	<div class="z cl mgt40 ue-maintitle">
+		<a href="/{{row.uid}}" class="z cl yz-idx-showct-name chs">{{row.account}}</a><span class="z cl yz-idx-showct-title chs">机构招募</span>
+	</div>
+	<div class="yz-search y cl mgt40">
+		<div class="z cl">
+			<ul class="yz-search-type z cl">
+				<li  style="top: 0px;">
+					<a href="#" class="yz-search-type-wk" title="搜作品"></a>
+				</li>
+				<li  style="top: 30px;">
+					<a href="#" class="yz-search-type-rcd" title="搜记录"></a>
+				</li>
+				<li  style="top: 60px;">
+					<a href="#" class="yz-search-type-usr" title="搜用户"></a>
+				</li>
+			</ul>
+			<input class="yz-search-text z cl" type="text" onKeyDown="if (event.keyCode==13) {}" onBlur="if(this.value=='')value='- 搜搜你感兴趣的 -';" onFocus="if(this.value=='- 搜搜你感兴趣的 -')value='';" value="- 搜搜你感兴趣的 -"/>
+			<input class="yz-search-sub z cl" type="submit" value="">
+		</div>
+	</div>
+</div>
+<!--SEARCH LINE END-->
+<!--SHOW BEGAIN-->
+<div class="yz-idx-body z cl">
+	<div class="wp1000 ue-all mgt40">
+<!--左侧内容-->
+        <div class="w200 z cl ue-left">
+	    {{modules.UeDescribe()}}
+	    <div class="yz-idx-share w200">
+					<p><span class="z cl">分享到</span><a href="javascript:;" class="z yz-csina cl" rel="nofollow"></a><a href="javascript:;" class="z cl yz-ctencent" rel="nofollow"></a></p>
+				</div>
+	  </div>
+		<div class="w640 z cl ue-middle">
+<!--事件内容-->
+			<div class="w640 z cl showct-ctbody">
+				<div class="showct-ct-title w640 z cl">
+					<p class="showct-ct-title-p z cl chs">{{row.title}}</p>
+				</div>
+				<div class="z cl mgt20 eventct-ct-info">
+					<p class="z cl eventct-ct-time">{{row.time}}</p>
+					<p class="z cl eventct-ct-add">{{place}}</p>
+					<p class="z cl eventct-ct-email">简历发送至 {{email}} (请注明优意座标账号方便查看作品)</p>					
+				</div>
+				<div class="z cl eventct-ct-img1 mgt20" id="event-img">
+                                        {% for i in row.picture.split(";") %}
+					<a href="#event-img1" id="#event-img1">
+						<img src="{{i}}" alt="标题" class="t-img">
+					</a>
+					{% end %}
+				</div>
+                                {% for j in row.content.split(";") %}
+				<div class="z cl eventct-ct-zhaopin mgt20">
+					<div class="z cl eventct-ct-zhiwei">
+						<h1>{{j.split("&")[0]}}</h1>
+						<a class="eventct-zhiwei-focus z cl chs br10">我对该职位感兴趣</a>
+					</div>
+					<p>
+				          {{j.split("&")[1]}}
+					</p>
+				</div>
+				{% end %}
+	<!--TEST END-->
+
+				<div class="showct-ct-surpot z cl mgt40">
+					<span class="z cl showct-ct-surpot-num en">{{row.support}}</span>
+					<a class="y cl showct-ct-surpot-icon-on"></a>
+				</div>
+			</div>
+<!--AD-->
+			<div class="z cl yz-ad-640-60 mgt20">
+				<img src="../../static/img/common/79b4c46696320828efe7e6b5aaf5e669.jpg"/>
+			</div>
+<!--相关模块-->
+			
+<!--评论-->
+			<div class="yz-idx-module-discus z cl mgt20 w640">
+				<div class="yz-idx-body-title w640 z cl">
+					<p class="yz-idx-body-title-p z cl chs">COMMENTS</p>
+				</div>
+				<div class="z cl yz-idx-module-discusbox">
+                                    <form method="post" action="" id="event-review-f">
+                                        {{xsrf_form_html()}}
+					<div class="yz-idx-module-discus-ta z cl">
+					<textarea class="inputtxtnum z cl" onKeyDown="if (event.keyCode==13) {}" onBlur="if(this.value=='')value='NICE';" onFocus="if(this.value=='NICE')value='';" value="NICE" maxlength=140 id="review-content-tx" name="rcontent" />NICE</textarea>
+					</div>
+					<span class="yz-idx-module-discus-wn">还可以输入<i class="en">140</i>个字</span>
+					<input type="submit" value="发言" class="yz-idx-module-discus-sub br5 mgt10 y cl">
+                                    </form>
+				</div>
+                                {% if not reviews %}
+                                <div class="yz-idx-module-discus-none z cl mgt40">
+				  <i class="en1">No Comments</i>
+				</div>
+                                {% else %}
+				<ul class="yz-idx-module-discus-ul z cl mgt40">
+                                 {% for one in reviews %}
+				    {{modules.UserReview(one)}}				
+				 {% end %}
+				</ul>
+                                {% end %}
+			</div>
+			<a href="#" class="yz-idx-module-discus-more z cl chs br5bt">
+				<p>更多评论</p>
+				<span></span>
+			</a>
+		</div>
+<!--右侧边栏-->
+		<div class="w336 y cl">
+			<div class="z cl yz-idx-right">
+				<div class="w336 yz-idx-title z cl">
+					<p class="z cl en1">Post By</p>
+				</div>
+				<div class="yz-idx-by z cl mgt20">
+					<a href="/{{row.uid}}" class="y cl">
+					<img src="{{row.img}}" alt="{{row.account}}" width="100px" height="100px"/>
+					</a>
+					<a href="/{{row.uid}}" class="z cl yz-idx-by1">{{row.account}}</a>
+					<span class="z cl yz-idx-by2">人像摄影+广告摄影+图片后期</span>
+					<p class="z cl yz-idx-by-ver mgt10"><span class="com z cl" title="知名公关传媒机构，中央电视台战略合作伙伴"></span><span class="company z cl" title="已通过营业执照认证"></span></p>
+				</div>
+			</div>
+			<div class="z cl">
+			  <a href="#" class="z cl yz-idx-right-button ue-remember-people" title="记住Ta">
+					</a>
+			</div>
+			<div class="z cl yz-idx-right">
+				<div class="w336 yz-idx-title z cl">
+					<p class="z cl en1">About Recorder</p>
+				</div>
+				<div class="z cl mgt20 yz-idx-info">
+					<p class="z cl yz-idx-info-view">阅览<span class="y cl">{{row.view}}</span></p>
+					<p class="z cl yz-idx-info-follow">关注<span class="y cl">126</span></p>
+					<p class="z cl yz-idx-info-surpot">支持<span class="y cl">{{row.support}}</span></p>
+					<p class="z cl yz-idx-info-discus">评论<span class="y cl">{{row.review}}</span></p>
+					<p class="z cl yz-idx-info-tags">标签<span class="y cl">{% for one in row.lable.split(",") %}<a href="/events?lable={{url_escape(one)}}" target="_blank">#{{one}}</a>{% end %}</span></p>
+				</div>
+				<div>
+					<a href="#" class="z cl yz-idx-right-button ue-remember-work" title="记住这篇记录">
+					</a>
+					</div>
+			</div>
+			<div class="z cl yz-idx-right">
+				<div class="w336 yz-idx-title">
+					<p class="z cl en1">MORE</p>
+				</div>
+				<div class="mgt20 yz-idx-more">
+					<ul class="cl">
+                    	<li>
+                        	<span>公益参与 @ 2012.03.04</span></br>
+                            <p><a href="#">TA的记录标题看看长度有多长 - -</a></p>
+                        </li>
+                        <li>
+                        	<span>工作日程 @ 2012.03.04</span></br>
+                            <p><a href="#">TA的工作日程记录标题</a></p>
+                        </li>
+                    </ul>
+				</div>
+				
+			</div>
+
+<!--AD-->
+			<div class="z cl yz-ad-336-280 mgt20">
+				<img src="../../static/img/common/imgad.jpg">
+			</div>
+			<div class="z cl yz-ad-336-280 mgt20">
+				<img src="../../static/img/common/imgad (1).jpg">
+			</div>
+			<div class="z cl yz-ad-336-280 mgt20">
+				<img src="../../static/img/common/T1P8YZXb4fXXb1upjX.jpg">
+			</div>
+<!--AD-->
+		</div>
+	</div>
+<script type="text/javascript">
+	$(document).ready(function(){
+                        $(".yz-idx-module-discus-sub").attr('disabled','');
+			$('#event-img a img').click(function(){
+			if($("#event-img").hasClass("eventct-ct-img1"))
+				$("#event-img").removeClass("eventct-ct-img1").addClass("eventct-ct-img2");
+		        else $("#event-img").removeClass("eventct-ct-img2").addClass("eventct-ct-img1");
+			});
+                        $('.showct-ct-surpot-icon-on').click(function(){
+                            var cuid=get_user();
+                            if(cuid==undefined) location.href='/user/action/login?next='+escape(location.href);
+                            else{
+                               var eid=location.href.match('([0-9]+)')[0];
+                               //alert(eid);
+                               var settings={
+                                       url:'/events/'+eid+'/agree',
+                                       type:'post',
+                                       data:{_xsrf:$("input[name='_xsrf']").val()},
+                                       dataType:'json',
+                                       success:function(result){
+                                          if(result.status){
+                                              var num=$('.showct-ct-surpot-num').text();
+                                              var newnum=parseInt(num)+1;
+                                              $('.showct-ct-surpot-num').text(newnum);
+                                              $(".showct-ct-surpot-icon-on").removeClass('showct-ct-surpot-icon-on').addClass('showct-ct-surpot-icon-off');
+                                          }
+                                          else{
+                                              alert(result.code);
+                                          }
+                                       }
+                               }
+                               $.ajax(settings);
+                            }
+                        })
+                        $("#event-review-f").ajaxForm({
+                            dataType:"json",
+                            beforeSubmit:function(a,f,o){
+                               if(!$("#review-content-tx").val()||$("#review-content-tx").val()=="欢迎各抒己见"){
+                                     alert("请写下你的评论");
+                                     return false;
+                               }
+                               $(".yz-idx-module-discus-sub").val("评论中...");
+                               $(".yz-idx-module-discus-sub").attr('disabled','disabled');
+                            },
+                            error:function(jq,data,errorThrow){
+                                    alert(data);
+                            },
+                            success:function(result){
+                               if(result.status){
+                                 alert("评论成功！");
+                                 $(".yz-idx-module-discus-sub").val("评论");
+                                 $(".yz-idx-module-discus-sub").attr('disabled','');
+                                 $("#review-content-tx").val("欢迎各抒己见");
+                                 $(result.msg).appendTo(".yz-idx-module-discus-ul");
+                               }
+                               else{
+                                 alert(result.msg);
+                               }
+                            }
+                        })
+                        $(".yz-idx-module-discus-cmtone-reply").click(function(){
+                            var bereview=$(this).prevAll(".yz-idx-module-discus-cmtone-name").children().eq(0).text();
+                            //alert(bereview);
+                            bereview="回复"+bereview+":";
+                            $("#review-content-tx").val(bereview);
+                        })
+                        $(".yz-idx-module-discus-cmtone-del").click(function(){
+                            var erid=$(this).attr("rel");
+                            alert(erid);
+                            var settings={
+                                   url:"/events/reviewdelete",
+                                   type:"post",
+                                   dataType:"json",
+                                   data:{"erid":erid,
+                                         "_xsrf":get_xsrf()},
+                                   success:function(result){
+                                             if(result.status){
+                                              //delete the current review li
+                                             }
+                                             else{
+                                              alert(result.code);
+                                             }
+                                     }
+                            }
+                            $.ajax(settings);
+                        })
+       
+	});
+</script>
+
+</div>
+<!--SHOW END-->
+
+
+<div class="cl"></div>
+<!--footer begain-->
+{{modules.MainFooter()}}	
+<!--footer end-->
+
+</body>
+</html>

@@ -1,0 +1,252 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<title>优意座标™专注于文创行业发展！</title>
+<meta name="keywords" content="中国优秀文创人,文创人,机构,媒体人,优意座标,演员,模特,设计师,创意,平面,产品设计,视觉,建筑,空间设计" />
+<meta name="description" content="为中国优秀文创人提供媒体助力，为媒体人提供新鲜文创业动态汇集，为中国文创机构提供合作空间。" />
+<meta name="author" content="优意座标™|YOEZ.CC团队" />
+<meta name="copyright" content="Copyright优意座标™" />
+<!--[if lt IE 9]><script src="http://www.html5china.com/templets/html5/scripts/html5.js"></script><![endif]-->
+<link rel="stylesheet" type="text/css" href="{{static_url('CSS/common.css')}}">
+<link rel="stylesheet" type="text/css" href="{{static_url('CSS/editor.css')}}">
+<script type="text/javascript" src="{{static_url('JS/jquery-1.6.4.js')}}"></script>
+<script type="text/javascript" src="{{static_url('JS/jquery-ui-personalized-1.6-min.js')}}"></script>
+<script type="text/javascript" src="{{static_url('JS/common.js')}}"></script>
+<script type="text/javascript" src="{{static_url('JS/editor.js')}}"></script>
+<script type="text/javascript" src="{{static_url('JS/jquery.form-2.67.js')}}"></script>
+<script type="text/javascript" src="{{static_url('JS/swfupload.js')}}"></script>
+<script type="text/javascript" src="{{static_url('JS/swfupload.queue.js')}}"></script>
+<script type="text/javascript" src="{{static_url('JS/fileprogress.js')}}"></script>
+<script type="text/javascript" src="{{static_url('JS/handlers.js')}}"></script>
+</head>
+<body>
+<!--header begain-->
+{{modules.EditorHeader(url)}}
+<!--header end-->
+<div class="wp yz-editorbody">
+	<div class="wp1000 yz-edbd cl">
+	  <div class="y cl w200">
+			{{modules.Recentpost()}}
+		</div>
+		<div class="w640 y cl">
+			<div class="editor-title z cl w640 mgt40">
+				<input type="text" onKeyDown="if (event.keyCode==13) {}" onBlur="if(this.value=='')value='- 标题 - 最多24个汉字';" onFocus="if(this.value=='- 标题 - 最多24个汉字')value='';" value="- 标题 - 最多24个汉字"/>
+				{{ xsrf_form_html() }}
+			</div>
+			{{modules.EditorUploadpic("支持JPG, GIF, PNG, BMP格式图片，单张大小不超过10M，最多40张。")}}
+			<div class="editor-description z cl w640 mgt40">
+				<div class="editor-desc-title z cl">
+					<p class="editor-desc-title-p z cl chs">描述<span> ( 1000字以内,可不填 )</span></p>
+				</div>
+				<div class="editor-desc-textarea z cl mgt20">
+					<textarea class="editor-desc-text z cl"></textarea>
+				</div>
+			</div>
+			<div class="editor-description z cl w640 mgt40">
+				<div class="editor-desc-title z cl">
+					<p class="editor-desc-title-p z cl chs">添加主创人员<span> ( 不要忘记您的团队哦~ )</span></p>
+				</div>
+				<div class="z cl mgt20 w640">
+					<ul class="editor-team z cl">
+					</ul>
+
+					<div class="editor-team-add z cl">
+						<input type="button" class="editor-team-addbtn z cl" value="添加主创"/>
+						<p class="z cl chs">请填写主创人员账号名，未注册用户将不被授权显示。</p>
+					</div>
+				</div>
+			</div>
+			<div class="editor-sub z cl mgt40 w640">
+				<input type="submit" value="OK!" class="editor-sub-btn1 z cl chs1">
+				<input type="submit" value="CANCEL" class="editor-sub-btn2 z cl chs1">
+				<div class="y cl editor-post-opentype">
+					<i></i>
+					<span class="editor-sub-btn4 y cl">公开发布</span>
+				</div>
+			</div>
+		</div>
+		<div class="w336 z cl">
+			<div class="editor-user mgt40 z cl">
+				<a href="/{{cuser.uid}}" target="_blank" class="aditor-user-avt z cl">
+					<img src="{{cuser.img}}" height="26" width="26"/>
+				</a>
+				<p>
+					您正在使用的账号 : <a href="/{{cuser.uid}}" target="_blank">{{cuser.account}}</a>
+				</p>
+			</div>
+			{{modules.UeAddlable()}}
+			{{modules.UeDocprotocol()}}
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+
+   var i=0;   
+   var pos=new Array();
+   var status=0;
+   var src,des;
+   var bpos,epos;
+   var front=0;
+   function picdelete (){
+     var order=parseInt($(this).next().attr("order"));
+     var last=parseInt($(".editor-pic-move").last().attr("order"));
+     for(var k=order+1;k<=last;k++) $(".editor-pic-move").eq(k).attr("order",k-1);
+     $(this).parent().remove();
+     pos[i]=0;
+     pos[i+1]=0;
+     i-=2;
+   }
+
+   function dragbegin (event){
+     for(var j=0;j<i;j++){
+            if(event.pageY >=pos[2*j] && event.pageY <=pos[2*j+1]) src=j;
+          }
+     bpos=event.pageY;
+     status=1;
+   }
+
+   function dragmove (event){
+     event.preventDefault();
+     if(status==1){
+       $(".editor-pic-ul li").eq(src).css({"top":(event.pageY-bpos),'z-index':999});
+       for(var j=0;j<i;j++){
+            if(event.pageY >=pos[2*j] && event.pageY <=pos[2*j+1]) des=j;
+          }
+          if((event.pageY-50) > $(".editor-pic-ul li").eq(des).offset().top && src!=des){
+            var html=$(".editor-pic-ul li").eq(src).clone();
+            $(".editor-pic-ul li").eq(src).remove();
+            if(des){
+                 $(html).insertAfter($(".editor-pic-ul li").eq(des-1));
+            }
+            else{
+                 $(html).insertBefore($(".editor-pic-ul li").eq(0));
+            }
+            $(".editor-pic-ul li").css({'top':0});
+            src=des;
+            $(".editor-pic-ul li").eq(src).css({'z-index':0});
+            $(".editor-pic-ul li").eq(src).find(".editor-pic-move").bind("mousedown",dragbegin).bind("mousemove",dragmove).bind("mouseup",dragend);
+            $(".editor-pic-ul li").eq(src).find(".editor-pic-front").bind("click",frontclick).bind("mouseover",frontover).bind("mouseout",frontout);
+            $(".editor-pic-ul li").eq(src).find(".editor-pic-del").bind("click",picdelete);
+            bpos=event.pageY;
+           }
+       }
+   }
+
+   function dragend (event){
+     if(status==1){
+          $(".editor-pic-ul li").eq(src).css({"top":0,'z-index':0});
+          for(var j=0;j<i;j++){
+            if(event.pageY >=pos[2*j] && event.pageY <=pos[2*j+1]) des=j;
+          }
+       }
+       //$(".editor-pic-ul").bind("mousemove",dragmove);
+       status=0;
+   }
+
+
+   function frontclick (){
+       if(!$(this).children().first().hasClass("editor-pic-front-on")){
+           $(".editor-pic-front span").removeClass("editor-pic-front-on");
+           $(this).children().first().addClass("editor-pic-front-on");
+       }
+   }
+
+   function frontover (){
+       if(!$(this).children().first().hasClass("editor-pic-front-on"))
+       $(this).children().first().addClass("editor-pic-front-over");
+   }
+
+   function frontout (){
+       if($(this).children().first().hasClass("editor-pic-front-over"))
+       $(this).children().first().removeClass("editor-pic-front-over");
+   }
+
+$(document).ready(function(){
+
+  select_item_on($(".ue-editor-btn a"),0,"active");
+  var limit={size : 10 , num : 40};
+  initflash(limit);				   
+  /*$(".editor-pic-addbtn").bind("change",function(){
+      
+      $("#editor-form-pic").ajaxSubmit({
+      dataType:"json",
+      beforeSubmit:function(a,f,o){
+          var file=$(".editor-pic-addbtn").val();
+          if(!file){
+            alert("请先选择要上传的文件");
+            return false;
+          }
+      },
+      success:function(result){
+          if(result.status){
+               $(li).appendTo(".editor-pic-ul");
+               $(".editor-pic-ul li").last().find(".editor-pic-move").bind("mousedown",dragbegin).bind("mousemove",dragmove).bind("mouseup",dragend);
+               $(".editor-pic-ul").bind("mousemove",dragmove);
+               $(".editor-pic-ul li").last().find(".editor-pic-front").bind("click",frontclick).bind("mouseover",frontover).bind("mouseout",frontout);
+               $(".editor-pic-ul li").last().find(".editor-pic-del").bind("click",picdelete);
+               pos[i]=$(".editor-pic-ul li").last().find(".editor-pic-move").offset().top;
+               pos[i+1]=pos[i]+$(".editor-pic-ul li").last().find(".editor-pic-move").height();
+               i+=2;
+          }
+          else{
+               alert(result.code);
+          }
+      }
+   })
+   })*/
+   $(".editor-sub-btn1").click(function(){
+      var title=$(".editor-title input").val();
+      var content="";
+      var defval="- 描述 -";
+      var imgsrc,txtval;
+      $(".editor-pic-ul li").each(function(index){
+	  imgsrc=$(this).find(".editor-pic-img img").attr("src");
+	  txtval=$(this).find(".editor-pic-text textarea").val();
+	  if(txtval == defval) txtval="";
+          if(index) content+=";"+imgsrc+"&"+txtval;
+          else content+=imgsrc+"&"+txtval;
+      })
+      var cover=$(".editor-pic-front").parents(".editor-pic-ul li").find(".editor-pic-img img").attr("src");
+      //cover=cover.substring(cover.indexOf("/static"));
+      var describe=$(".editor-desc-text").val();
+      var sign=$(".editor-cc-on span").attr("snum");
+      var mates="";
+      $(".editor-team li").each(function(index){
+          if(index) mates+=";"+$(this).find(".editor-team-id").val()+"&"+$(this).find(".editor-team-work").val();
+          else mates+=$(this).find(".editor-team-id").val()+"&"+$(this).find(".editor-team-work").val();
+      })
+      alert(title+content+lable+cover+describe+sign);
+      var settings={
+             url:"/user/postwork/picture",
+             type:"post",
+             dataType:"json",
+             data:{
+                   "describe":describe,
+                   "lable":lable,
+                   "title":title,
+                   "cover":cover,
+                   "copysign":sign,
+                   "teammates":mates,
+                   "content":content,
+                   "_xsrf":$("input[name='_xsrf']").val()},
+             success:function(result){
+                       if(result.status){
+                              alert("发布成功");
+                       }
+                       else{
+                              alert("发布失败"+result.code);
+                       }
+                     }
+       }
+      $.ajax(settings);
+  })
+})
+</script>
+<!--footer begain-->
+{{modules.BlackFooter(cuser)}}
+<!--footer end-->
+</body>
+<script type="text/javascript" src="{{static_url('JS/ue-sortable.js')}}"></script>
+</html>

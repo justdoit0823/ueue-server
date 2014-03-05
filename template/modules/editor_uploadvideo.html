@@ -1,0 +1,33 @@
+<div class="editor-video z cl w640 mgt40">
+			  <input type="hidden" id="editor-video-url" />
+				<input type="text" onKeyDown="if (event.keyCode==13) {}" onBlur="if(this.value=='')value='- 直接添加视频网址 -';" onFocus="if(this.value=='- 直接添加视频网址 -')value='';" value="- 直接添加视频网址 -" class="editor-video-input z cl"/>
+				<p class="z cl chs editor-video-1">支持优酷、土豆</p>	
+				<div class="editor-video-pic z cl mgt20">
+					<div class="editor-video-pic-img z cl">
+					  <div style="width:230px;height:140px;overflow:hidden;">
+						<img class="z c" src="{{static_url('img/no-cover.png')}}" height="140" />
+					  </div>
+					</div>
+					{% if is_change %}
+					<div class="editor-video-pic-text z cl">
+						<p class="z cl chs">
+						  自定义上传视频封面时，很高兴您能注意到这些 ：<br>
+							1、请确定封面与视频内容相关 ;<br>
+							2、带有联系方式的封面可能不会被接受。
+						</p>
+					</div>
+                                         <div class="editor-video-pic-btn z cl">
+                                   <form id="editor-form-pic" action="/user/works/picupload" method="POST" enctype="multipart/form-data" name="file">
+				     {{ xsrf_form_html() }}
+					<a class="editor-add-pic z cl">
+						添加图片
+						<span>
+							<input type="file" class="editor-pic-addbtn" name="file"/>
+						</span>
+					</a>
+                                   </form>
+                                   
+				</div>
+                                        {% end %}
+				</div>		
+			</div>

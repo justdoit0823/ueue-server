@@ -1,0 +1,77 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<title>初始化设置 | 优意座标™</title>
+<meta name="keywords" content="中国优秀文创人,文创人,机构,媒体人,优意座标,演员,模特,设计师,创意,平面,产品设计,视觉,建筑,空间设计" />
+<meta name="description" content="为中国优秀文创人提供媒体助力，为媒体人提供新鲜文创业动态汇集，为中国文创机构提供合作空间。" />
+<meta name="author" content="优意座标™|YOEZ.CC团队" />
+<meta name="copyright" content="Copyright优意座标™" />
+<link rel="stylesheet" type="text/css" href="{{static_url('CSS/common.css')}}">
+<link rel="stylesheet" type="text/css" href="{{static_url('CSS/user.css')}}">
+<script type="text/javascript" src="{{static_url('JS/jquery-1.6.4.js')}}"></script>
+<script>
+	$(document).ready(function(){
+			
+			$('.user-1-avr-btn1').click(function(){
+				$('#user-1-avr-btn1').trigger("click")
+			});
+	});
+</script>
+</head>
+<body class="user-body">
+<div class="wp1000">
+	<div class="user-1-header z cl mgt40">
+		<span class="user-1-hd-tt chs1 z cl">您正在初始化设置</span>
+		<a href="http://www.yoez.cc" class="user-1-hd-back y cl bs br5">回到首页</a>
+	</div>
+	<div class="user-1-bd br5 z cl mgt40 bs">
+		<div class="user-1-left z cl mgt40">
+			<div class="user-1-type z cl chs">
+				<p class="z cl user-1-tt">账户性质</p>
+				<div class="z cl user-1-chooseoff" id="user-1-id1">
+					个人
+				</div>
+				<div class="z cl user-1-chooseon" id="user-1-id2">
+					机构
+				</div>
+				<p class="user-1-explain z cl">
+					此项设置关联资料设置、认证方式和用户权限，确认后将无法做出修改。
+				</p>
+			</div>
+			<div class="user-1-sex z cl chs">
+				<p class="z cl user-1-tt">我的性别</p>
+				<div class="z cl user-1-chooseoff" id="user-1-id1">
+					男 / Male
+				</div>
+				<div class="z cl user-1-chooseon" id="user-1-id2">
+					女 / Female
+				</div>
+				<p class="user-1-explain z cl">
+					此项设置关联资料设置，确认后将无法做出修改。
+				</p>
+			</div>
+			<div class="user-1-avr z cl">
+				<span class="user-1-avr-span" style="border: 1px solid #FFF;">
+					<img src="../../static/img/noava.png" height="200" width="200"/>
+				</span>
+				<input type="file" id="user-1-avr-btn1" title="上传头像" style="display: none;"/>
+				<input type="button" value="更改头像" class="user-1-avr-btn1 bs br5"/>
+				<div class="user-1-avr-text">
+					<!--<span>这张图片小了一些，换一张试试看吧 ^.^</span><br>-->
+					<span>恭喜您 ! 拥有了一枚新的头像 ^.^</span><br>
+					<p>
+						注 : 图片宽高均须大于200px，我们欣赏并更愿意接受视觉感受良好的图片作为头像，同时不会欢迎出现文字广告的头像。
+					</p>
+				</div>
+			</div>
+			
+		</div>
+		<div class="user-1-right y cl mgt40">
+			<a href="#" class="user-1-draw"></a>
+		</div>
+	</div>
+	<p class="user-copyright y cl">© YOEZ.CC | 优意座标™</p>
+</div>
+</body>
+</html>

@@ -1,0 +1,32 @@
+<div class="wp1000 ue-hp-title cl mgt40">
+	<h1>{{user.account}}</h1>
+</div>
+<div class="wp1000 ue-hp-topbody cl">
+	<div class="z cl">
+		<a href="/{{user.uid}}">
+			<img src="{{user.img}}" width="200" height="200" alt="{{user.account}}"/>
+		</a>
+	</div>
+	<div class="z cl ue-hp-topbody-info">
+		{% if info and info.area %}<p>{{info.area}}</p>{% end %}
+		{% if info and info.job %}<p>{{info.job}}</p>{% end %}
+		<p>Member Since {{user.time[:4]}}.{{user.time[5:7]}}.{{user.time[8:10]}}</p>
+		{% if userself %}
+		<input type="button" class="ue-people-post" value="新发布 / NEW"/>
+		{% elif followed %}
+		<input type="button" class="ue-people-unfollow" value="已记忆，忘记TA"/>
+		{% else %}
+		<input type="button" class="ue-people-follow" value="+ 记住TA"/>
+		{% end %}
+	</div>
+	<div class="y cl ue-people-v">
+		<h2>认证信息</h2>
+		<p>还没有得到UE官方认证。</p>
+	</div>
+	<div class="ue-hp-nav">
+		<a href="/{{user.uid}}/works">作品展示</a>
+		<a href="/{{user.uid}}/records">记录通告</a>
+		<a href="/{{user.uid}}/profile">资料&amp;联络</a>
+		{% if userself %}<a href="/user/focus">我的记忆</a>{% end %}
+	</div>
+</div>

@@ -1,0 +1,54 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<title>管理中心 | 优意座标™</title>
+<meta name="keywords" content="中国优秀文创人,文创人,机构,媒体人,优意座标,演员,模特,设计师,创意,平面,产品设计,视觉,建筑,空间设计" />
+<meta name="description" content="为中国优秀文创人提供媒体助力，为媒体人提供新鲜文创业动态汇集，为中国文创机构提供合作空间。" />
+<meta name="author" content="优意座标™|YOEZ.CC团队" />
+<meta name="copyright" content="Copyright优意座标™" />
+<link rel="stylesheet" type="text/css" href="{{static_url('CSS/common.css')}}">
+<link rel="stylesheet" type="text/css" href="{{static_url('CSS/user.css')}}">
+<script type="text/javascript" src="{{static_url('JS/jquery-1.6.4.js')}}"></script>
+<script type="text/javascript" src="{{static_url('JS/common.js')}}"></script>
+<script type="text/javascript" src="{{static_url('JS/user.js')}}"></script>
+</script>
+</head>
+<body class="user-body">
+  {{modules.SettingHeader(cuser,request.uri)}}
+<div class="w1000">
+	<div class="user-1-bd z cl mgt100">
+		<div class="user-left z cl mgt40">
+			<div class="user-1-type z cl chs">
+				<p class="z cl user-1-tt1">绑定账号后你会知道</p>
+				<p class="user-1-explain1 z cl">
+				  1、记不住账号？不要紧！通过合作账号直接登入优意座标™，如此简单；<br>
+						2、轻松分享我的记录，同一时间让更多人了解动态；<br>
+						3、此设置是完全保密的，并且通过了新浪和腾讯的官方授权。
+				</p>
+			</div>
+			<div class="user-1-type z cl">
+				<ul class="z cl user-bangding">
+				  <li class="z cl">
+							<p class="z cl user-shequ-1 user-shequ-sina">新浪微博</p>
+							<a>立即绑定</a>								
+						</li>
+						<li class="z cl">
+							<p class="z cl user-shequ-1 user-shequ-tencent">腾讯微博</p>
+							<a>立即绑定</a>			
+						</li>
+						<li class="z cl">
+							<p class="z cl user-shequ-1 user-shequ-qq">腾讯QQ</p>	
+							<p>已绑定 <a href="#" class="user-bangding-cancel">取消绑定</a></p>				
+						</li>
+				</ul>
+			</div>
+		</div>
+		<div class="user-1-right y cl mgt40">
+			{{modules.Setlist()}}
+		</div>
+	</div>
+	<p class="user-copyright y cl">© UEUE.CC | 优意座标™</p>
+</div>
+</body>
+</html>

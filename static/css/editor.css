@@ -1,0 +1,209 @@
+.editor-logo { height: 89px; width: 150px; background: url(../img/fabulogo.png) no-repeat; margin-top: 30px;}
+.yz-editorbody { background: url(../img/background1.png) repeat; height: auto; min-width: 1242px;}
+	.yz-editorbody>div>div.w640 { border-left: 1px solid #CCC; border-right: 1px solid #CCC;}
+input { background: none;}
+
+.ue-editor-btn { margin-left: 50px; margin-top: 40px; height: 90px; line-height: 40px;}
+	.ue-editor-btn a { border: 1px solid #CCC; padding: 5px 10px;  color: #333;}
+		.ue-editor-btn a:hover,.ue-editor-btn a.active { background: #3BB; color: #FFF; -webkit-transition: all 500ms;}
+.editor-btn { margin-left: 50px; margin-top: 30px;}
+	.editor-btn a { width: 90px; height: 90px; overflow: hidden; margin-right: 45px;}
+		.editor-btn1 { background: url(../img/editor.png) 0 -96px no-repeat;}
+			a.editor-btn1:hover,.editor-btn1on { background: url(../img/editor.png) -97px -96px no-repeat;}
+		.editor-btn2 { background: url(../img/editor.png) 0 0 no-repeat;}
+			a.editor-btn2:hover,.editor-btn2on { background: url(../img/editor.png) -97px 0 no-repeat;}
+		.editor-btn3 { background: url(../img/editor.png) 0 -191px no-repeat;}
+			a.editor-btn3:hover,.editor-btn3on { background: url(../img/editor.png) -97px -191px no-repeat;}
+		.editor-btn4 { background: url(../img/editor.png) 0 -286px no-repeat;}
+			a.editor-btn4:hover,.editor-btn4on { background: url(../img/editor.png) -97px -286px no-repeat;}
+		.editor-btn5 { background: url(../img/editor.png) 0 -381px no-repeat;}
+			a.editor-btn5:hover,.editor-btn5on { background: url(../img/editor.png) -97px -381px no-repeat;}
+.editor-bk { width: 90px; height: 90px; margin-top: 30px;}
+.editor-back { display: block; width: 90px; height: 90px; background: url(../img/editor.png) -97px -482px;  cursor: pointer; -moz-border-radius: 10px; -webkit-border-radius: 10px; border-radius: 10px; }
+	a.editor-back:hover { background: url(../img/editor.png) -97px -863px;}
+.editor-title { padding: 0 20px;}
+.editor-title input { height: 20px; outline: none; border: 1px solid #CCC; width: 578px; padding: 10px; font-size: 14px; font-family: "Microsoft Yahei"; color: #999; line-height: 20px; background: none; }
+	.editor-title input:focus { border: 1px solid #3BB; -webkit-transition: all 500ms;}
+.editor-pic { }
+	.editor-pic ul {}
+		.editor-pic li { padding: 20px; width: 600px; position: relative; float: left; margin-bottom: 10px;}
+	.editor-pic-img { height: 100px; width: 100px; overflow: hidden; margin-right: 20px;}
+		.editor-pic-img img { max-height: 100px;}
+	.editor-pic-text { height: 100px; width: 350px; }
+		.editor-pic-text textarea { outline: none; resize: none; width: 330px; height: 80px; border: 1px solid #CCC; margin-top: -1px; padding: 10px; font-size: 14px; font-family: "Microsoft Yahei"; color: #666; overflow: hidden; background: none;}
+			.editor-pic-text textarea:focus { border: 1px solid #3BB; -webkit-transition: all 500ms;} 
+	.editor-pic-del { display: block; position: absolute; top: 5px; right: 5px; height: 20px; width: 20px; background: url(../img/editor.png) 0 -491px; cursor: pointer;}
+	.editor-pic-move { display: block; background: url(../img/editor.png) 0 -525px; width: 100px; height: 50px; margin-left: 20px; cursor: move;}
+	.editor-pic-front { line-height: 30px; width: 98px; height: 28px; text-align: center; border: 1px solid #CCC; margin-left: 20px; position: relative; cursor: pointer; color: #333;}
+		a.editor-pic-front span { display: none; height: 30px; width: 100px; position: absolute; top: -1px; left: -1px; background: url(../img/editor.png) 0 -617px;}
+			a.editor-pic-front .active { display: block ! important; background: url(../img/editor.png) 0 -580px ! important;}
+			a.editor-pic-front:hover span { display: block ! important; background: url(../img/editor.png) 0 -580px ! important; } 
+	.editor-pic-imgname { width: 530px; height: 20px; line-height: 20px;  overflow: hidden; color: #666;}
+		.editor-pic-imgname a { text-decoration: underline; cursor: pointer;}
+	.editor-pic-rate { width: 50px; height: 20px; line-height: 20px; text-align: center;}
+	.editor-pic-add {}
+	.swfuploaddiv { position: relative; margin-left: 20px; width: 120px; height: 40px; cursor: pointer;}
+.swfuploaddiv>div { position: absolute; top: 0; left: 0; width: 120px; height: 40px; z-index: 999; filter:alpha(oapacit=0); opacity: 0;}
+	.editor-add-pic { height: 40px; width: 120px; line-height: 40px; font-size: 14px; color: #FFF; cursor: pointer; position: relative; overflow: hidden; text-align: center; background: #333; }
+			a.editor-add-pic:hover { background: #3BB; -webkit-transition: all 500ms;}
+	.editor-add-pic span { display: block; height: 40px; width: 200px; height: 50px; position: absolute; top: 0px; right: 0px;}
+	.editor-add-pic input.editor-pic-addbtn { cursor: pointer; outline: none; border: solid; border-width: 0 0 100px 100px; color: #FFF; position: absolute; top: 0; right: 0;  opacity: 0; filter:alpha(opacity=0);}
+		
+	.editor-pic-add p { line-height: 40px; width: 600px;color: #666; margin-left: 20px;}
+.editor-description {  padding-bottom: 20px;}
+.editor-description-left { padding: 0 10px 20px; width: 316px;}
+	.editor-desc-title { height: 50px; width: 620px; }
+	.editor-desc-title-p { line-height: 50px; padding-left: 20px; color: #999; font-size: 24px;} 
+		.editor-desc-title-p span { font-size: 14px !important; font-weight: normal !important;}
+	.editor-zhaopin-name { line-height: 30px; height: 30px; border: 1px solid #CCC; outline: none; width: 200px; padding: 0 10px; color: #3BB; font-size: 14px; margin-top: 9px; margin-left: 10px;}
+	
+	.editor-zhaopin-more { width: 600px; margin-left: 20px; background: #333; text-align: center; height: 50px; line-height: 50px; position: relative; font-size: 14px; cursor: pointer; color: #FFF;}
+	.editor-zhaopin-more:hover { background: #3BB; -webkit-transition: all 500ms;}
+	.editor-zhaopin-del { margin-top: 7px; width: 35px; height: 35px; cursor: pointer; background: url(../img/editor.png) -11px -971px no-repeat;}
+		a.editor-zhaopin-del:hover { background: url(../img/editor.png) -51px -971px no-repeat;}
+	
+	
+	.editor-desc-textarea { border: 1px solid #CCC; width: 598px; margin-left: 20px;}
+	.editor-desc-text { width: 578px; outline: none; border: none; height: 298px;  margin: 11px 9px; font-size: 14px; font-family: "Microsoft Yahei"; color: #666; resize: none; background: none;}
+.editor-team { width: 600px; margin-left: 20px;}
+	.editor-team li { width: 580px; height: 40px; padding: 10px; margin-bottom: 10px;}
+		.editor-team li:hover { background: #FFF; -webkit-box-shadow: 0px 0px 5px #999; -moz-box-shadow: 0px 0px 5px #999;}
+	.editor-team-id { height: 20px; line-height: 20px; padding: 10px; width: 142px; border: 1px solid #CCC; outline: none; font-size: 14px; font-family: "Microsoft Yahei"; color: #999; overflow: hidden; background: none;}
+	.editor-team-work { height: 20px; line-height: 20px; padding: 10px; width: 330px; border: 1px solid #CCC; outline: none; font-size: 14px; font-family: "Microsoft Yahei"; color: #999; overflow: hidden; margin-left: 10px; background: none;}
+	.editor-team-del { width: 40px; height: 42px; background: url(../img/editor.png) -123px -671px; outline: none; border: 1px solid #3BB; cursor: pointer;}
+	.editor-team-add { width: 580px; margin-left: 30px;}
+	.editor-team-addbtn { height: 40px; width: 120px; font-size: 14px; outline: none; background: #666; border: none; color: #FFF; font-family: "Microsoft Yahei"; cursor: pointer;}
+		.editor-team-addbtn:hover { background: #3BB;}
+	.editor-team-add p { line-height: 40px; width: 600px; color: #666; }
+	.editor-user-right { height: 40px; width: 174px; border-bottom: 1px solid #CCC; border-top: 1px solid #CCC; }
+		.editor-user-right p { line-height: 40px; font-size: 14px; padding: 0 10px; text-align: center;}
+	.editor-user-right-list {  width: 176px; border-top: 1px solid #CCC; }
+		.editor-user-right-list p { line-height: 25px;  padding: 10px;}
+		.editor-user-right-list p a { text-decoration: underline; color: #3BB;}
+.editor-user { height: 40px; width: 334px; border-bottom: 1px solid #CCC; border-top: 1px solid #CCC; }
+	.aditor-user-avt { height: 26px; width: 26px; overflow: hidden; margin: 7px 10px;}
+	.editor-user p { line-height: 40px; font-size: 14px; float: left; width: 280px;}
+	.editor-user p a { text-decoration: underline; cursor: pointer;}
+.editor-tags { width: 336px; border-top: 1px solid #CCC; padding-bottom: 20px;}
+.editor-tags-title { margin-left: 10px; line-height: 20px; font-size: 14px; width: 314px; }
+.editor-tags-box { margin-left: 10px; border: 1px solid #CCC; width: 314px; min-height: 105px; margin-bottom: 20px; padding-top: 10px;}
+	.editor-tags-name { width: 309px;}
+		.editor-tags-name span { float: left; padding: 0 32px 0 8px; position: relative; height: 26px; line-height: 26px; color: #FFF; background: #999; margin-left: 5px; margin-top: 5px; white-space:nowrap; cursor: default; -moz-border-radius: 4px; -webkit-border-radius: 4px; border-radius: 4px; }
+		.editor-tags-name span:hover { background: #7F7F7F;}
+		.editor-tags-name span a { display: block; height: 26px; width: 26px; position: absolute; top: 0; right: 0; background: url(../img/editor.png) -23px -488px; cursor: pointer}
+	.editor-tags-text { outline: none; border: none; line-height: 20px; height: 30px; width: 298px; padding: 5px 8px; font-size: 14px; font-family: "Microsoft Yahei"; color: #999; background: none;}
+.editor-cc {}
+	.editor-cc a { margin-left: 10px; width: 250px; border: 1px solid #CCC; height: 30px; line-height: 30px; margin-top: 10px; padding-left: 62px; color: #333; position: relative;}
+	.editor-cc a:hover { background-color: #FFF; cursor: pointer;}
+	.editor-cc a span { display: none; height: 30px; width: 30px; position: absolute; top: 0; right: 10px; background: url(../img/editor.png) -124px -612px no-repeat;}
+	.editor-cc-on { background-color: #FFF !important;}
+	.editor-cc-on span { display: block !important;}
+		.no-cc { background: url(../img/editor.png) -122px -573px no-repeat;}
+		.cc-by-nc-nd { background: url(../img/cc.png) 6px 8px no-repeat; }
+		.cc-by-nc-sa { background: url(../img/cc.png) -49px -16px no-repeat;} 
+		.cc-by-nc { background: url(../img/cc.png) 6px -39px no-repeat; }
+		.cc-by-nd { background: url(../img/cc.png) -64px -62px no-repeat;}
+		.cc-by-sa { background: url(../img/cc.png) 6px -86px no-repeat; }
+		.cc-by { background: url(../img/cc.png) -81px -110px no-repeat;}
+.editor-sub { height: 100px;}
+	.editor-sub div { width: 176px;}
+	.editor-sub input { border: none; outline: none; color: #FFF; font-size: 18px;  line-height: 38px; width: 176px; height: 40px; cursor: pointer; font-family: "Microsoft Yahei"; text-shadow: 1px 1px 1px #000 !important;}
+		.editor-sub-btn1 { margin-left: 20px; background: #333; }
+			.editor-sub-btn1:hover { background: #3BB; color:  #FFF; -webkit-transition: all 500ms;}
+		.editor-sub-btn2 { background: #666; }
+			.editor-sub-btn2:hover { background: #3BB; color:  #FFF; -webkit-transition: all 500ms;}
+	.editor-post-opentype { margin-right: 20px; height: 40px; overflow: hidden;}
+		.editor-post-opentype i { float: right; height: 40px; width: 40px; background: url(../img/editor.png) -4px -107px no-repeat #333; cursor: pointer;}
+			.editor-post-opentype i:hover { background-color: #555; -webkit-transition: all 500ms;}
+		.editor-sub-btn3 { height: 38px; line-height: 38px; font-size: 14px; color: #999; text-shadow: 1px 1px 1px #FFF; padding: 0 8px 0 30px; background: url(../img/editor.png) -6px -6px no-repeat; border: 1px solid #CCC;}
+		.editor-sub-btn4 { height: 40px; line-height: 40px;  font-size: 14px; color: #FFF; padding: 0 8px 0 30px; background: url(../img/editor.png) -6px -55px no-repeat #3BB;}
+/*发布器加载选项*/
+#editor-choose { width: 100%; height: auto;}
+	.ue-ed-tt{ width: 1000px; border-bottom: 1px solid #CCC; border-top: 1px solid #CCC; padding: 20px 0; margin-top: 40px;}
+	.ue-ed-title {  display: block; padding: 0 20px;  height: 30px; line-height: 30px; font-size: 18px; color: #666; text-shadow: 0px 1px 0px rgba(255, 255, 255, 0.8);}
+	.ue-ed-title-en { display: block; padding: 0 20px;  height: 30px; line-height: 30px; font-size: 12px; color: #999;}
+	.one-half { padding: 0 20px; width: 460px; float: left; margin-top: 20px; text-shadow: 0px 1px 0px rgba(255, 255, 255, 0.8);}
+	.one-half p { line-height: 20px; color: #999;margin: 9px 0;}
+	.one-half p a { color: #1FA8E1;}
+	.one-half p a:hover { text-decoration: underline;}
+	.one-third,.one-third-noroot {  padding: 0 20px; width: 293px; float: left; margin-top: 20px; text-shadow: 0px 1px 0px rgba(255, 255, 255, 0.8);}
+	.one-third p,.one-third-noroot p { line-height: 20px; color: #999;margin: 9px 0;}
+	.one-third p a { color: #1FA8E1;}
+	.one-third p a:hover { text-decoration: underline;}
+	.one-third-noroot p a { color: #CCC;}
+/*视频发布器*/
+.editor-video { width: 640px;}
+	.editor-video-input { float: left; height: 20px; outline: none; border: 1px solid #CCC; width: 578px; padding: 10px; font-size: 14px; font-family: "Microsoft Yahei"; color: #999; line-height: 20px; margin-left: 20px;}
+	.editor-video-1{ line-height: 30px; width: 576px; margin-left: 20px;  color: #666;  margin-top: 10px;}
+.editor-video-pic { margin-left: 20px; width: 600px; height: 152px;}
+	.editor-video-pic-img { border: 1px solid #CCC; width: 230px; height: 140px; padding: 5px; background: #FFF;}
+	.editor-video-pic-img div { height: 140px; width: 230px; overflow: hidden; background: url(../img/no-cover.png) 0 0 no-repeat;}
+	.editor-video-pic-img span img {}
+	.editor-video-pic-text { width: 350px; overflow: hidden; height: 102px;}
+		.editor-video-pic-text p { width: 340px; line-height: 30px; margin-left: 10px; font-size: 12px; color: #666;}
+	.editor-video-pic-btn { height: 40px; width: 120px;  padding-left: 10px; padding-top: 9px;}
+		input.editor-video-pic-btn:hover { background: #3BB;}
+/*声音发布器*/
+.editor-voice { width: 640px; }
+.editor-voice-input { position: relative; padding-bottom: 20px;}
+.editor-voice-input-1 { height: 102px;}
+.editor-voice-input input { float: left; height: 20px; outline: none; border: 1px solid #CCC; width: 578px; padding: 10px; font-size: 14px; font-family: "Microsoft Yahei"; color: #999; line-height: 20px; margin-left: 20px; margin-top: 20px;}
+	/*.editor-voice-pic-text { width: 350px; overflow: hidden; height: 120px;}
+		.editor-voice-pic-text p { width: 340px; line-height: 24px; margin-left: 10px; font-size: 14px; font-weight: bold; color: #666;}
+	input.editor-voice-pic-btn { height: 40px; width: 120px; font-size: 14px; outline: none; background: #666; border: none; color: #FFF; font-family: "Microsoft Yahei"; cursor: pointer; margin-left: 10px;}
+		input.editor-voice-pic-btn:hover { background: #3BB;}
+		.editor-voice-pic-img { border: 1px solid #CCC; width: 230px; height: 170px; padding: 5px; background: #FFF;}
+		.editor-voice-pic-img div { height: 170px; width: 230px; overflow: hidden; background: url(../img/music.png) 0 0 no-repeat;}
+		.editor-voice-pic-img div p{ display: block; width: 150px; font-size: 14px; margin: 73px 20px 0 60px; line-height: 30px; text-align: left; height: 60px; color: #FFF; overflow: hidden;}*/
+
+.editor-title-event {}
+	.editor-title-event input { float: right;	height: 20px; outline: none; border: 1px solid #CCC; width: 490px; padding: 10px; font-size: 14px; font-family: "Microsoft Yahei"; color: #999; line-height: 20px;}
+	.editor-title-event input:focus { border: 1px solid #3BB; -webkit-transition: all 500ms;}
+	.editor-title-event div { float: left; height: 40px; border: 1px solid #CCC; width: 119px; background: #FFF; position: relative;}
+	.editor-event-choose { width: 25px; font-size: 14px; color: #999; line-height: 40px; text-align: center; cursor: pointer;}
+	.editor-event-choose:hover { color: #000;}
+	.editor-title-event div ul { position: absolute; display: block; width: 119px; top: 40px; left: -1px; background: #FFF; border: 1px solid #CCC; z-index: 2000;}
+	.editor-title-event li { line-height: 30px; height: 30px; float: left; width: 119px; text-align: center; color: #999; font-size: 14px; cursor: pointer;}
+	.editor-title-event li:hover { color: #FFF; background: #3BB;}
+.editor-event-pic { width: 640px;  margin-bottom: 10px;}
+	.editor-eve-picul1 { 604px; margin-left: 17px; margin-top: 20px;}
+		.editor-eve-picul1 li { float: left; height: 146px; width: 146px; overflow: hidden; margin: 0 3px 2px; position: relative;}
+		.editor-eve-picul1 li a { display: block; height: 20px; width: 20px; cursor: pointer; position: absolute; top: 10px; right: -20px; background: url(../img/editor.png) -23px -491px #333 no-repeat;}
+		.editor-eve-picul1 li a:hover { background-color: #666;}
+		.editor-eve-picul1 li:hover a { right: 10px; -webkit-transition: all 300ms;}
+	.editor-eve-picul2 { width: 598px; padding: 10px 20px;}
+	.editor-eve-picul2 li { width: 598px; margin: 10px 0; float: left; line-height: 20px; height: 20px;}
+.editor-event-imgname { width: 530px; height: 20px; line-height: 20px;  overflow: hidden; color: #666;}
+	.editor-event-imgname a { text-decoration: underline; cursor: pointer;}
+.editor-event-rate { width: 50px; height: 20px; line-height: 20px; text-align: center;}
+.editor-event-time { width: 316px;}
+	.editor-event-time div { font-size: 14px; color: #999; line-height: 30px;}
+	.eve-link-ico,.eve-time-ico,.eve-add-ico,.eve-email-ico { height: 30px; width: 30px;}
+		.eve-time-ico { background: url(../img/editor.png) -16px -722px no-repeat;}
+		.eve-link-ico { background: url(../img/editor.png) -103px -1019px no-repeat;}
+		.eve-email-ico { background: url(../img/editor.png) -103px -974px no-repeat;}
+	.eve-time-1 { height: 20px; padding: 4px 8px; border: 1px solid #CCC; outline: none; width: 34px; font-size: 14px; font-family: "Microsoft Yahei"; color: #999;}
+	.eve-time-2 { height: 20px; padding: 4px 8px; border: 1px solid #CCC; outline: none; width: 18px; font-size: 14px; font-family: "Microsoft Yahei"; color: #999;}
+	
+	.eve-email { height: 20px; padding: 4px 8px; margin-top: 10px; border: 1px solid #CCC; outline: none; width: 300px; font-size: 14px; font-family: "Microsoft Yahei"; color: #999;}
+.eve-time-title { line-height: 30px; width: 40px; text-align: left; margin-right: 15px; font-size: 14px; color: #999;}
+.eve-address-title,.eve-email-title { line-height: 30px; font-size: 14px; color: #999; text-shadow: 1px 1px 1px #FFF; }
+
+/*footer*/
+.ue-othr-footer { background: #FFF; height: 300px; width: 100%; overflow: hidden;}
+.ue-sitemap-tt { width: 1000px;}
+	.ue-sitemap-tt h2 { margin-top: 10px; float: left; padding: 10px 0; border-bottom: 1px solid #333;}
+.ue-sitemap1 { width: 200px; overflow: hidden; margin-top: 20px;}
+	.ue-sitemap1 a { float: left; color: #999; padding: 0 20px; line-height: 25px;}
+	.ue-sitemap1 a:hover { color:#3BB;}
+.ue-sitemap2 { width: 190px; overflow: hidden; margin-top: 20px;}
+	.ue-sitemap2 a { float: left; color: #999; padding-right: 20px; line-height: 25px;}
+	.ue-sitemap2 a:hover { color:#3BB;}
+/*
+	Level:			Function
+	Explain:		个人主页底部信息样式
+	Last Modify:	Alex
+*/	
+	
+	.user-ftbg { min-width: 1242px; height: 50px; background: url(../img/bgt.jpg) repeat; overflow: hidden; position: relative; margin-top: 20px;}
+		.user-ftbg p { line-height: 50px; color: #FFF; text-align: center;}

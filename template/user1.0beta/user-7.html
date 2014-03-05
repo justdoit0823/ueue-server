@@ -1,0 +1,47 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<title>管理中心 | 优意座标™</title>
+<meta name="keywords" content="中国优秀文创人,文创人,机构,媒体人,优意座标,演员,模特,设计师,创意,平面,产品设计,视觉,建筑,空间设计" />
+<meta name="description" content="为中国优秀文创人提供媒体助力，为媒体人提供新鲜文创业动态汇集，为中国文创机构提供合作空间。" />
+<meta name="author" content="优意座标™|YOEZ.CC团队" />
+<meta name="copyright" content="Copyright优意座标™" />
+<link rel="stylesheet" type="text/css" href="{{static_url('CSS/common.css')}}">
+<link rel="stylesheet" type="text/css" href="{{static_url('CSS/user.css')}}">
+<script type="text/javascript" src="{{static_url('JS/jquery-1.6.4.js')}}"></script>
+<script type="text/javascript" src="{{static_url('JS/common.js')}}"></script>
+<script type="text/javascript" src="{{static_url('JS/user.js')}}"></script>
+</script>
+</head>
+<body class="user-body">
+  {{modules.SettingHeader(cuser,request.uri)}}
+<div class="w1000">
+	<div class="user-1-bd z cl mgt100">
+		<div class="user-left z cl mgt40">
+				<div class="user-1-type z cl">
+					<div class="user-7-headtitle z cl">
+						<p class="z cl user-1-tt1 z cl">申请认证</p>
+						<p class="z cl user-1-explain z cl">若未收到邀请码，请跳过此步骤继续使用微博关联认证 | <a href="#">点击这里查看如何获取邀请码</a></p>
+					</div>
+					<div class="z cl user-7-invite">
+						<input type="text" onKeyDown="if (event.keyCode==13) {}" onBlur="if(this.value=='')value='- 请输入16位邀请码 -';" onFocus="if(this.value=='- 请输入16位邀请码 -')value='';" value="- 请输入16位邀请码 -">
+						<input type="button" value="OK!">
+						<a href="/user/set/confirm-realname">跳过</a>
+					</div>
+					<div class="z cl">
+						<p class="user-1-explain mgt40">
+							建议未获得邀请码用户跳过并选择使用更简便的微博关联方式进行UE认证。</br>
+							注 : 关联微博须得到新浪或腾讯官方加V认证。
+						</p>
+					</div>
+				</div>
+			</div>
+		<div class="user-1-right y cl mgt40">
+			{{modules.Setlist()}}
+		</div>
+	</div>
+	<p class="user-copyright y cl">© UEUE.CC | 优意座标™</p>
+</div>
+</body>
+</html>

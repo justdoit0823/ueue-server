@@ -1,0 +1,75 @@
+
+/*
+	Level:			Global
+	Explain:		register
+	Last Modify:	Alex
+*/
+
+.rg-body { min-width: 1240px; min-height: 100%; background: url(../img/background1.png) repeat #F2F2F2; padding-bottom:60px;}
+	.rg-head { position: relative; height: 270px; width: 1202px; }
+	.rg-head-logo{ height: 170px;}
+	.rg-head-logo a { height: 170px; width: 260px; background: url(../img/register.png) 0 30px no-repeat;} 
+	.rg-head div.rg-head-titlebox { width: 1202px; border-bottom: 1px solid #CCC; border-top: 1px solid #CCC; position: absolute; left: 0px; top: 170px; padding: 20px 0;}
+	.rg-head-title {  display: block; padding: 0 50px;  height: 30px; line-height: 30px; font-size: 18px; color: #666; text-shadow: 0px 1px 0px rgba(255, 255, 255, 0.8);}
+	.rg-head-title-en { display: block; padding: 0 50px;  height: 30px; line-height: 30px; font-size: 12px; color: #999;}
+.rg-box { height: 268px; width: 690px;  margin: 20px  0 0 30px; position: relative;}
+.rg-box1 { width: 690px; height: 62px; overflow: hidden; }
+	.rg-box input { float: left; outline: none; border: none; font-size: 16px; font-family: "Microsoft Yahei"; color: #999; background: none; padding: 0; line-height: 20px; height: 20px; margin: 10px 20px 0 70px; width: 280px;}
+	.rg-email,.rg-psw,.rg-rep,.rg-nic { height: 40px; border: 1px solid #CCC; width: 370px; position: absolute; left: 20px;}
+	.rg-email span,.rg-psw span,.rg-rep span,.rg-nic span { display: block; height: 40px; line-height: 42px;  font-size: 16px; color: #999; position: absolute; padding-left: 70px; width: 300px;}
+		.rg-email { background: url(../img/register.png) -45px -258px no-repeat #FFF; top: 20px;}
+		.rg-psw { background: url(../img/register.png) -45px -366px no-repeat #FFF; top: 144px;}
+		.rg-rep { background: url(../img/register.png) -45px -425px no-repeat #FFF; top: 206px;}
+		.rg-nic { background: url(../img/register.png) -45px -314px no-repeat #FFF; top: 82px;}
+		.rg-email-t { position: absolute; top: 20px; left: 410px;}
+		.rg-psw-t {  position: absolute; top: 144px; left: 410px;}
+		.rg-rep-t {  position: absolute; top: 206px; left: 410px;}
+		.rg-nic-t {  position: absolute; top: 82px; left: 410px;}
+	.rg-text { line-height: 40px; width: 260px; color: #666; text-shadow: 1px 1px 1px #FFF; height: 40px; font-size: 14px;}
+	.rg-text-warning { line-height: 40px; width: 230px; color: #F30; text-shadow: 1px 1px 1px #FFF; height: 40px; font-size: 14px; padding-left: 30px; background: url(../img/register.png) -64px -600px;}
+	.rg-text-right { height: 40px; width: 40px; background: url(../img/register.png) -194px -484px no-repeat; }
+	.rg-agreement { position: absolute; height: 30px; width: 380px; bottom: -80px; left: 290px;}
+	.rg-autologin { position: absolute; height: 30px; width: 200px; bottom: 10px; left: 320px;}
+	.rg-agreement p,.rg-autologin p { font-size: 14px; line-height: 30px;}
+	.rg-agreement-checkbox { display: block; width: 30px; height: 30px; background: url(../img/register.png) -185px -547px; float: left; cursor:pointer;}
+	.rg-agreement-checked { display: block; width: 30px; height: 30px; background: url(../img/register.png) -232px -547px; float: left; cursor: pointer;}
+.rg-btn { width: 288px; position: relative;}
+.rg-btn1 { height: 50px; width: 240px; margin-left: 50px; margin-top: 40px; line-height: 40px; background:  #3BB; color: #FFF; outline: none; border: none;  font-size: 24px; font-family: "Microsoft Yahei";}
+	.rg-btn1:hover { background: #333; -webkit-transition: all 500ms; cursor: pointer;}
+.rg-login { width: 450px; border-left: 1px solid #CCC; padding-left: 20px; margin-top: 40px; padding-bottom: 30px;}
+	.rg-login p { padding: 0; font-size: 14px; width: 450px;  line-height: 40px;}
+	.rg-login-sina { background: url(../img/register.png) -54px -479px; height: 50px; width: 50px;}
+		a.rg-login-sina:hover { background: url(../img/register.png) -115px -479px;}
+	.rg-login-tencent { background: url(../img/register.png) -50px -538px; height: 50px; width: 50px; margin-left: 5px;}
+		a.rg-login-tencent:hover { background: url(../img/register.png) -111px -538px;}
+.rg-box-email { height: 188px; width: 690px;  margin: 0px 0 0 30px;}
+	.rg-box-email p{ line-height: 30px; width: 650px; float: left; margin: 25px 20px 0; font-size: 14px; color: #333; text-shadow: 1px 1px 1px #FFF;}
+	.rg-box-email p a { color: #F60; text-decoration: underline;}
+	.rg-box-email p a:hover { cursor: pointer; color: #666;} 
+.rg-box-done {  height: 128px; width: 690px;  margin: 80px 0 0 30px;}
+	.rg-box-done p{ line-height: 30px; width: 650px; float: left; margin: 25px 20px 0; font-size: 14px; color: #333; text-shadow: 1px 1px 1px #FFF;}
+	
+/*µ«»Î*/
+.log-box { height: 82px; width: 690px; margin-left: 30px; margin-top: 20px; position: relative;}
+	.log-box input { float: left; outline: none; border: none; font-size: 16px; font-family: "Microsoft Yahei"; color: #999; background: #fff; padding: 0; line-height: 20px; height: 20px; margin: 10px 10px 0 70px; width: 235px;}
+	.log-email,.log-psw { height: 40px; border: 1px solid #CCC; width: 315px; position: absolute; top: 20px;}
+	.log-email span,.log-psw span { display: block; height: 40px; line-height: 42px;  font-size: 16px; color: #999; position: absolute; padding-left: 70px; width: 245px;}
+		.log-email { background: url(../img/register.png) -45px -258px no-repeat #FFF; left: 20px;}
+		.log-psw { background: url(../img/register.png) -45px -366px no-repeat #FFF; left: 355px;}
+		.log-psw-t {  position: absolute; top: 82px; left: 410px;}
+	.log-forgetpsw { height: 20px; width: 650px; margin-left: 50px; padding-top: 10px;}
+		.log-forgetpsw p { line-height: 20px; font-size: 14px; padding: 0 20px;}
+			.log-forgetpsw p a:hover { text-decoration: underline;}
+	.log-warning { width: 652px;  overflow: hidden; margin-left: 50px; border-bottom: 1px solid #CCC; }
+		.log-warning div {  height:40px; padding: 5px 20px; }
+	.log-text-warning { line-height: 40px; width: 630px; color: #3BB; height: 40px; font-size: 14px; text-shadow: 1px 1px 1px #FFF; background: url(../img/register.png) -64px -600px no-repeat; padding-left: 25px;}
+
+#loading { width: 100%; height: 100%; background: url(../img/pngbg80.png) repeat; position: fixed; top: 0; left: 0;}
+	#loading div { width: 58px; height: 10px; background: url(../img/loading2.gif) no-repeat; position: absolute; top: 50%; left:50%; margin-top: -5px; margin-left: -29px;}
+	
+.rg-choose-old { padding: 20px 50px 60px; width:500px; margin-top: 80px; border-right: 1px solid #CCC; text-shadow: 1px 1px 1px #FFF;}
+	.rg-choose-old p,.rg-choose-new p { font-size: 14px; line-height: 30px; height: 60px; padding-top: 10px; font-weight: normal; color: #333;}
+.rg-choose-new { padding: 20px 50px 60px; width:500px; margin-top: 80px; border-left: 1px solid #FFF; text-shadow: 1px 1px 1px #FFF;}
+.rg-choose-btn { height: 30px; margin-top: 20px;}
+	.rg-choose-btn1 { height: 30px; width: 120px;  line-height: 30px; background:  #3BB; color: #FFF; outline: none; border: none;  font-size: 16px; font-family: "Microsoft Yahei";}
+	.rg-choose-btn1:hover { background: #333; cursor: pointer; -webkit-transition: all 500ms;}

@@ -1,0 +1,147 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<title>管理中心 | 优意座标™</title>
+<meta name="keywords" content="中国优秀文创人,文创人,机构,媒体人,优意座标,演员,模特,设计师,创意,平面,产品设计,视觉,建筑,空间设计" />
+<meta name="description" content="为中国优秀文创人提供媒体助力，为媒体人提供新鲜文创业动态汇集，为中国文创机构提供合作空间。" />
+<meta name="author" content="优意座标™|YOEZ.CC团队" />
+<meta name="copyright" content="Copyright优意座标™" />
+<link rel="stylesheet" type="text/css" href="{{static_url('CSS/common.css')}}">
+<link rel="stylesheet" type="text/css" href="{{static_url('CSS/user.css')}}">
+<script type="text/javascript" src="{{static_url('JS/jquery-1.6.4.js')}}"></script>
+<script type="text/javascript" src="{{static_url('JS/common.js')}}"></script>
+<script type="text/javascript" src="{{static_url('JS/user.js')}}"></script>
+<script>
+
+$(document).ready(function(){
+	
+	$(document).click(function(e){
+	  if($(e.target).is(".user-focuson")||$(e.target).is(".auth-val")){
+	   return false;
+	  }
+	  $(".user-focuson span").fadeOut(200);
+	  $(".user-focuson").removeClass("user-focuson");
+	 });
+
+});
+</script>
+
+</head>
+<body class="user-body">
+  {{modules.SettingHeader(cuser,request.uri)}}
+<div class="w1000">
+	<div class="user-1-bd z cl mgt100">
+		<div class="user-left z cl mgt40">
+			<div class="user-1-type z cl">
+				<p class="z cl user-1-tt">联系电话</p>
+                                <div class="z cl user-normal-div">                 
+                                     <input type="text" id="user-phone" class="z cl user-normal" value="{% if info.telphone and info.telphone[0] %}{{info.telphone[0]}}{% end %}"/>
+                                     <span>- Telphone -</span>
+                                </div>
+				<p class="y cl user-secrecy bs" style="z-index: 3">
+                                        {% if info.telphone and info.telphone[1] %}
+					<b class="auth-val" option="{{info.telphone[1]}}">{{options[info.telphone[1]]}}</b> ▼
+                                        {% else %}
+                                        <b class="auth-val" option="0">{{options["0"]}}</b> ▼
+                                        {% end %}
+					<span class="authorize-options">
+						<a option="0">授权公开</a>
+						<a option="1">仅对我关注的人公开</a>
+						<a option="2">保密</a>
+					</span>
+				</p>
+				<p class="user-1-explain z cl">
+					填写手机或固定电话，固定电话前不要忘记区号哦。
+				</p>
+			</div>
+		
+			<div class="user-1-type z cl">
+				<p class="z cl user-1-tt">联系邮箱</p>
+                                <div class="z cl user-normal-div">
+				     <input type="text" id="user-email" class="z cl user-normal" onKeyDown="if (event.keyCode==13) {}" value="{% if info.conmail and info.conmail[0] %}{{info.conmail[0]}}{% end %}"/>
+                                     <span>- Email -</span>
+                                </div>
+				<p class="y cl user-secrecy bs" style="z-index: 2">
+                                        {% if info.conmail and info.conmail[0] %}
+					<b class="auth-val" option="{{info.conmail[1]}}">{{options[info.conmail[1]]}}</b> ▼
+                                        {% else %}
+                                        <b class="auth-val" option="0">{{options["0"]}}</b> ▼
+                                        {% end %}
+					<span class="authorize-options">
+						<a option="0">授权公开</a>
+						<a option="1">仅对我关注的人公开</a>
+						<a option="2">保密</a>
+					</span>
+				</p>
+				<p class="user-1-explain z cl">
+					可以与注册邮箱不一致，此邮箱仅做为联系方式使用，对您的账户不会产生任何影响。
+				</p>
+			</div>
+			<div class="user-1-type z cl">
+				<p class="z cl user-1-tt">地址</p>
+				<div class="z cl user-addressbox">
+                                        
+					<textarea id="user-address" class="z cl user-address">{% if info.conaddress and info.conaddress[0] %}{{info.conaddress[0]}}{% end %}</textarea>
+				</div>
+				<p class="y cl user-secrecy bs" style="z-index: 1">
+                                        {% if info.conaddress and info.conaddress[1] %}
+					<b class="auth-val" option="{{info.conaddress[1]}}">{{options[info.conaddress[1]]}}</b> ▼
+                                        {% else %}
+                                        <b class="auth-val" option="0">{{options["0"]}}</b> ▼
+                                        {% end %}
+					<span class="authorize-options">
+						<a option="0">授权公开</a>
+						<a option="1">仅对我关注的人公开</a>
+						<a option="2">保密</a>
+					</span>
+				</p>
+				<p class="user-1-explain z cl">
+					填写联系地址，最多40字，如为私人住所不建议公开。
+				</p>
+			</div>
+			<div class="user-button z cl">
+				  {{ xsrf_form_html() }}
+					<input type="button" value="SAVE"/>
+				</div>
+		</div>
+		<div class="user-1-right y cl mgt40">
+			{{modules.Setlist()}}
+		</div>
+	</div>
+	<p class="user-copyright y cl">© UEUE.CC | 优意座标™</p>
+</div>
+<script type="text/javascript">
+  $(".user-button input").click(function(){
+      var agent=$("#user-agent").val()+"&"+$("#user-agent").next().find(".auth-val").attr("option");
+      var phone=$("#user-phone").val()+"&"+$("#user-phone").next().find(".auth-val").attr("option");
+      var email=$("#user-email").val()+"&"+$("#user-email").next().find(".auth-val").attr("option");
+      var address=$("#user-address").val()+"&"+$(".user-addressbox").next().find(".auth-val").attr("option");
+      var sina=$("#user-sina").val()+"&"+$(".user-shequ-sina").next().find(".auth-val").attr("option");
+      var tqq=$("#user-tqq").val()+"&"+$(".user-shequ-tencent").next().find(".auth-val").attr("option");
+      var qq=$("#user-qq").val()+"&"+$(".user-shequ-qq").next().find(".auth-val").attr("option");
+      var qzone=$("#user-qzone").val()+"&"+$(".user-shequ-zone").next().find(".auth-val").attr("option");
+      var renren=$("#user-renren").val()+"&"+$(".user-shequ-rr").next().find(".auth-val").attr("option");
+      var douban=$("#user-douban").val()+"&"+$(".user-shequ-douban").next().find(".auth-val").attr("option");
+      var settings={
+             url:"/user/set-contact",
+             type:"post",
+             dataType:"json",
+             data:{agent:"",phone:phone,mail:email,address:address,sina:sina,tqq:tqq,qq:qq,qzone:qzone,renren:renren,douban:douban,_xsrf:$("input[name='_xsrf']").val()},
+             error:function(jq,data,errorThrow){
+                     if(date) alert(data);
+                   },
+             success:function(result){
+                        if(result.status){
+                           alert("设置成功");
+                        }
+                        else{
+                           alert("设置失败:"+result.code);
+                        }
+                     }
+           }
+      $.ajax(settings);
+  })
+</script>
+</body>
+</html>

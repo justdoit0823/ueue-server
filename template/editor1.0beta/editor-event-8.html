@@ -1,0 +1,165 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<title>优意座标™专注于文创行业发展！</title>
+<meta name="keywords" content="中国优秀文创人,文创人,机构,媒体人,优意座标,演员,模特,设计师,创意,平面,产品设计,视觉,建筑,空间设计" />
+<meta name="description" content="为中国优秀文创人提供媒体助力，为媒体人提供新鲜文创业动态汇集，为中国文创机构提供合作空间。" />
+<meta name="author" content="优意座标™|YOEZ.CC团队" />
+<meta name="copyright" content="Copyright优意座标™" />
+<!--[if lt IE 9]><script src="http://www.html5china.com/templets/html5/scripts/html5.js"></script><![endif]-->
+<link rel="stylesheet" type="text/css" href="{{static_url('CSS/common.css')}}">
+<link rel="stylesheet" type="text/css" href="{{static_url('CSS/editor.css')}}">
+<script type="text/javascript" src="{{static_url('JS/jquery-1.6.4.js')}}"></script>
+<script type="text/javascript" src="{{static_url('JS/editor.js')}}"></script>
+<script type="text/javascript" src="{{static_url('JS/common.js')}}"></script>
+<script type="text/javascript" src="{{static_url('JS/jquery.form-2.67.js')}}"></script>
+<script type="text/javascript" src="{{static_url('JS/swfupload.js')}}"></script>
+<script type="text/javascript" src="{{static_url('JS/swfupload.queue.js')}}"></script>
+<script type="text/javascript" src="{{static_url('JS/fileprogress.js')}}"></script>
+<script type="text/javascript" src="{{static_url('JS/handlers.js')}}"></script>
+<style type="text/css">
+</style>
+</head>
+<body>
+<!--header begain-->
+{{modules.EditorHeader(url)}}
+<!--header end-->
+<div class="wp yz-editorbody">
+	<div class="wp1000 yz-edbd cl">
+	  <div class="y cl w200">
+			{{modules.Recentpost()}}
+		</div>
+		<div class="w640 y cl">
+			<div class="editor-title z cl w640 mgt40">
+				<input type="text" onKeyDown="if (event.keyCode==13) {}" onBlur="if(this.value=='')value='- 标题 - 最多24个汉字';" onFocus="if(this.value=='- 标题 - 最多24个汉字')value='';" value="- 标题 - 最多24个汉字" name="title" />
+				{{ xsrf_form_html() }}
+      </div>
+			{{modules.EditorUploadpic("支持JPG, GIF, PNG, BMP格式图片，单张大小不超过5M，最多20张。")}}
+			{{modules.EditorUploadvideo()}}
+			<div class="editor-description z cl w640 mgt40">
+				<div class="editor-desc-title z cl">
+					<p class="editor-desc-title-p z cl chs">描述<span> ( 1000字以内,可不填 )</span></p>
+				</div>
+				<div class="editor-desc-textarea z cl mgt20">
+					<textarea class="editor-desc-text z cl" name="content"></textarea>
+                               </div>
+				</div>
+				<div class="editor-sub z cl mgt40 w640">
+				<input type="submit" value="OK!" class="editor-sub-btn1 z cl chs1">
+				<input type="submit" value="CANCEL" class="editor-sub-btn2 z cl chs1">
+				<div class="y cl editor-post-opentype">
+					<i></i>
+					<span class="editor-sub-btn4 y cl">公开发布</span>
+				</div>
+			</div>
+		</div>
+		<div class="w336 z cl">
+			<div class="editor-user mgt40 z cl">
+				<a href="/{{cuser.uid}}" target="_blank" class="aditor-user-avt z cl">
+					<img src="{{cuser.img}}" height="26" width="26"/>
+				</a>
+				<p>
+					您正在使用的账号 : <a href="/{{cuser.uid}}" target="_blank">{{cuser.account}}</a>
+				</p>
+			</div>
+                        {{modules.UeAddlable()}}
+			<div class="editor-description-left z cl">
+				<div class="editor-event-time z cl">
+					<span class="eve-time-ico z cl"></span>
+					<span class="eve-time-title z cl">时间</span>
+					<div class="z cl">
+						<input type="text" class="eve-time-1"> 年
+						<input type="text" class="eve-time-2"> 月
+						<input type="text" class="eve-time-2"> 日
+					</div>
+				</div>
+			</div>
+               </div>
+	</div>
+</div>
+<script type="text/javascript">
+  var is_bind=false;
+$(document).ready(function(){
+  select_item_on($(".ue-editor-btn a"),12,"active");
+  var limit={size : 5 , num : 20};
+  initflash(limit);
+  $(".editor-pic-addbtn").bind("change",function(){
+      
+      $("#editor-form-pic").ajaxSubmit({
+      dataType:"json",
+      beforeSubmit:function(a,f,o){
+          var file=$(".editor-pic-addbtn").val();
+          if(!file){
+            alert("请先选择要上传的文件");
+            return false;
+          }
+      },
+      success:function(result){
+          if(result.status){
+               //alert(result.path);
+               var li="<li>\
+							<img src='"+result.path+"' width='146' height='146' />\
+							<a></a>					</li>";
+               $(".editor-event-pic").show();
+               $(li).appendTo(".editor-eve-picul1");
+               $(".editor-eve-picul1 li").last().bind("click",function(){$(this).remove()});
+          }
+          else{
+               alert(result.code);
+          }
+      }
+   })
+  })
+  
+  $(".editor-sub-btn1").click(function(){
+      var time="";
+      var year=$(".editor-event-time input").eq(0).val();
+      var mon=$(".editor-event-time input").eq(1).val();
+      var day=$(".editor-event-time input").eq(2).val();
+      var hour=$(".editor-event-time input").eq(3).val();
+      var min=$(".editor-event-time input").eq(4).val();
+      time=year+":"+dateformat(mon)+":"+dateformat(day)+" "+dateformat(hour)+":"+dateformat(min)+":00";
+      var place=$(".eve-add-1").val();
+      var title=$(".editor-title-event input").val();
+      var content=$(".editor-desc-text").val();
+      var pic="";
+      $(".editor-eve-picul1").children().each(function(){
+          if(pic) pic+=";"+$(this).children("img").attr("src");
+          else pic=$(this).children("img").attr("src");
+      })
+      alert(pic);
+      //alert(type+time+place+lable+title+content);
+      var settings={
+             url:"/user/postevent/pubwelfare",
+             type:"post",
+             dataType:"json",
+             data:{
+                   "time":time,
+                   "place":place,
+                   "lable":lable,
+                   "title":title,
+                   "uploadpic":pic,
+                   "content":content,
+                   "_xsrf":$("input[name='_xsrf']").val()},
+             error:function(jq,data,errorThrow){
+                     alert(data);
+                   },
+             success:function(result){
+                       if(result.status){
+                              alert("发布成功");
+                       }
+                       else{
+                              alert("发布失败"+result.code);
+                       }
+                     }
+       }
+      $.ajax(settings);
+  })
+})
+</script>
+<!--footer begain-->
+{{modules.BlackFooter(cuser)}}
+<!--footer end-->
+</body>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<title>登录账户 | 优意座标™</title>
+<meta name="keywords" content="中国优秀文创人,文创人,机构,媒体人,优意座标,演员,模特,设计师,创意,平面,产品设计,视觉,建筑,空间设计" />
+<meta name="description" content="为中国优秀文创人提供媒体助力，为媒体人提供新鲜文创业动态汇集，为中国文创机构提供合作空间。" />
+<meta name="author" content="优意座标™|YOEZ.CC团队" />
+<meta name="copyright" content="Copyright优意座标™" />
+<link rel="stylesheet" type="text/css" href="{{static_url('CSS/common.css')}}">
+<link rel="stylesheet" type="text/css" href="{{static_url('CSS/register.css')}}">
+<script type="text/javascript" src="{{static_url('JS/jquery-1.6.4.js')}}"></script>
+<script type="text/javascript" src="{{static_url('JS/jquery.form-2.67.js')}}"></script>
+<script type="text/javascript" src="{{static_url('JS/login.js')}}"></script>
+</head>
+<body class="rg-body">
+<div class="wp1000">
+    <div class="rg-head">
+      <div class="rg-head-logo">
+	<a href="http://www.ueue.cc" class="z cl">
+	</a>
+      </div>
+		<div class="rg-head-titlebox">
+			<p class="rg-head-title">您正在登入优意座标™</p>
+			<p class="rg-head-title-en">Login UEUE.CC</p>
+		</div>
+    </div>
+    <div class="rg-login y cl">
+			<p class="chs z cl">也可以使用合作账号登入</p>
+			<a href="#" class="rg-login-sina z cl"></a>
+			<a href="#" class="rg-login-tencent z cl"></a>
+		</div>
+    <form method="post" action="" id="yoez_login_f">
+    {{ xsrf_form_html() }}
+	<div class="log-box">
+		
+			<div class="log-email inputtipdiv">
+				<input type="text" name="email"/>
+				<span>邮箱 / E-mail</span>
+			</div>
+			<div class="log-psw inputtipdiv">
+				<input type="password" name="password"/>
+				<span>密码 / Password</span>
+			</div>
+	</div>
+	<div class="log-warning" style="height: 51px;display:none;">
+		<div class="z cl br5bt">
+			<p class="log-text-warning z cl chs">账户名或是密码出错啦!再仔细想想吧 ^.^</p>
+		</div>
+	</div>
+	<div class="log-forgetpsw">
+		<p class="z cl chs">糟糕，我忘了密码！<a href="#" target="_blank">戳这里找回密码</a></p>
+	</div>
+	<div class="rg-btn cl">
+		<input type="submit" value="确认登入" class="rg-btn1"/>
+	</div>
+	</form>
+</div>
+<div id="loading" style="display:none;">
+	<div></div>
+</div>
+</body>
+</html>

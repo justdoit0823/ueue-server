@@ -1,0 +1,74 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<title>消息中心 | 优意座标™</title>
+<meta name="keywords" content="中国优秀文创人,文创人,机构,媒体人,优意座标,演员,模特,设计师,创意,平面,产品设计,视觉,建筑,空间设计" />
+<meta name="description" content="为中国优秀文创人提供媒体助力，为媒体人提供新鲜文创业动态汇集，为中国文创机构提供合作空间。" />
+<meta name="author" content="优意座标™|YOEZ.CC团队" />
+<meta name="copyright" content="Copyright优意座标™" />
+<link rel="stylesheet" type="text/css" href="{{static_url('CSS/common.css')}}">
+<link rel="stylesheet" type="text/css" href="{{static_url('CSS/user.css')}}">
+<script type="text/javascript" src="{{static_url('JS/jquery-1.6.4.js')}}"></script>
+</head>
+<body class="user-body">
+  {{modules.Header(cuser,request.uri)}}
+  <div class="ue-user-allbody">
+	</div>
+    <div class="user-close-window">
+    </div>
+<div class="w1000">
+	<div class="user-1-bd br5 z cl mgt100">
+		<div class="user-left-msg z cl mgt40">
+			<ul class="user-msg-list z cl">
+                            {% for msg in msgs %}
+				{{modules.UserMessage(msg)}}
+                            {% end %}
+			</ul>
+			<div class="y cl user-msg-page">	
+					<a href="#" class="z cl">Prev</a>
+					<a href="#" class="y cl">Next</a>
+				</div>
+		</div>
+		<div class="user-1-right y cl mgt40">
+			<ul class="user-msg-nav z cl">
+				<li id="user-msg-nav-on" type="0">
+					<a>未读消息</a>
+					<span>47</span>
+					<i></i>				</li>
+				<li type="1">
+					<a>系统消息</a>
+					<span>23</span>
+					<i></i>				</li>
+				<li type="2">
+					<a>回复通知</a>
+					<span>17</span>
+					<i></i>				</li>
+				<li type="3">
+					<a>商业消息</a>
+					<span>7</span>
+					<i></i>				</li>
+			</ul>
+		</div>
+	</div>
+	<p class="user-copyright y cl">© UEUE.CC | 优意座标™</p>
+</div>
+<script type="text/javascript">
+  
+   $(".user-msg-nav li").click(function(){
+       $(".user-msg-nav li").attr("id","");
+       $(this).attr("id","user-msg-nav-on");
+       var type=$(this).attr("type");
+       var settings={
+            url:"/user/messages?msgtype="+type,
+            type:"get",
+            success:function(html){
+                      $(".user-msg-list").html(html);
+                    }
+       }
+       $.ajax(settings);
+   })
+   
+</script>
+</body>
+</html>

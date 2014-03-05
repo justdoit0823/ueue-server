@@ -1,0 +1,29 @@
+<li>
+						<div class="yz-work-li-bg">
+						  {% if userself %}
+						  <div class="yz-hp-show-ct">
+								<a href="/work/{{row.wid}}/edit" class="y cl hp-show-del">删除</a>
+								<a href="/work/{{row.wid}}/delete" class="y cl hp-show-edit">编辑</a>
+								<a class="y cl hp-show-off">设置为保密</a>
+							</div>
+						  {% end %}
+							<div class="yz-work-show-{{typeclass}}">
+								<a href="/work/{{row.wid}}" target="_blank">
+									{{content}}
+								</a>
+							</div>
+							<div class="yz-othr">
+								<p class="yz-othr-title">{{row.title}}</p>
+								<p class="yz-othr-tags">
+									{% for i in row.lable.split(",") %}
+									<a href="/works?lable={{url_escape(i)}}" target="_blank">#{{i}}</a>
+									{% end %}
+								</p>
+								<p class="yz-hp-othr-num">
+									<span class="yz-hp-othr-view">{{row.view}}</span>
+                        			<span class="yz-hp-othr-sup">{{row.support}}</span>
+                        			<span class="yz-hp-othr-reply">{{row.review}}</span>
+								</p>
+							</div>
+						</div>
+					</li>

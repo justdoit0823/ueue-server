@@ -1,0 +1,23 @@
+<li>
+						<div class="yz-work-li-bg">
+							<div class="yz-work-show-{{typeclass}}">
+								<a href="/work/{{row.wid}}" target="_blank">
+									{{content}}
+								</a>
+							</div>
+							<div class="yz-othr">
+								<p class="yz-othr-title">{{row.title}}</p>
+								<p class="yz-othr-tags">
+									{% for lb in row.lable.split(',') %}
+                                                     <a href="/works?lable={{url_escape(lb)}}" target="_blank">#{{lb}}</a>
+                                                {% end %}
+								</p>
+								<p class="yz-othr-avr">
+									<a href="/{{row.uid}}" target="_blank">
+										<img src="{{row.img}}" height="25" width="25"/>
+									</a>
+									<a href="/{{row.uid}}" target="_blank">{{row.account}}</a>
+								</p>
+							</div>
+						</div>
+					</li>

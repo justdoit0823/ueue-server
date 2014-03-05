@@ -1,0 +1,59 @@
+<div class="editor-pic z cl w640 mgt40">
+				<ul>
+					<li>
+						<div class="z cl editor-pic-img">
+							<img src="../../static/img/common/7/2.JPEG">
+						</div>
+						<div class="z cl editor-pic-text">
+							<textarea onKeyDown="if (event.keyCode==13) {}" onBlur="if(this.value=='')value='- 描述 -';" onFocus="if(this.value=='- 描述 -')value='';" value="- 描述 -" >- 描述 -</textarea>
+						</div>
+						<span class="editor-pic-del">
+						</span>
+						<span class="editor-pic-move z cl" title="按住可以拖动排序哦~">
+						</span>
+						<a class="editor-pic-front z cl mgt20">
+							选为封面
+							<span id="editor-pic-front-on"></span>
+						</a>
+					</li>
+					<li>
+						<div class="z cl editor-pic-img">
+							<img src="../../static/img/common/7/9.JPEG">
+						</div>
+						<div class="z cl editor-pic-text">
+							<textarea onKeyDown="if (event.keyCode==13) {}" onBlur="if(this.value=='')value='- 描述 -';" onFocus="if(this.value=='- 描述 -')value='';" value="- 描述 -" >- 描述 -</textarea>
+						</div>
+						<span class="editor-pic-del">
+						</span>
+						<span class="editor-pic-move z cl" title="按住可以拖动排序哦~">
+						</span>
+						<a class="editor-pic-front z cl mgt20">
+							选为封面
+							<span></span>
+						</a>
+					</li>
+				</ul>
+				<ul>
+					<li>
+						<p class="z cl editor-pic-imgname" id="testone-file">IMG164645213654642146476.jpg</p>
+						<span class="y cl editor-pic-rate" id="testone-rate">60%</span>
+					</li>
+					<li>
+						<p class="z cl editor-pic-imgname">IMG1646452sqgwerfs.jpg</p>
+						<span class="y cl editor-pic-rate">0%</span>
+					</li>
+					<li>
+						<p class="z cl editor-pic-imgname">这张图片有些大啦，<a>取消上传</a> IMG41654676761613.JPEG</p>
+						<span class="y cl editor-pic-rate">0%</span>
+					</li>
+				</ul>
+				<div class="editor-pic-add z cl w640">
+                                        <form method="post" action="/postevent/picupload" enctype="multipart/form-data" id="pic-upload-f" name="file">
+                                         {{xsrf_form_html()}}
+                                        <input type="file" accept="image/jpeg,image/png,image/gif" style="display:none;" id="editor-pic-addvir" name="pic" />
+					<input type="button" class="editor-pic-addbtn z cl" value="添加图片"/>
+					<p class="z cl chs">支持JPG, GIF, PNG格式图片，单张大小不超过5M，最多40张。</p>
+                                        <input type="submit" class="editor-pic-addsub z cl" value="上传图片" style="display:none;" />
+                                        </form>
+				</div>
+			</div>

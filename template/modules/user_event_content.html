@@ -1,0 +1,44 @@
+<div class="yz-hp-event mgt60 z cl">
+			<div class="yz-hp-event-nohappened">
+				<a class="yz-hp-event-ct-tagtype chs1">{{row.type}}</a>
+				<span class="en1 yz-hp-event-year">{{row.time[:7]}}</span>
+				<span class="en yz-hp-event-date">{{row.time[8:10]}}</span>
+			</div>
+			<div class="yz-hp-event-ct y">
+				<p class="yz-hp-event-tt z cl">
+					<a href="/events/{{row.eid}}"  target="_blank" class="br5">
+				          {{row.title}}						
+					</a>
+				</p>
+				<div class="z mgt20 cl yz-hp-event-ct-info">
+					<p class="z yz-hp-event-ct-clock">{{row.time[11:]}}</p>
+					<p class="z yz-hp-event-ct-add">{{row.place}}</p>
+				</div>
+                                {% if row.picture %}
+				<a href="/events/{{row.eid}}" target="_blank" class="yz-hp-event-ct-img z cl mgt20">
+                                        {% for one in row.picture.split(";") %}
+                                        {% if one %}
+					<img src="{{one.split("&")[0][4:]}}" alt="{{one.split("&")[1][4:]}}">
+                                        {% end %}
+                                        {% end %}         
+				</a>
+                                {% end %}
+				<div class="z mgt20 cl yz-hp-event-ct-int">
+					<p>{{row.content}}</p>
+					<i></i>
+				</div>
+				<span class="z mgt20 cl yz-hp-event-ct-tags">
+				{% for lb in row.lable.split(',') %}
+                                   <a href="#" target="_blank">{{lb}}</a>
+                                {% end %}
+				</span>
+				<span class="z mgt20 cl yz-hp-event-ct-button">
+					<a class="br5 yz-hp-event-ct-button1 z">支持</a><i class="z en">{{row.agree}}</i>
+					<a class="br5 yz-hp-event-ct-button2 z">评论</a><i class="z en">{{row.review}}</i>
+					<a class="br5 yz-hp-event-ct-button3 z">抢占头条</a>
+					<a class="yz-hp-event-ct-button4 y">展开评论 ▼</a>
+				</span>
+				<span class="z mgt10 cl tr460">
+				</span>
+			</div>
+		</div>
