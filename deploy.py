@@ -59,6 +59,8 @@ def runserver(workdir):
     '''run server in the specified dir.'''
 
     with cd(workdir):
+        #if os.path.exists("/var/run/ueue/server.pid"):
+            #pid = open("/var/run/ueue/server.pid").read()
         run("python ./server.py")
 
 
@@ -85,4 +87,17 @@ def upload_files(src, user, host, port, dst):
 
 def main():
 
-    pass
+    if len(sys.argv) > 1:
+        path = sys.argv[1]
+    initialize_env(path)
+    build_path = optimize_file(os.path.dirname(sys.argv[0]),
+                               ("/home/justdoit/document/Libary/Java/"
+                                "yuicompressor-2.4.8.jar"))
+    upload_files(build_path, env.user, env.host, env.port,
+                 "/var/www/ueue/ueue-server")
+    runserver("/var/www/ueue/ueue-server")
+
+
+if __name__ == '__main__':
+
+    main()

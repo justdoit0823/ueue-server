@@ -13,6 +13,7 @@ import sys
 import smtplib
 import os
 import email.utils
+from tornado import database
 
 from email.mime.text import MIMEText
 
@@ -20,6 +21,13 @@ from getpass import getpass
 
 import PIL.Image
 
+
+#mysql define
+
+define("mysql_host", default="127.0.0.1:3306", help="ueue database host")
+define("mysql_database", default="yoez", help="ueue database name")
+define("mysql_user", default="justdoit", help="ueue database user")
+define("mysql_password", default=None, help="ueue database password")
 
 # define site server hosts
 
@@ -71,6 +79,18 @@ USER_CACHE = dict()
 
 
 class BaseHandler(tornado.web.RequestHandler):
+
+    def initialize(self):
+
+        self.db = database.Connection(host=options.mysql_host,
+                                      user=options.mysql_user,
+                                      database=options.mysql_database,
+                                      password=options.mysql_password)
+
+    @property
+    def is_db_connected(self):
+
+        return self.db is not None
 
     def get_current_user(self):
 

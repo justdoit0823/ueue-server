@@ -159,7 +159,7 @@ def daemonize():
     if pid < 0:
         logging.error("fork error!")
     elif pid > 0:
-        os._exit(0)
+        exit(0)
     os.setsid()
     fd = os.open("/dev/null", os.O_RDWR)
     os.dup2(fd, 0)
@@ -173,13 +173,16 @@ def main():
     tornado.options.parse_config_file(config_file)
     tornado.options.parse_command_line()
     signal.signal(signal.SIGQUIT, serverquit)
-    #initdbpsw()
-    #daemonize()
+    daemonize()
+    pid = os.getpid()
+    logging.info("start server process " + str(pid))
+    with open(options.pid_file, 'w') as f:
+        f.write(str(pid))
+        f.close()
     application = MyApplication()
     http_server0 = tornado.httpserver.HTTPServer(application, xheaders=True)
     http_server0.bind(options.server_port0)
-    http_server0.start(4)
-    pid = os.getpid()
+    http_server0.start(1)
     port = options.server_port0
     logging.info("process: "+str(pid)+" listen port "+str(port))
     #http_server1 = tornado.httpserver.HTTPServer(application,xheaders=True)
