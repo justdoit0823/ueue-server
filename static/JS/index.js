@@ -74,7 +74,9 @@ function dellable(){
 
 	s.splice(i,1);
 
-	if(s.length > 0) location.search = s.join('&');
+	if(s.length > 1) location.search = '?' + s.join('&');
+
+	else if(s.length = 1) location.search = '?' + s[0];
 
 	else location.search = "";
 	
