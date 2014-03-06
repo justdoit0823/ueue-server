@@ -62,17 +62,6 @@ function dellable(){
 
 	var s = location.search.substring(1).split('&');
 
-	/*if(s.length >){
-
-	    location.search = location.search.substring(0,i);
-	    //$(".yz-idx-line-p p").last().remove();
-	}
-	else{
-	    //$(".yz-idx-line-p").remove();
-	    //$(".yz-idx-line").hide();
-	    location.search = '';
-	}*/
-
 	var i = $(this).parent().index();
 
 	console.log(i);
@@ -85,7 +74,9 @@ function dellable(){
 
 	s.splice(i,1);
 
-	location.search = s.join('&');
+	if(s.length > 0) location.search = s.join('&');
+
+	else location.search = "";
 	
     }
           

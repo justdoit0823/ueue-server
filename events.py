@@ -133,8 +133,8 @@ class RecordHandler(BaseHandler):
                     args1.append(right)
             elif left == "trade":
                 right = tornado.escape.url_unescape(right)
-                right = "%"+right+"%"
-                print right
+                right = u"%" + right + u"%"
+                #print right
                 if not usrwhcond:
                     usrwhcond = " where "+CONDITIONS[left]
                 else:
@@ -142,8 +142,8 @@ class RecordHandler(BaseHandler):
                 args1.append(right)
             elif left == "lable":
                 right = tornado.escape.url_unescape(right)
-                right = "%"+right+"%"
-                print right
+                right = u"%" + right + u"%"
+                #print right
                 if not rcdwhcond:
                     rcdwhcond = "  "+CONDITIONS[left]
                 else:

@@ -21,7 +21,7 @@ def initialize_env(path):
 
 def optimize_file(project_path, compress_tool_path, opt=True):
 
-    '''use tool to optiminze project files.'''
+    '''use tool to optimize project files.'''
 
     project_path = os.path.abspath(project_path)
     if not os.path.exists(project_path):
@@ -37,31 +37,33 @@ def optimize_file(project_path, compress_tool_path, opt=True):
     print "create build path %s." % build_dir
     os.chdir(project_path)
     local("rsync -Cavz --exclude-from=.rsyncignore ./ %s" % build_dir)
-    for dirpath, dirnames, filenames in os.walk(build_dir):
-        os.chdir(dirpath)
-        has_css = False
-        has_js = False
-        for file in filenames:
-            has_css = file.endswith(".css")
-            has_js = file.endswith(".js")
-            if has_css and has_js:
-                break
-        if has_css:
-            local("java -jar %s -o '.css$:.css' *.css" % compress_tool_path)
-        if has_js:
-            local("java -jar %s -o '.js$:.js' *.js" % compress_tool_path)
+    if opt:
+        for dirpath, dirnames, filenames in os.walk(build_dir):
+            os.chdir(dirpath)
+            has_css = False
+            has_js = False
+            for file in filenames:
+                has_css = file.endswith(".css")
+                has_js = file.endswith(".js")
+                if has_css and has_js:
+                    break
+            if has_css:
+                local("java -jar %s -o '.css$:.css' *.css" %
+                      compress_tool_path)
+            if has_js:
+                local("java -jar %s -o '.js$:.js' *.js" % compress_tool_path)
     os.chdir(build_dir)
     return build_dir
 
 
-def runserver(workdir):
+def runserver(workdir, servercmd, runserver=True):
 
     '''run server in the specified dir.'''
 
-    with cd(workdir):
-        #if os.path.exists("/var/run/ueue/server.pid"):
-            #pid = open("/var/run/ueue/server.pid").read()
-        run("python ./server.py")
+    #checkserver("/var/run/ueue/server.pid")
+    if runserver:
+        with cd(workdir):
+            run(servercmd)
 
 
 def upload_files(src, user, host, port, dst):
@@ -85,17 +87,36 @@ def upload_files(src, user, host, port, dst):
         pass
 
 
+def deploy_static(config_file):
+
+    initialize_env(config_file)
+    build_path = optimize_file(env.srcpath, env.optool, bool(env.optimize))
+    upload_files(build_path, env.user, env.host, env.port, env.dstpath)
+
+
+def deploy_www(config_file):
+
+    initialize_env(config_file)
+    build_path = optimize_file(env.srcpath, env.optool, bool(env.optimize))
+    upload_files(build_path, env.user, env.host, env.port, env.dstpath)
+    runserver(env.dstpath, env.servercmd, bool(env.runserver))
+
+
+def deploy(config_file):
+
+    initialize_env(config_file)
+    build_path = optimize_file(env.srcpath, env.optool, bool(env.optimize))
+    upload_files(build_path, env.user, env.host, env.port, env.dstpath)
+    runserver(env.dstpath, env.servercmd, bool(env.runserver))
+
+
 def main():
 
-    if len(sys.argv) > 1:
-        path = sys.argv[1]
-    initialize_env(path)
-    build_path = optimize_file(os.path.dirname(sys.argv[0]),
-                               ("/home/justdoit/document/Libary/Java/"
-                                "yuicompressor-2.4.8.jar"))
-    upload_files(build_path, env.user, env.host, env.port,
-                 "/var/www/ueue/ueue-server")
-    runserver("/var/www/ueue/ueue-server")
+    #server, configfile = sys.argv[1:3]
+    #server = 'deploy_' + server
+    #func = globals()[server]
+    #func(configfile)
+    deploy(sys.argv[1])
 
 
 if __name__ == '__main__':

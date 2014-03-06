@@ -31,7 +31,7 @@ define("server_port0", default=10000, help="run on the given port", type=int)
 define("server_port1", default=10001, help="run on the given port", type=int)
 define("server_port2", default=10002, help="run on the given port", type=int)
 define("server_port3", default=10003, help="run on the given port", type=int)
-define("pid_file", default=None, help="pid file for the daemon process",
+define("pidfile", default=None, help="pid file for the daemon process",
        type=str)
 
 #rewrite RequestHandler
@@ -80,6 +80,20 @@ class IndexHandler(BaseHandler):
         self.render("yoez1.0beta/index-"+tab+".html")
 
 
+class AboutOneminHandler(BaseHandler):
+
+    def get(self):
+
+        self.render("other1.0beta/other-1.html")
+
+
+class AboutPartnersHandler(BaseHandler):
+
+    def get(self):
+
+        self.render("other1.0beta/other-2.html")
+
+
 class StaticImgHandler(BaseHandler):
     def get(self, filename):
         imgfmt = filename.split(".")[1]
@@ -112,6 +126,7 @@ class UserStatementHandler(BaseHandler):
     def get(self):
         self.render("other1.0beta/other-1.html")
 
+
 #rewrite Application
 
 
@@ -123,6 +138,8 @@ class MyApplication(tornado.web.Application):
             (r"/professional", ProfessionalHandler),
             (r"/vane", ClubHandler),
             (r"/user/statement", UserStatementHandler),
+            (r"/about/oneminute", AboutOneminHandler),
+            (r"/about/partners", AboutPartnersHandler),
             #(r"/static/img/([a-zA-Z0-9.]+)", StaticImgHandler),
             ]
         import_modules = [works, events, userspace, useraction, setting]
@@ -153,18 +170,55 @@ def serverquit(signum, frame):
     exit(0)
 
 
-def daemonize():
+def daemonize(debug=False):
+
     '''daemonize the call process'''
-    pid = os.fork()
-    if pid < 0:
-        logging.error("fork error!")
-    elif pid > 0:
-        exit(0)
-    os.setsid()
-    fd = os.open("/dev/null", os.O_RDWR)
-    os.dup2(fd, 0)
-    os.dup2(fd, 1)
-    os.dup2(fd, 2)
+
+    if not debug:
+        try:
+            pid = os.fork()
+        except:
+            logging.error("fork error!")
+            exit(0)
+        else:
+            if pid > 0:
+                exit(0)
+            os.setsid()
+            fd = os.open("/dev/null", os.O_RDWR)
+            os.dup2(fd, 0)
+            os.dup2(fd, 1)
+            os.dup2(fd, 2)
+
+
+def checkserver(pidfile):
+
+    '''use pidfile to check specified process is running.
+    kill the process if running.'''
+
+    #run(("test -f %s && kill -0 '`cat %s`' &>/dev/null "
+    #     "&& kill -9 '`cat %s`' &>/dev/null") % (pidfile, pidfile, pidfile),
+    #    shell_escape=False)
+    if os.path.exists(pidfile):
+        with open(pidfile, 'r') as f:
+            pid = f.read()
+            f.close()
+        if pid:
+            try:
+                os.kill(int(pid), 0)
+            except:
+                pass
+            else:
+                os.kill(int(pid), 9)
+    return True
+
+
+def registerserver(pidfile, pid):
+
+    '''write the server process's pid into pidfile.'''
+
+    with open(pidfile, 'w') as f:
+        f.write(str(pid))
+        f.close()
 
 
 def main():
@@ -172,28 +226,21 @@ def main():
     config_file = os.path.join(os.path.dirname(sys.argv[0]), "server.conf")
     tornado.options.parse_config_file(config_file)
     tornado.options.parse_command_line()
+    checkserver(options.pidfile)
+    daemonize(False)
     signal.signal(signal.SIGQUIT, serverquit)
-    daemonize()
     pid = os.getpid()
-    logging.info("start server process " + str(pid))
-    with open(options.pid_file, 'w') as f:
-        f.write(str(pid))
-        f.close()
     application = MyApplication()
     http_server0 = tornado.httpserver.HTTPServer(application, xheaders=True)
     http_server0.bind(options.server_port0)
     http_server0.start(1)
     port = options.server_port0
-    logging.info("process: "+str(pid)+" listen port "+str(port))
-    #http_server1 = tornado.httpserver.HTTPServer(application,xheaders=True)
-    #http_server1.listen(options.port1)
-    #http_server2 = tornado.httpserver.HTTPServer(application,xheaders=True)
-    #http_server2.listen(options.port2)
-    #http_server3 = tornado.httpserver.HTTPServer(application,xheaders=True)
-    #http_server3.listen(options.port3)
-    logging.info("server start and press key Ctrl+\ to stop...")
+    logging.info(("start server process %d at port %d "
+                  "and press key Ctrl+\ to stop...") % (pid, port))
+    registerserver(options.pidfile, pid)
     tornado.ioloop.IOLoop.instance().start()
 
 
 if __name__ == "__main__":
+
     main()

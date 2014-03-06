@@ -13,6 +13,7 @@ from __init__ import BaseHandler, USER_STATUS
 from userspace import DEFAULT_TEXT
 
 import tornado.web
+import tornado.escape
 import module
 
 
@@ -101,9 +102,11 @@ class WorksHandler(BaseHandler):
                         usrwhcond += " and "+CONDITIONS[left]
                     args1.append(right)
             elif left == "trade":
+                #print right, type(right)
                 right = tornado.escape.url_unescape(right)
-                right = "%"+right+"%"
-                print right
+                #print right, type(right)
+                right = u"%" + right + u"%"
+                #print right
                 if not usrwhcond:
                     usrwhcond = " where "+CONDITIONS[left]
                 else:
@@ -111,8 +114,8 @@ class WorksHandler(BaseHandler):
                 args1.append(right)
             elif left == "lable":
                 right = tornado.escape.url_unescape(right)
-                right = "%"+right+"%"
-                print right
+                right = u"%" + right + u"%"
+                #print right
                 if not wrkwhcond:
                     wrkwhcond = "  "+CONDITIONS[left]
                 else:
