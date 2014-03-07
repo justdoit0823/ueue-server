@@ -204,7 +204,7 @@ class EventDetailHandler(BaseHandler):
         cuser = self.get_current_user()
         if cuser:
             chksql = "select * from eventsupport where supuid=%s and supeid=%s"
-            rt = self.db.get(chksql, [cuser.uid, eid])
+            rt = self.db.get(chksql, *[cuser.uid, eid])
             is_support = (rt is not None)
         else:
             is_support = False
