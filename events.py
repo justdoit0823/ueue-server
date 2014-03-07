@@ -204,7 +204,7 @@ class EventDetailHandler(BaseHandler):
         cuser = self.get_current_user()
         if cuser:
             chksql = "select * from eventsupport where supuid=%s and supeid=%s"
-            rt = self.db.get(chksql, [cuser.uid, eid])
+            rt = self.db.get(chksql, *[cuser.uid, eid])
             is_support = (rt is not None)
         else:
             is_support = False
@@ -214,7 +214,7 @@ class EventDetailHandler(BaseHandler):
         row = self.db.get(event_sql, eid)
         row.contet = row.content.replace("\'", "'")
         review_sql = ("select * from user join eventreview on eventreview."
-                      "reviewuid=user.uid where eventreview.revieweid=%d")
+                      "reviewuid=user.uid where eventreview.revieweid=%s")
         reviews = self.db.query(review_sql, eid)
         for i in reviews:
             i.content = i.content.replace("\'", "'")
