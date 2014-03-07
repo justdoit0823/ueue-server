@@ -38,21 +38,12 @@ def optimize_file(project_path, compress_tool_path, opt=True):
     os.chdir(project_path)
     local("rsync -Cavz --exclude-from=.rsyncignore ./ %s" % build_dir)
     if opt:
-        for dirpath, dirnames, filenames in os.walk(build_dir):
-            os.chdir(dirpath)
-            has_css = False
-            has_js = False
-            for file in filenames:
-                has_css = file.endswith(".css")
-                has_js = file.endswith(".js")
-                if has_css and has_js:
-                    break
-            if has_css:
-                local("java -jar %s -o '.css$:.css' *.css" %
-                      compress_tool_path)
-            if has_js:
-                local("java -jar %s -o '.js$:.js' *.js" % compress_tool_path)
-    os.chdir(build_dir)
+        os.chdir(build_dir)
+        local("find ./ -name \*.css -exec java -jar %s -o '.css$:.css' {} \;" %
+              compress_tool_path)
+        local("find ./ -name \*.js -exec java -jar %s -o '.js$:.js' {} \;" %
+              compress_tool_path)
+        print "optimize css and javascript files success."
     return build_dir
 
 
@@ -60,7 +51,6 @@ def runserver(workdir, servercmd, runserver=True):
 
     '''run server in the specified dir.'''
 
-    #checkserver("/var/run/ueue/server.pid")
     if runserver:
         with cd(workdir):
             run(servercmd)
@@ -80,11 +70,21 @@ def upload_files(src, user, host, port, dst):
     shcmd = "'ssh -p %s'" % port
     local(("rsync -CrlptDcvz -e %s --exclude-from=.rsyncignore "
            "./ %s" % (shcmd, dst)))
-    print "upload local %s to remote %s." % (src, dst)
+    print "upload local %s to remote %s success." % (src, dst)
     try:
         local("rm -rf %s" % src)
     except:
         pass
+
+
+def set_libjs_version(path, version):
+
+    '''set the js libary's version with the given version.'''
+
+    os.chdir(path)
+    local(("find ./ -name \*.js -exec sed -i 's/jquery-[0-9.].js/jquery-%s.js'"
+           "{} \;") % version)
+    print "set js libary success."
 
 
 def deploy_static(config_file):
@@ -104,6 +104,8 @@ def deploy_www(config_file):
 
 def deploy(config_file):
 
+    '''common deploy function,invoke with different config file'''
+
     initialize_env(config_file)
     build_path = optimize_file(env.srcpath, env.optool, bool(env.optimize))
     upload_files(build_path, env.user, env.host, env.port, env.dstpath)
@@ -112,10 +114,6 @@ def deploy(config_file):
 
 def main():
 
-    #server, configfile = sys.argv[1:3]
-    #server = 'deploy_' + server
-    #func = globals()[server]
-    #func(configfile)
     deploy(sys.argv[1])
 
 
