@@ -28,7 +28,9 @@ status for the user:
 
 '''
 
-from __init__ import BaseHandler, send, USER_STATUS, set_image_size
+from __init__ import BaseHandler, send, set_image_size
+from __init__ import WWW_COOKIE_DOMIAN, USER_STATUS
+
 import time
 import random
 import sys
@@ -62,7 +64,8 @@ class UserLoginHandler(BaseHandler):
                     json = dict(error=1, msg='你的帐号以被暂停使用，请联系客服', url=go)
                 else:
                     self.set_secure_cookie("_yoez_uid",
-                                           str(result.uid), expires_days=7)
+                                           str(result.uid), expires_days=7,
+                                           domain=WWW_COOKIE_DOMIAN)
                     json = dict(error=0, msg='', url=go)
             else:
                 tip = "请完成邮箱激活"
@@ -146,7 +149,8 @@ class UserActiveHandler(BaseHandler):
         result = self.db.get(check_sql)
         if(result):
             if result.status == USER_STATUS["unactive"]:
-                self.set_secure_cookie("_yoez_uid", str(result.uid), 7)
+                self.set_secure_cookie("_yoez_uid", str(result.uid), 7,
+                                       domain=WWW_COOKIE_DOMIAN)
                 active_sql = ("update user set status=%d where "
                               "uid='%d'") % (USER_STATUS["uninit"], result.uid)
                 self.db.execute(active_sql)

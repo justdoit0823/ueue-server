@@ -73,6 +73,10 @@ AUTHORIZE_OPTIONS = {
 
 DEFAULT_TEXT = "未被授权显示"
 
+# define www cookie domain
+
+WWW_COOKIE_DOMIAN = "www.ueue.cc"
+
 #rewrite requesthandler
 
 USER_CACHE = dict()
@@ -106,7 +110,7 @@ class BaseHandler(tornado.web.RequestHandler):
 
     def clear_current_user(self):
 
-        self.clear_cookie("_yoez_uid")
+        self.clear_cookie("_yoez_uid", domain=WWW_COOKIE_DOMAIN)
 
     def get_dynum(self, user):
         dnum = 0

@@ -77,14 +77,35 @@ def upload_files(src, user, host, port, dst):
         pass
 
 
-def set_libjs_version(path, version):
+def set_libjs_version(path, pattern, version):
 
     '''set the js libary's version with the given version.'''
 
     os.chdir(path)
-    local(("find ./ -name \*.js -exec sed -i 's/jquery-[0-9.].js/jquery-%s.js'"
-           "{} \;") % version)
+    local("find ./ -name \*.html -exec sed -i 's/%s/%s/g' {} \;" % version)
     print "set js libary success."
+
+
+def parse_bool(v):
+
+    '''parse string to bool value.'''
+
+    if isinstance(v, bool):
+
+        return v
+
+    return v.lower() not in ('false', '0', 'f')
+
+
+def parse_string(s):
+
+    '''parse string with strip ' char in string'''
+
+    if isinstance(s, str):
+
+        return s.strip(" '")
+
+    return str(s)
 
 
 def deploy_static(config_file):
@@ -107,9 +128,12 @@ def deploy(config_file):
     '''common deploy function,invoke with different config file'''
 
     initialize_env(config_file)
-    build_path = optimize_file(env.srcpath, env.optool, bool(env.optimize))
+    env.optimize = parse_bool(env.optimize)
+    env.runserver = parse_bool(env.runserver)
+    env.servercmd = parse_string(env.servercmd)
+    build_path = optimize_file(env.srcpath, env.optool, env.optimize)
     upload_files(build_path, env.user, env.host, env.port, env.dstpath)
-    runserver(env.dstpath, env.servercmd, bool(env.runserver))
+    runserver(env.dstpath, env.servercmd, env.runserver)
 
 
 def main():
