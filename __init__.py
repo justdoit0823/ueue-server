@@ -75,7 +75,7 @@ DEFAULT_TEXT = "未被授权显示"
 
 # define www cookie domain
 
-WWW_COOKIE_DOMIAN = "www.ueue.cc"
+WWW_COOKIE_DOMAIN = "www.ueue.cc"
 
 #rewrite requesthandler
 

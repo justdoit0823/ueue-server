@@ -29,7 +29,7 @@ status for the user:
 '''
 
 from __init__ import BaseHandler, send, set_image_size
-from __init__ import WWW_COOKIE_DOMIAN, USER_STATUS
+from __init__ import WWW_COOKIE_DOMAIN, USER_STATUS
 
 import time
 import random
@@ -65,7 +65,7 @@ class UserLoginHandler(BaseHandler):
                 else:
                     self.set_secure_cookie("_yoez_uid",
                                            str(result.uid), expires_days=7,
-                                           domain=WWW_COOKIE_DOMIAN)
+                                           domain=WWW_COOKIE_DOMAIN)
                     json = dict(error=0, msg='', url=go)
             else:
                 tip = "请完成邮箱激活"
@@ -150,7 +150,7 @@ class UserActiveHandler(BaseHandler):
         if(result):
             if result.status == USER_STATUS["unactive"]:
                 self.set_secure_cookie("_yoez_uid", str(result.uid), 7,
-                                       domain=WWW_COOKIE_DOMIAN)
+                                       domain=WWW_COOKIE_DOMAIN)
                 active_sql = ("update user set status=%d where "
                               "uid='%d'") % (USER_STATUS["uninit"], result.uid)
                 self.db.execute(active_sql)
