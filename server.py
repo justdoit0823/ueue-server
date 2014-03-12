@@ -25,6 +25,7 @@ import module
 import signal
 import logging
 
+from manage import WorkManager, RecordManager, ReviewManager
 
 #rewrite RequestHandler
 
@@ -37,16 +38,9 @@ class HomeHandler(BaseHandler):
         if self.is_db_connected is False:
             return self.write("connect to mysql server failed.")
         cuser = self.get_current_user()
-        work_sql = ("select * from user join work on work.author_id=user.uid "
-                    "order by work.time desc")
-        rows = self.db.query(work_sql)
-        event_sql = ("select * from user join event on event.author_id="
-                     "user.uid order by event.time desc limit 0,4")
-        ls = self.db.query(event_sql)
-        review_sql = ("select * from user join eventreview on "
-                      "eventreview.reviewuid=user.uid order by "
-                      "eventreview.time desc limit 0,4")
-        rvls = self.db.query(review_sql)
+        rows = WorkManager.get_latest_works(30)
+        ls = RecordManager.get_latest_records(4)
+        rvls = ReviewManager.get_latest_reviews(4)
         kwargs = dict(cuser=cuser, sf=self, rows=rows, ls=ls, rvls=rvls)
         self.render("yoez1.0beta/index.html", **kwargs)
 
@@ -113,12 +107,6 @@ class StaticImgHandler(BaseHandler):
             self.write("img read error!")
 
 
-class UserStatementHandler(BaseHandler):
-
-    def get(self):
-        self.render("other1.0beta/other-1.html")
-
-
 #rewrite Application
 
 
@@ -129,7 +117,7 @@ class MyApplication(tornado.web.Application):
             (r"/index", IndexHandler),
             (r"/professional", ProfessionalHandler),
             (r"/vane", ClubHandler),
-            (r"/user/statement", UserStatementHandler),
+            #(r"/user/statement", UserStatementHandler),
             (r"/about/oneminute", AboutOneminHandler),
             (r"/about/partners", AboutPartnersHandler),
             #(r"/static/img/([a-zA-Z0-9.]+)", StaticImgHandler),

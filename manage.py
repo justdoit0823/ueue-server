@@ -8,6 +8,8 @@ from tornado import database
 
 from tornado.options import define, options
 
+import logging
+
 
 def create_connection(**kwargs):
 
@@ -25,19 +27,24 @@ def create_connection(**kwargs):
 class WorkManager:
 
     @staticmethod
-    def get_latest_works(start, offset=None):
+    def get_latest_works(limit, offset=None):
 
-        db = create_connection(**options.dbsettings)
-        args = [start]
+        args = [limit]
         worksql = ("select W.wid,W.title,W.type,W.content,W.teammates,"
                    "W.copysign,W.lable,W.time,W.view,W.review,W.support,"
-                   "W.cover,W.describe,U.uid,U.img,U.account from work "
-                   "as W join user as U on W.author_id=U.uid order by "
-                   "W.timelimit %s")
+                   "W.cover,W.wdescribe,U.uid,U.img,U.account from user "
+                   "as U join work as W on W.author_id=U.uid order by "
+                   "W.time desc limit %s")
         if offset is not None:
-            args.append(offset)
+            args.insert(0, offset)
             worksql = worksql + ",%s"
-        return db.query(worksql, *args)
+        try:
+            con = create_connection(**options.dbsettings)
+
+            return con.query(worksql, *args)
+        except:
+
+            return None
 
     @staticmethod
     def get_work():
@@ -73,11 +80,26 @@ class RecordManager:
             return None
 
     @staticmethod
-    def get_latest_records(start, offset=None):
+    def get_latest_records(limit, offset=None):
 
         '''Get latest records'''
 
-        pass
+        args = [limit]
+
+        sql = ("select U.uid,U.account,E.eid,E.title,E.type,E.time from user "
+               "as U join event as E on U.uid=E.author_id order by E.time "
+               "limit %s")
+        if offset is not None:
+
+            args.insert(0, offset)
+            sql += ",%s"
+        try:
+
+            con = create_connection(**options.dbsettings)
+            return con.query(sql, *args)
+        except:
+
+            return None
 
     @staticmethod
     def get_user_record(rid):
@@ -137,6 +159,28 @@ class UserManager:
             con = create_connection(**options.dbsettings)
 
             return con.get(sql, mail)
+        except:
+
+            return None
+
+
+class ReviewManager:
+
+    @staticmethod
+    def get_latest_reviews(limit, offset=None):
+
+        args = [limit]
+
+        sql = ("select U.uid,U.account,ER.content,ER.time from eventreview as "
+               "ER join user as U on ER.reviewuid=U.uid order by ER.time desc "
+               "limit %s")
+        if offset is not None:
+            sql += ",%s"
+            args.insert(0, offset)
+        try:
+
+            con = create_connection(**options.dbsettings)
+            return con.query(sql, *args)
         except:
 
             return None
