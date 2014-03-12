@@ -8,22 +8,6 @@ from tornado import database
 
 from tornado.options import define, options
 
-#mysql define
-
-define("mysql_host", default="127.0.0.1:3306", help="ueue database host")
-define("mysql_database", default="yoez", help="ueue database name")
-define("mysql_user", default="justdoit", help="ueue database user")
-define("mysql_password", default=None, help="ueue database password")
-define("noreply_password",
-       default=None, help="signup email check account password")
-
-dbsettings = {
-    'host': mysql_host,
-    'database': mysql_database,
-    'user': mysql_user,
-    'password': mysql_password,
-    }
-
 
 def create_connection(**kwargs):
 
@@ -43,7 +27,7 @@ class WorkManager:
     @staticmethod
     def get_latest_works(start, offset=None):
 
-        db = create_connection(**dbsettings)
+        db = create_connection(**options.dbsettings)
         args = [start]
         worksql = ("select W.wid,W.title,W.type,W.content,W.teammates,"
                    "W.copysign,W.lable,W.time,W.view,W.review,W.support,"
@@ -55,12 +39,104 @@ class WorkManager:
             worksql = worksql + ",%s"
         return db.query(worksql, *args)
 
+    @staticmethod
+    def get_work():
+
+        pass
+
 
 class RecordManager:
 
-    pass
+    @staticmethod
+    def get_recordlist(uid, type=-1):
+
+        '''Get user's records'''
+
+        args = [uid]
+
+        if(type > -1):
+            args.append(type)
+            sql = ("select E.eid,E.title,E.content,E.type,E.place,E.lable,"
+                   "E.time from event as E where E.author_id=%s and E.type=%s "
+                   "order by E.time desc")
+        else:
+            sql = ("select E.eid,E.title,E.content,E.type,E.place,E.lable,"
+                   "E.time from event as E where E.author_id=%s order by "
+                   "E.time desc")
+        try:
+
+            con = create_connection(**options.dbsettings)
+
+            return con.query(sql, *args)
+
+        except:
+            return None
+
+    @staticmethod
+    def get_latest_records(start, offset=None):
+
+        '''Get latest records'''
+
+        pass
+
+    @staticmethod
+    def get_user_record(rid):
+
+        sql = ("select U.uid,U.account,U.img,E.title,E.content,E.picture,"
+               "E.lable,E.type,E.view,E.review,E.support,E.time from user "
+               "as U join event as E on U.uid=E.author_id where E.eid=%s")
+        try:
+
+            con = create_connection(**options.dbsettings)
+
+            return con.get(sql, rid)
+
+        except:
+
+            return None
 
 
 class UserManager:
 
-    pass
+    @staticmethod
+    def has_user(uid):
+        '''check the user exists'''
+
+        sql = "select uid from user where uid=%s"
+
+        try:
+
+            con = create_connection(**options.dbsettings)
+
+            return con.get(con, uid)
+
+        except:
+
+            return None
+
+    @staticmethod
+    def get_user_withid(uid):
+
+        sql = ("select uid,account,img,status,email,password,status,time from "
+               "user where uid=%s")
+
+        try:
+            con = create_connection(**options.dbsettings)
+
+            return con.get(sql, uid)
+        except:
+
+            return None
+
+    def get_user_withmail(mail):
+
+        sql = ("select uid,account,img,status,password,status from user "
+               "where email=%s")
+
+        try:
+            con = create_connection(**options.dbsettings)
+
+            return con.get(sql, mail)
+        except:
+
+            return None

@@ -25,6 +25,8 @@ import module
 
 from hashlib import md5
 
+from manage import RecordManager, UserManager
+
 SUPPORT_EVENTS = ["pubwelfare", "job", "award",
                   "recruit", "declare", "media",
                   "experience", "games", "official"]
@@ -87,17 +89,6 @@ class UserPostHandler(BaseHandler):
     def do_event_delete(self):
 
         pass
-
-
-'''class EventsHandler(BaseHandler):
-    def get(self):
-        cuser = self.get_current_user()
-        event_sql = ("select * from user join event on event.author_id=user.uid order by event.time desc"
-        rows=self.db.query(event_sql)
-        for one in rows:
-            one.contet=one.content.replace("\'","'")
-        self.render("yoez1.0beta/event-search.html",cuser=cuser,rows=rows)
-'''
 
 
 class RecordHandler(BaseHandler):
@@ -172,24 +163,15 @@ class RecordHandler(BaseHandler):
 class UserEventsHandler(BaseHandler):
     def get(self, id):
         uid = int(id)
-        cuser = self.get_current_user()
-        user_sql = "select * from user where uid=%d" % uid
-        user = self.db.get(user_sql)
         type = int(self.get_argument("type", -1))
-        if not user:
+        cuser = self.get_current_user()
+        user = UserManager.get_user_withid(uid)
+        if user is None:
             return self.write("sorry!the page you request does not exists.")
-        if(type > -1):
-            event_sql = ("select * from event join user on event.author_id="
-                         "user.uid where event.author_id=%d and event.type=%d "
-                         "order by event.time desc") % (uid, type)
-        else:
-            event_sql = ("select * from user join event on event.author_id="
-                         "user.uid where user.uid=%d "
-                         "order by event.time desc") % uid
-        rows = self.db.query(event_sql)
-        for one in rows:
-            one.contet = one.content.replace("\'", "'")
-        userself = cuser and (user.uid == cuser.uid)
+        rows = RecordManager.get_recordlist(uid, type)
+        #for one in rows:
+        #    one.contet = one.content.replace("\'", "'")
+        userself = cuser and (uid == cuser.uid)
         consql = ("select * from contactinfo join basicinfo on "
                   "con_id=bsc_id where con_id=%s")
         conrow = self.db.get(consql, uid)
@@ -209,9 +191,9 @@ class EventDetailHandler(BaseHandler):
         else:
             is_support = False
         upview = "update event set view=view+1 where eid=%d" % eid
-        event_sql = ("select * from user join event on event.author_id="
-                     "user.uid where event.eid=%s")
-        row = self.db.get(event_sql, eid)
+        row = RecordManager.get_user_record(eid)
+        if row is None:
+            return self.write("sorry!the page you request does not exists.")
         row.contet = row.content.replace("\'", "'")
         review_sql = ("select * from user join eventreview on eventreview."
                       "reviewuid=user.uid where eventreview.revieweid=%s")

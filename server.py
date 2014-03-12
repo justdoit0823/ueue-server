@@ -6,7 +6,7 @@ The is a main server module,with some application settings
 
 '''
 
-
+from tornado.options import define, options
 import tornado.httpserver
 import tornado.ioloop
 import tornado.options
@@ -15,7 +15,7 @@ import sys
 import re
 import os
 import time
-from __init__ import BaseHandler, USER_STATUS
+from __init__ import BaseHandler, USER_STATUS, initconfig
 import works
 import events
 import userspace
@@ -25,14 +25,6 @@ import module
 import signal
 import logging
 
-from tornado.options import define, options
-
-define("server_port0", default=10000, help="run on the given port", type=int)
-define("server_port1", default=10001, help="run on the given port", type=int)
-define("server_port2", default=10002, help="run on the given port", type=int)
-define("server_port3", default=10003, help="run on the given port", type=int)
-define("pidfile", default=None, help="pid file for the daemon process",
-       type=str)
 
 #rewrite RequestHandler
 
@@ -224,8 +216,7 @@ def registerserver(pidfile, pid):
 def main():
 
     config_file = os.path.join(os.path.dirname(sys.argv[0]), "server.conf")
-    tornado.options.parse_config_file(config_file)
-    tornado.options.parse_command_line()
+    initconfig(config_file)
     checkserver(options.pidfile)
     daemonize(False)
     signal.signal(signal.SIGQUIT, serverquit)

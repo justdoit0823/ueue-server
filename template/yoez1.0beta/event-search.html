@@ -491,66 +491,6 @@ var list={
 		$.ajax(settings);
 	}
 
-	$(".yz-idx-calendar a").bind("mousedown",dateselect);	//  每一个日期都绑定一个mousedown事件 -- 处理dateselect
-
-	$(".yz-idx-calendar a").click(function(){});
-
-	$(".yz-idx-calendar").mousemove(function(event) {	//  鼠标在区域内移动时 -- 先要mousedown创建“数字”元素才会有“数字”跟随效果
-		event.preventDefault();
-		$(".yz-idx-calendar-date-mvbox").css({'top':event.pageY,'left':event.pageX});
-  	});
-
-	$(document).mouseup(function(event){
-
-	    var day = $(".yz-idx-calendar-date-mvbox").text();	//  拖动的day	
-
-	    var bof = $("#yz-idx-c-srch-b").offset();	//  相对document的偏移 -- .position()是相对于父元素
-	    var bhg = $("#yz-idx-c-srch-b").height();	
-	    var bwd = $("#yz-idx-c-srch-b").width();
-
-	    var eof = $("#yz-idx-c-srch-e").offset();
-	    var ehg = $("#yz-idx-c-srch-e").height();
-	    var ewd = $("#yz-idx-c-srch-e").width();
-
-	    if((event.pageX >= bof.left && event.pageX <= bof.left + bwd) && (event.pageY >= bof.top && event.pageY <= bof.left + bhg)) {
-	    	if(day) {	//  保证已经选中日期
-	    		isStart = true;
-
-	    		ydStart = $(".yz-idx-calendar-year").text() + "." + day;
-	    		$("#yz-idx-c-srch-b").text(ydStart);
-	    		yStart = parseInt(ydStart.split(".")[0]);
-	    		mStart = parseInt(ydStart.split(".")[1]);
-	    		dStart = parseInt(day);
-	    	}
-	     }
-
-	    if((event.pageX >= eof.left && event.pageX <= eof.left + ewd) && (event.pageY >= eof.top && event.pageY <= eof.left + ehg)){
-	        if(day) {
-	        	isEnd = true;
-
-	        	ydEnd = $(".yz-idx-calendar-year").text() + "." + day;
-	        	$("#yz-idx-c-srch-e").text(ydEnd);
-	    		yEnd = parseInt(ydEnd.split(".")[0]);
-	    		mEnd = parseInt(ydEnd.split(".")[1]);
-	    		dEnd = parseInt(day);
-
-	        }
-	    }
-
-	    $(".yz-idx-calendar-date-mvbox").remove();
-
-		if (isStart && isEnd) {
-			if (yStart > yEnd || (yStart == yEnd && mStart > mEnd) || (yStart == yEnd && mStart == mEnd && dStart > dEnd)) {
-				var temp1 = yEnd; yEnd = yStart; yStart = temp1;
-				var temp2 = mEnd; mEnd = mStart; mStart = temp2;
-				var	temp3 = dEnd; dEnd = dStart; dStart = temp3;
-				$("#yz-idx-c-srch-e").text(ydStart);
-				$("#yz-idx-c-srch-b").text(ydEnd);
-			};
-		};
-		
-	});
-
       inittexts(list);
 
       loadlable();

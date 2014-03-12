@@ -21,13 +21,25 @@ from getpass import getpass
 
 import PIL.Image
 
+import manage
+
 
 #mysql define
 
 define("mysql_host", default="127.0.0.1:3306", help="ueue database host")
 define("mysql_database", default="yoez", help="ueue database name")
 define("mysql_user", default="justdoit", help="ueue database user")
-define("mysql_password", default=None, help="ueue database password")
+define("mysql_password", default='', help="ueue database password")
+define("dbsettings", default={}, help="ueue database settings")
+define("noreply_password",
+       default=None, help="signup email check account password")
+
+define("server_port0", default=10000, help="run on the given port", type=int)
+define("server_port1", default=10001, help="run on the given port", type=int)
+define("server_port2", default=10002, help="run on the given port", type=int)
+define("server_port3", default=10003, help="run on the given port", type=int)
+define("pidfile", default=None, help="pid file for the daemon process",
+       type=str)
 
 # define site server hosts
 
@@ -77,19 +89,15 @@ DEFAULT_TEXT = "未被授权显示"
 
 WWW_COOKIE_DOMAIN = "www.ueue.cc"
 
-#rewrite requesthandler
 
-USER_CACHE = dict()
+#rewrite requesthandler
 
 
 class BaseHandler(tornado.web.RequestHandler):
 
     def initialize(self):
 
-        self.db = database.Connection(host=options.mysql_host,
-                                      user=options.mysql_user,
-                                      database=options.mysql_database,
-                                      password=options.mysql_password)
+        self.db = manage.create_connection(**options.dbsettings)
 
     @property
     def is_db_connected(self):
@@ -155,6 +163,20 @@ def initdbpsw():
     options.mysql_password = getpass("User database password:")
     print "init database connection"
     options.noreply_password = getpass("User noreply email password:")
+
+
+def initconfig(path):
+
+    '''init the options with the config file'''
+
+    tornado.options.parse_config_file(path)
+    tornado.options.parse_command_line()
+    options.dbsettings = {
+        'host': options.mysql_host,
+        'database': options.mysql_database,
+        'user': options.mysql_user,
+        'password': options.mysql_password,
+    }
 
 
 #set image size
