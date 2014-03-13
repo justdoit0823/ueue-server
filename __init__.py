@@ -23,6 +23,7 @@ import PIL.Image
 
 import manage
 
+import logging
 
 #mysql define
 
@@ -125,6 +126,29 @@ class BaseHandler(tornado.web.RequestHandler):
         if(dyn):
             dnum = dyn.nid
         return dnum
+
+    def get_values(self, names):
+
+        '''get values of item in names list.'''
+
+        values = []
+        for name in names:
+            kwargs = {}
+            if isinstance(name, tuple):
+                if len(name) > 1:
+                    kwargs['default'] = name[1]
+                arg = name[0]
+            else:
+                arg = name
+            try:
+                value = self.get_argument(arg, **kwargs)
+                values.append(value)
+                if 'default' in kwargs:
+                    kwargs.pop('default')
+            except:
+                logging.error("get argument %s's value error" % arg)
+                return ()
+        return tuple(values)
 
 
 #send email

@@ -73,7 +73,7 @@ status for the work:
 
 class UserPostHandler(BaseHandler):
 
-    def do_event_add(self, etype):
+    def do_record_add(self, etype):
 
         time = self.get_argument('time')
         place = self.get_argument('place')
@@ -91,15 +91,11 @@ class UserPostHandler(BaseHandler):
 
 def do_record_add(request, rtype):
 
-    time = request.get_argument('time')
-    place = request.get_argument('place')
-    lable = request.get_argument('lable')
-    title = request.get_argument('title')
-    pic = request.get_argument("uploadpic", "")
-    content = request.get_argument('content')
-    content = content.replace("'", "\'")
+    #content = content.replace("'", "\'")
     cuid = request.get_secure_cookie("_yoez_uid")
-    args = (cuid, rtype, title, content, pic, place, lable, time)
+    values = request.get_values(('title', 'content', ('uploadpic', ''),
+                                 'place', 'lable', 'time'))
+    args = (cuid, rtype) + values
     RecordManager.new_record(*args)
 
 
@@ -306,7 +302,7 @@ class UserPostPubwelfareventHandler(BaseHandler):
     def post(self):
 
         cuid = self.get_secure_cookie("_yoez_uid")
-        do_event_add(self, '0')
+        do_record_add(self, '0')
         self.write(dict(status=1, code=''))
 
 
@@ -321,7 +317,7 @@ class UserPostJobeventHandler(BaseHandler):
 
     def post(self):
 
-        do_event_add(self, '1')
+        do_record_add(self, '1')
         self.write(dict(status=1, code=''))
 
 
@@ -337,7 +333,7 @@ class UserPostAwardeventHandler(BaseHandler):
     def post(self):
 
         cuid = self.get_secure_cookie("_yoez_uid")
-        do_event_add(self, '2')
+        do_record_add(self, '2')
         self.write(dict(status=1, code=''))
 
 
@@ -353,7 +349,7 @@ class UserPostRecruiteventHandler(BaseHandler):
     def post(self):
 
         cuid = self.get_secure_cookie("_yoez_uid")
-        do_event_add(self, '3')
+        do_record_add(self, '3')
         self.write(dict(status=1, code=''))
 
 
@@ -369,7 +365,7 @@ class UserPostDeclareventHandler(BaseHandler):
     def post(self):
 
         cuid = self.get_secure_cookie("_yoez_uid")
-        do_event_add(self, '4')
+        do_record_add(self, '4')
         self.write(dict(status=1, code=''))
 
 
@@ -385,7 +381,7 @@ class UserPostMediaeventHandler(BaseHandler):
     def post(self):
 
         cuid = self.get_secure_cookie("_yoez_uid")
-        do_event_add(self, '5')
+        do_record_add(self, '5')
         self.write(dict(status=1, code=''))
 
 
@@ -401,7 +397,7 @@ class UserPostMediaeventHandler(BaseHandler):
     def post(self):
 
         cuid = self.get_secure_cookie("_yoez_uid")
-        do_event_add(self, '5')
+        do_record_add(self, '5')
         self.write(dict(status=1, code=''))
 
 
@@ -417,7 +413,7 @@ class UserPostExpeventHandler(BaseHandler):
     def post(self):
 
         cuid = self.get_secure_cookie("_yoez_uid")
-        do_event_add(self, '6')
+        do_record_add(self, '6')
         self.write(dict(status=1, code=''))
 
 
@@ -433,7 +429,7 @@ class UserPostGameseventHandler(BaseHandler):
     def post(self):
 
         cuid = self.get_secure_cookie("_yoez_uid")
-        do_event_add(self, '7')
+        do_record_add(self, '7')
         self.write(dict(status=1, code=''))
 
 
@@ -449,7 +445,7 @@ class UserPostOfficialeventHandler(BaseHandler):
     def post(self):
 
         cuid = self.get_secure_cookie("_yoez_uid")
-        do_event_add(self, '8')
+        do_record_add(self, '8')
         self.write(dict(status=1, code=''))
 
 

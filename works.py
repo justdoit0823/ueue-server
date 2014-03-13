@@ -227,17 +227,15 @@ class UserPostVideoworkHandler(BaseHandler):
 
     def post(self):
         cuid = self.get_secure_cookie("_yoez_uid")
-        title = self.get_argument("title")
-        content = self.get_argument("content")
-        describe = self.get_argument("describe", "")
-        teammates = self.get_argument("teammates", "")
-        lable = self.get_argument("lable")
-        cover = self.get_argument("cover")
         type = '0'
-        copysign = self.get_argument("copysign")
+        values = self.get_values(('title', 'content', ('describe', ''),
+                                  'cover', 'lable', 'copysign',
+                                  ('teammates', '')))
+        if not values:
+            return self.write({'status': 0, 'code': "missing argument."})
         at = time.strftime("%Y-%m-%d %X", time.localtime())
-        WorkManager.new_work(*(cuid, type, title, content, describe,
-                               cover, lable, copysign, teammates, at))
+        args = (cuid, type) + values + (at,)
+        WorkManager.new_work(*args)
         result = dict(status=1, code='')
         self.write(result)
 
@@ -251,17 +249,15 @@ class UserPostMusicworkHandler(BaseHandler):
 
     def post(self):
         cuid = self.get_secure_cookie("_yoez_uid")
-        title = self.get_argument("title")
-        content = self.get_argument("content")
-        describe = self.get_argument("describe", "")
-        teammates = self.get_argument("teammates", "")
-        lable = self.get_argument("lable")
-        cover = "/static/img/music.png"
         type = '1'
-        copysign = self.get_argument("copysign")
+        values = self.get_values(('title', 'content', ('describe', ''),
+                                  ('cover', ''), 'lable', 'copysign',
+                                  ('teammates', '')))
+        if not values:
+            return self.write({'status': 0, 'code': "missing argument."})
         at = time.strftime("%Y-%m-%d %X", time.localtime())
-        WorkManager.new_work(*(cuid, type, title, content, describe, cover,
-                               lable, copysign, teammates, at))
+        args = (cuid, type) + values + (at,)
+        WorkManager.new_work(*args)
         result = dict(status=1, code='')
         self.write(result)
 
@@ -275,20 +271,15 @@ class UserPostArticleworkHandler(BaseHandler):
 
     def post(self):
         cuid = self.get_secure_cookie("_yoez_uid")
-        title = self.get_argument("title")
-        content = self.get_argument("content")
-        describe = self.get_argument("describe", "")
-        teammates = self.get_argument("teammates", "")
-        lable = self.get_argument("lable")
-        cover = ""
         type = '3'
-        copysign = self.get_argument("copysign")
+        values = self.get_values(('title', 'content', ('describe', ''),
+                                  ('cover', ''), 'lable', 'copysign',
+                                  ('teammates', '')))
+        if not values:
+            return self.write({'status': 0, 'code': "missing argument."})
         at = time.strftime("%Y-%m-%d %X", time.localtime())
-        addsql = ("insert into work (author_id,type,title,content,wdescribe,"
-                  "cover,lable,copysign,teammates,time) values(%s,%s,%s,%s,%s,"
-                  "%s,%s,%s,%s,%s)")
-        WorkManager.new_work(*(cuid, type, title, content, describe, cover,
-                               lable, copysign, teammates, at))
+        args = (cuid, type) + values + (at,)
+        WorkManager.new_work(*args)
         result = dict(status=1, code='')
         self.write(result)
 
@@ -302,20 +293,15 @@ class UserPostPictureworkHandler(BaseHandler):
 
     def post(self):
         cuid = self.get_secure_cookie("_yoez_uid")
-        title = self.get_argument("title")
-        content = self.get_argument("content")
-        describe = self.get_argument("describe", "")
-        teammates = self.get_argument("teammates", "")
-        lable = self.get_argument("lable")
-        cover = self.get_argument("cover")
         type = '2'
-        copysign = self.get_argument("copysign")
+        values = self.get_values(('title', 'content', ('describe', ''),
+                                  'cover', 'lable', 'copysign',
+                                  ('teammates', '')))
+        if not values:
+            return self.write({'status': 0, 'code': "missing argument."})
         at = time.strftime("%Y-%m-%d %X", time.localtime())
-        addsql = ("insert into work (author_id,type,title,content,wdescribe,"
-                  "cover,lable,copysign,teammates,time) values(%s,%s,%s,%s,%s,"
-                  "%s,%s,%s,%s,%s)")
-        WorkManager.new_work(*(cuid, type, title, content, describe, cover,
-                               lable, copysign, teammates, at))
+        args = (cuid, type) + values + (at,)
+        WorkManager.new_work(*args)
         result = dict(status=1, code='')
         self.write(result)
 
@@ -325,7 +311,6 @@ class WorksPicuploadHandler(BaseHandler):
     @tornado.web.authenticated
     def post(self):
         cuser = self.get_current_user()
-        #print self.request
         workdir = os.path.dirname(sys.argv[0])
         for i in self.request.files:
             print i

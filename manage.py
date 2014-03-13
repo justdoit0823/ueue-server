@@ -110,15 +110,15 @@ class WorkManager:
             return None
 
     @staticmethod
-    def update_work_view(rid, num):
+    def update_work_view(wid, num):
 
-        sql = "update work set view=view+%s where eid=%s"
+        sql = "update work set view=view+%s where wid=%s"
 
         try:
 
             con = create_connection(**options.dbsettings)
 
-            return con.execute(sql, *(num, rid))
+            return con.execute(sql, *(num, wid))
 
         except Exception, e:
 
@@ -126,15 +126,15 @@ class WorkManager:
             return 0
 
     @staticmethod
-    def update_work_review(rid, num):
+    def update_work_review(wid, num):
 
-        sql = "update work set review=review+%s where eid=%s"
+        sql = "update work set review=review+%s where wid=%s"
 
         try:
 
             con = create_connection(**options.dbsettings)
 
-            return con.execute(sql, *(num, rid))
+            return con.execute(sql, *(num, wid))
 
         except Exception, e:
 
@@ -142,15 +142,15 @@ class WorkManager:
             return 0
 
     @staticmethod
-    def update_work_support(rid, num):
+    def update_work_support(wid, num):
 
-        sql = "update work set support=support+%s where eid=%s"
+        sql = "update work set support=support+%s where wid=%s"
 
         try:
 
             con = create_connection(**options.dbsettings)
 
-            return con.execute(sql, *(num, rid))
+            return con.execute(sql, *(num, wid))
 
         except Exception, e:
 
