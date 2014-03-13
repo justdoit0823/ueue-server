@@ -39,7 +39,7 @@ from hashlib import sha224, md5
 import tornado.web
 from tornado.options import define, options
 
-import UserManager
+from manage import UserManager
 
 define("noreply_account", default="noreply@ueue.cc",
        help="signup email check account")

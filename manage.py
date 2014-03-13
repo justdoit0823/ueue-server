@@ -333,6 +333,7 @@ class UserManager:
             log_mysql_error(e)
             return None
 
+    @staticmethod
     def get_user_withmail(mail):
 
         sql = ("select uid,account,img,status,password,status from user "
