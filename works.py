@@ -24,7 +24,7 @@ import re
 
 from hashlib import md5
 
-from manage import WorkManager, UserManager
+from manage import WorkManager, UserManager, ReviewManager
 
 
 '''The typevalue -1 is for all(default),0 for video,1 for music,
@@ -180,8 +180,7 @@ class WorkDetailHandler(BaseHandler):
     def get(self, id):
         wid = int(id)
         cuser = self.get_current_user()
-        updsql = "update work set view=view+1 where wid=%d" % wid
-        self.db.execute(updsql)
+        WorkManager.update_work_view(wid, 1)
         row = WorkManager.get_work_byid(wid)
         row.contet = row.content.replace("\'", "'")
         copysign = SUPORT_WORK_MARKS[int(row.copysign)]
@@ -198,9 +197,7 @@ class WorkDetailHandler(BaseHandler):
                           "flwid=%d") % (cuser.uid, row.uid)
                 flwrst = self.db.get(flwsql)
                 is_follow = flwrst and int(flwrst.relation)
-        revsql = ("select * from user join workreview on workreview.reviewuid"
-                  "=user.uid where workreview.reviewwid=%d") % wid
-        reviews = self.db.query(revsql)
+        reviews = ReviewManager.get_work_reviews(wid)
         work = SUPORT_WORKS[int(row.type)]
         self.render("yoez1.0beta/work-content-"+work+".html", cuser=cuser,
                     row=row, copysign=copysign, mid=mid, is_follow=is_follow,
@@ -212,11 +209,8 @@ class WorkDetailHandler(BaseHandler):
         content = self.get_argument("rcontent")
         content = content.replace("'", "\'")
         at = time.strftime("%Y-%m-%d %X", time.localtime())
-        updsql = "update work set review=review+1 where wid=%d" % wid
-        addsql = ("insert into workreview (reviewwid,reviewuid,content,time) "
-                  "values(%d,%d,'%s','%s')") % (wid, cuser.uid, content, at)
-        self.db.execute(addsql)
-        self.db.execute(updsql)
+        ReviewManager.new_work_review(*(wid, cuser.uid, content, at))
+        WorkManager.update_work_review(wid, 1)
         one = dict(uid=cuser.uid, img=cuser.img, account=cuser.account,
                    content=content.replace("\'", "'"), time=at)
         rmsg = self.render_string("modules/user_review_content.html", one=one)
@@ -242,11 +236,8 @@ class UserPostVideoworkHandler(BaseHandler):
         type = '0'
         copysign = self.get_argument("copysign")
         at = time.strftime("%Y-%m-%d %X", time.localtime())
-        addsql = ("insert into work (author_id,type,title,content,wdescribe,"
-                  "cover,lable,copysign,teammates,time) values(%s,%s,%s,%s,%s,"
-                  "%s,%s,%s,%s,%s)")
-        self.db.execute(addsql, cuid, type, title, content, describe, cover,
-                        lable, copysign, teammates, at)
+        WorkManager.new_work(*(cuid, type, title, content, describe,
+                               cover, lable, copysign, teammates, at))
         result = dict(status=1, code='')
         self.write(result)
 
@@ -269,11 +260,8 @@ class UserPostMusicworkHandler(BaseHandler):
         type = '1'
         copysign = self.get_argument("copysign")
         at = time.strftime("%Y-%m-%d %X", time.localtime())
-        addsql = ("insert into work (author_id,type,title,content,wdescribe,"
-                  "cover,lable,copysign,teammates,time) values(%s,%s,%s,%s,%s,"
-                  "%s,%s,%s,%s,%s)")
-        self.db.execute(addsql, cuid, type, title, content, describe, cover,
-                        lable, copysign, teammates, at)
+        WorkManager.new_work(*(cuid, type, title, content, describe, cover,
+                               lable, copysign, teammates, at))
         result = dict(status=1, code='')
         self.write(result)
 
@@ -299,8 +287,8 @@ class UserPostArticleworkHandler(BaseHandler):
         addsql = ("insert into work (author_id,type,title,content,wdescribe,"
                   "cover,lable,copysign,teammates,time) values(%s,%s,%s,%s,%s,"
                   "%s,%s,%s,%s,%s)")
-        self.db.execute(addsql, cuid, type, title, content, describe, cover,
-                        lable, copysign, teammates, at)
+        WorkManager.new_work(*(cuid, type, title, content, describe, cover,
+                               lable, copysign, teammates, at))
         result = dict(status=1, code='')
         self.write(result)
 
@@ -326,8 +314,8 @@ class UserPostPictureworkHandler(BaseHandler):
         addsql = ("insert into work (author_id,type,title,content,wdescribe,"
                   "cover,lable,copysign,teammates,time) values(%s,%s,%s,%s,%s,"
                   "%s,%s,%s,%s,%s)")
-        self.db.execute(addsql, cuid, type, title, content, describe, cover,
-                        lable, copysign, teammates, at)
+        WorkManager.new_work(*(cuid, type, title, content, describe, cover,
+                               lable, copysign, teammates, at))
         result = dict(status=1, code='')
         self.write(result)
 

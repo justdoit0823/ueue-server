@@ -25,7 +25,9 @@ import module
 
 from hashlib import md5
 
-from manage import RecordManager, UserManager
+from manage import RecordManager, UserManager, ReviewManager
+
+from manage import ViewManager
 
 SUPPORT_EVENTS = ["pubwelfare", "job", "award",
                   "recruit", "declare", "media",
@@ -81,7 +83,6 @@ class UserPostHandler(BaseHandler):
         content = self.get_argument('content')
         content = content.replace("'", "\'")
         cuid = self.get_secure_cookie("_yoez_uid")
-        #sql = ("insert into event (author_id,type,title,content,picture,place,"
         #       "lable,time) values(%s,%s,%s,%s,%s,%s,%s,%s)")
         #args = [cuid, etype, title, content, pic, place, lable, time]
         #return self.db.execute(sql, *args)
@@ -205,24 +206,18 @@ class EventDetailHandler(BaseHandler):
         if row is None:
             return self.write("sorry!the page you request does not exists.")
         row.contet = row.content.replace("\'", "'")
-        review_sql = ("select * from user join eventreview on eventreview."
-                      "reviewuid=user.uid where eventreview.revieweid=%s")
-        reviews = self.db.query(review_sql, eid)
+        reviews = ReviewManager.get_record_reviews(eid)
         for i in reviews:
             i.content = i.content.replace("\'", "'")
         if not cuser:
             RecordManager.update_record_view(eid, 1)
         else:
-            if(not cuser.uid == row.uid):
-                chksql = ("select * from eventview where vieweid=%d and "
-                          "viewuid=%d") % (eid, cuser.uid)
-                rt = self.db.get(chksql)
+            if not (cuser.uid == row.uid):
+                rt = ViewManager.user_view_record(cuser.uid, eid)
                 if not rt:
                     at = time.strftime("%Y-%m-%d %X", time.localtime())
-                    addsql = ("insert into eventview (vieweid,viewuid,time) "
-                              "values(%d,%d,'%s')") % (eid, cuser.uid, at)
-                    self.db.execute(addsql)
-                    self.db.execute(upview)
+                    ViewManager.new_record_view(*(eid, cuser.uid, at))
+                    RecordManager.update_record_view(eid, 1)
         is_follow = False
         if cuser:
             if(cuser.uid == row.uid):
@@ -259,11 +254,9 @@ class EventDetailHandler(BaseHandler):
         content = self.get_argument("rcontent")
         content = content.replace("'", "\'")
         at = time.strftime("%Y-%m-%d %X", time.localtime())
-        addsql = ("insert into eventreview (revieweid,reviewuid,content,time) "
-                  "values(%d,%d,'%s','%s')") % (eid, cuser.uid, content, at)
-        updsql = "update event set review=review+1 where eid=%d" % eid
-        self.db.execute(addsql)
-        self.db.execute(updsql)
+        args = (eid, cuser.uid, content, at)
+        ReviewManager.new_record_review(*args)
+        ReviewManager.update_record_review(eid, 1)
         one = dict(uid=cuser.uid, img=cuser.img, account=cuser.account,
                    content=content.replace("\'", "'"), time=at)
         rmsg = self.render_string("modules/user_review_content.html", one=one)

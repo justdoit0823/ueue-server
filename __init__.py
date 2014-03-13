@@ -107,11 +107,8 @@ class BaseHandler(tornado.web.RequestHandler):
     def get_current_user(self):
 
         cuser = self.get_secure_cookie("_yoez_uid")
-        if(cuser):
-            user_sql = ("select account,uid,img,status,time from user "
-                        "where uid=%s")
-            user = self.db.get(user_sql, cuser)
-            #USER_CACHE[cuser]=user
+        if cuser:
+            user = manage.UserManager.get_user_withid(cuser)
             return user
         else:
             return None

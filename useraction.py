@@ -39,8 +39,15 @@ from hashlib import sha224, md5
 import tornado.web
 from tornado.options import define, options
 
+import UserManager
+
 define("noreply_account", default="noreply@ueue.cc",
        help="signup email check account")
+
+
+def check_password(input_psw, salt, check_psw):
+
+    return (sha224(input_psw + salt).hexdigest() == check_psw)
 
 
 class UserLoginHandler(BaseHandler):
@@ -51,27 +58,29 @@ class UserLoginHandler(BaseHandler):
     def post(self):
         email = self.get_argument("email")
         psw = self.get_argument("password")
-        psw = sha224(psw).hexdigest()
-        print psw
         go = self.get_argument("next", "/")
-        result = self.db.get(("select uid,account,status from user where "
-                              "email='%s' and password='%s'") % (email, psw))
-        print result
+        result = UserManager.get_user_withmail(email)
         json = {}
         if result:
-            if(result.status > USER_STATUS["unactive"]):
-                if(result.status == USER_STATUS["lock"]):
-                    json = dict(error=1, msg='你的帐号以被暂停使用，请联系客服', url=go)
+            salt = ""
+            check = check_password(psw, salt, result.password)
+            if check:
+                if(result.status > USER_STATUS["unactive"]):
+                    if(result.status == USER_STATUS["lock"]):
+                        json = dict(error=1, msg='你的帐号以被暂停使用，请联系客服', url=go)
+                    else:
+                        self.set_secure_cookie("_yoez_uid",
+                                               str(result.uid), expires_days=7,
+                                               domain=WWW_COOKIE_DOMAIN)
+                        json = dict(error=0, msg='', url=go)
                 else:
-                    self.set_secure_cookie("_yoez_uid",
-                                           str(result.uid), expires_days=7,
-                                           domain=WWW_COOKIE_DOMAIN)
-                    json = dict(error=0, msg='', url=go)
+                    tip = "请完成邮箱激活"
+                    json = dict(error=1, msg=tip, url='/user/action/login')
             else:
-                tip = "请完成邮箱激活"
+                tip = "密码错误"
                 json = dict(error=1, msg=tip, url='/user/action/login')
         else:
-            tip = "用户名或密码错误"
+            tip = "用户不存在"
             json = dict(error=1, msg=tip, url='/user/action/login')
         self.write(json)
 
@@ -79,13 +88,13 @@ class UserLoginHandler(BaseHandler):
 class UserLogoutHandler(BaseHandler):
 
     def get(self):
-        cuser = self.get_current_user()
         self.clear_current_user()
         go = self.get_argument("next", "/")
         self.redirect(go)
 
 
 class UserSignupHandler(BaseHandler):
+
     def get(self):
         self.render("register1.0beta/register-1.html")
 
@@ -93,7 +102,6 @@ class UserSignupHandler(BaseHandler):
         act = self.get_argument("nick")
         mail = self.get_argument("email")
         psw = self.get_argument("password")
-        print psw
         psw = sha224(psw).hexdigest()
         num = random.randint(1, 10)
         img = "/static/img/common/avt"+str(num)+".jpg"
@@ -106,14 +114,12 @@ class UserSignupHandler(BaseHandler):
             if not rt:
                 break
         code = md5(str(uid)+reg_time).hexdigest()
-        sql = ("insert into user(uid,account,email,password,img,"
-               "time,code) values ('%d','%s','%s','%s','%s','%s',"
-               "'%s')") % (uid, act, mail, psw, img, reg_time, code)
         msg = self.render_string("register1.0beta/config_email.htm",
                                  act=act, co=code)
         sub = "请完成账号激活"
         send(options.noreply_account, mail, sub, msg)
-        self.db.execute(sql)
+        args = (uid, act, mail, psw, img, reg_time, code)
+        UserManager.new_user(*args)
         left, right = mail.split('@')
         rlft, rght = right.split('.')
         if rlft == "gmail":
@@ -167,7 +173,7 @@ class UserActiveHandler(BaseHandler):
                             '''点此登陆</a>'''))
         else:
             self.write(('''验证错误，请检查地址有错误没。如果还是不行，请<a href='''
-                        '''"mailto:shareyou.net.cn@gmail.com">联系我们</a>,'''
+                        '''"mailto:noreply@ueue.cc">联系我们</a>,'''
                         '''我们会为你解决的。'''))
 
 
