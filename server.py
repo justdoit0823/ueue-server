@@ -117,7 +117,6 @@ class MyApplication(tornado.web.Application):
             (r"/index", IndexHandler),
             (r"/professional", ProfessionalHandler),
             (r"/vane", ClubHandler),
-            #(r"/user/statement", UserStatementHandler),
             (r"/about/oneminute", AboutOneminHandler),
             (r"/about/partners", AboutPartnersHandler),
             #(r"/static/img/([a-zA-Z0-9.]+)", StaticImgHandler),

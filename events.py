@@ -81,14 +81,25 @@ class UserPostHandler(BaseHandler):
         content = self.get_argument('content')
         content = content.replace("'", "\'")
         cuid = self.get_secure_cookie("_yoez_uid")
-        sql = ("insert into event (author_id,type,title,content,picture,place,"
-               "lable,time) values(%s,%s,%s,%s,%s,%s,%s,%s)")
-        args = [cuid, etype, title, content, pic, place, lable, time]
-        return self.db.execute(sql, *args)
+        #sql = ("insert into event (author_id,type,title,content,picture,place,"
+        #       "lable,time) values(%s,%s,%s,%s,%s,%s,%s,%s)")
+        #args = [cuid, etype, title, content, pic, place, lable, time]
+        #return self.db.execute(sql, *args)
+        RecordManager.new_record()
 
-    def do_event_delete(self):
 
-        pass
+def do_record_add(request, rtype):
+
+    time = request.get_argument('time')
+    place = request.get_argument('place')
+    lable = request.get_argument('lable')
+    title = request.get_argument('title')
+    pic = request.get_argument("uploadpic", "")
+    content = request.get_argument('content')
+    content = content.replace("'", "\'")
+    cuid = request.get_secure_cookie("_yoez_uid")
+    args = (cuid, rtype, title, content, pic, place, lable, time)
+    RecordManager.new_record(*args)
 
 
 class RecordHandler(BaseHandler):
@@ -168,9 +179,9 @@ class UserEventsHandler(BaseHandler):
         user = UserManager.get_user_withid(uid)
         if user is None:
             return self.write("sorry!the page you request does not exists.")
-        rows = RecordManager.get_recordlist(uid, type)
-        #for one in rows:
-        #    one.contet = one.content.replace("\'", "'")
+        rows = RecordManager.get_user_records(uid, type)
+        for one in rows:
+            one.contet = one.content.replace("\'", "'")
         userself = cuser and (uid == cuser.uid)
         consql = ("select * from contactinfo join basicinfo on "
                   "con_id=bsc_id where con_id=%s")
@@ -190,8 +201,7 @@ class EventDetailHandler(BaseHandler):
             is_support = (rt is not None)
         else:
             is_support = False
-        upview = "update event set view=view+1 where eid=%d" % eid
-        row = RecordManager.get_user_record(eid)
+        row = RecordManager.get_record_byid(eid)
         if row is None:
             return self.write("sorry!the page you request does not exists.")
         row.contet = row.content.replace("\'", "'")
@@ -201,7 +211,7 @@ class EventDetailHandler(BaseHandler):
         for i in reviews:
             i.content = i.content.replace("\'", "'")
         if not cuser:
-            self.db.execute(upview)
+            RecordManager.update_record_view(eid, 1)
         else:
             if(not cuser.uid == row.uid):
                 chksql = ("select * from eventview where vieweid=%d and "
@@ -291,162 +301,162 @@ class UserPosteventHandler(BaseHandler):
         self.render('editor1.0beta/editor-event-default.html', cuser=cuser)
 
 
-class UserPostPubwelfareventHandler(UserPostHandler):
+class UserPostPubwelfareventHandler(BaseHandler):
     @tornado.web.authenticated
     def get(self):
 
         cuser = self.get_current_user()
-        url = self.get_argument("backurl", "/")
+        url = self.request.headers.get("Referer", "/")
         kwargs = dict(cuser=cuser, eventxt=EVENTLIKEY[0], url=url)
         self.render('editor1.0beta/editor-event-0.html', **kwargs)
 
     def post(self):
 
         cuid = self.get_secure_cookie("_yoez_uid")
-        self.do_event_add('0')
+        do_event_add(self, '0')
         self.write(dict(status=1, code=''))
 
 
-class UserPostJobeventHandler(UserPostHandler):
+class UserPostJobeventHandler(BaseHandler):
     @tornado.web.authenticated
     def get(self):
 
         cuser = self.get_current_user()
-        url = self.get_argument("backurl", "/")
+        url = self.request.headers.get("Referer", "/")
         kwargs = dict(cuser=cuser, eventxt=EVENTLIKEY[1], url=url)
         self.render('editor1.0beta/editor-event-1.html', **kwargs)
 
     def post(self):
 
-        self.do_event_add('1')
+        do_event_add(self, '1')
         self.write(dict(status=1, code=''))
 
 
-class UserPostAwardeventHandler(UserPostHandler):
+class UserPostAwardeventHandler(BaseHandler):
     @tornado.web.authenticated
     def get(self):
 
         cuser = self.get_current_user()
-        url = self.get_argument("backurl", "/")
+        url = self.request.headers.get("Referer", "/")
         kwargs = dict(cuser=cuser, eventxt=EVENTLIKEY[2], url=url)
         self.render('editor1.0beta/editor-event-2.html', **kwargs)
 
     def post(self):
 
         cuid = self.get_secure_cookie("_yoez_uid")
-        self.do_event_add('2')
+        do_event_add(self, '2')
         self.write(dict(status=1, code=''))
 
 
-class UserPostRecruiteventHandler(UserPostHandler):
+class UserPostRecruiteventHandler(BaseHandler):
     @tornado.web.authenticated
     def get(self):
 
         cuser = self.get_current_user()
-        url = self.get_argument("backurl", "/")
+        url = self.request.headers.get("Referer", "/")
         kwargs = dict(cuser=cuser, eventxt=EVENTLIKEY[3], url=url)
         self.render('editor1.0beta/editor-event-3.html', **kwargs)
 
     def post(self):
 
         cuid = self.get_secure_cookie("_yoez_uid")
-        self.do_event_add('3')
+        do_event_add(self, '3')
         self.write(dict(status=1, code=''))
 
 
-class UserPostDeclareventHandler(UserPostHandler):
+class UserPostDeclareventHandler(BaseHandler):
     @tornado.web.authenticated
     def get(self):
 
         cuser = self.get_current_user()
-        url = self.get_argument("backurl", "/")
+        url = self.request.headers.get("Referer", "/")
         kwargs = dict(cuser=cuser, eventxt=EVENTLIKEY[4], url=url)
         self.render('editor1.0beta/editor-event-4.html', **kwargs)
 
     def post(self):
 
         cuid = self.get_secure_cookie("_yoez_uid")
-        self.do_event_add('4')
+        do_event_add(self, '4')
         self.write(dict(status=1, code=''))
 
 
-class UserPostMediaeventHandler(UserPostHandler):
+class UserPostMediaeventHandler(BaseHandler):
     @tornado.web.authenticated
     def get(self):
 
         cuser = self.get_current_user()
-        url = self.get_argument("backurl", "/")
+        url = self.request.headers.get("Referer", "/")
         kwargs = dict(cuser=cuser, eventxt=EVENTLIKEY[5], url=url)
         self.render('editor1.0beta/editor-event-5.html', **kwargs)
 
     def post(self):
 
         cuid = self.get_secure_cookie("_yoez_uid")
-        self.do_event_add('5')
+        do_event_add(self, '5')
         self.write(dict(status=1, code=''))
 
 
-class UserPostMediaeventHandler(UserPostHandler):
+class UserPostMediaeventHandler(BaseHandler):
     @tornado.web.authenticated
     def get(self):
 
         cuser = self.get_current_user()
-        url = self.get_argument("backurl", "/")
+        url = self.request.headers.get("Referer", "/")
         kwargs = dict(cuser=cuser, eventxt=EVENTLIKEY[5], url=url)
         self.render('editor1.0beta/editor-event-5.html', **kwargs)
 
     def post(self):
 
         cuid = self.get_secure_cookie("_yoez_uid")
-        self.do_event_add('5')
+        do_event_add(self, '5')
         self.write(dict(status=1, code=''))
 
 
-class UserPostExpeventHandler(UserPostHandler):
+class UserPostExpeventHandler(BaseHandler):
     @tornado.web.authenticated
     def get(self):
 
         cuser = self.get_current_user()
-        url = self.get_argument("backurl", "/")
+        url = self.request.headers.get("Referer", "/")
         kwargs = dict(cuser=cuser, eventxt=EVENTLIKEY[6], url=url)
         self.render('editor1.0beta/editor-event-6.html', **kwargs)
 
     def post(self):
 
         cuid = self.get_secure_cookie("_yoez_uid")
-        self.do_event_add('6')
+        do_event_add(self, '6')
         self.write(dict(status=1, code=''))
 
 
-class UserPostGameseventHandler(UserPostHandler):
+class UserPostGameseventHandler(BaseHandler):
     @tornado.web.authenticated
     def get(self):
 
         cuser = self.get_current_user()
-        url = self.get_argument("backurl", "/")
+        url = self.request.headers.get("Referer", "/")
         kwargs = dict(cuser=cuser, eventxt=EVENTLIKEY[7], url=url)
         self.render('editor1.0beta/editor-event-7.html', **kwargs)
 
     def post(self):
 
         cuid = self.get_secure_cookie("_yoez_uid")
-        self.do_event_add('7')
+        do_event_add(self, '7')
         self.write(dict(status=1, code=''))
 
 
-class UserPostOfficialeventHandler(UserPostHandler):
+class UserPostOfficialeventHandler(BaseHandler):
     @tornado.web.authenticated
     def get(self):
 
         cuser = self.get_current_user()
-        url = self.get_argument("backurl", "/")
+        url = self.request.headers.get("Referer", "/")
         kwargs = dict(cuser=cuser, eventxt=EVENTLIKEY[8], url=url)
         self.render('editor1.0beta/editor-event-8.html', **kwargs)
 
     def post(self):
 
         cuid = self.get_secure_cookie("_yoez_uid")
-        self.do_event_add('8')
+        do_event_add(self, '8')
         self.write(dict(status=1, code=''))
 
 

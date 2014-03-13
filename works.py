@@ -24,6 +24,9 @@ import re
 
 from hashlib import md5
 
+from manage import WorkManager, UserManager
+
+
 '''The typevalue -1 is for all(default),0 for video,1 for music,
 2 for picture,3 for article.'''
 
@@ -148,26 +151,18 @@ class UserWorksHandler(BaseHandler):
         cuser = self.get_current_user()
         type = int(self.get_argument("type", -1))
         worklist = {'-1': 0, '0': 0, '1': 0, '2': 0, '3': 0}
-        user_sql = "select * from user where uid=%d" % uid
-        user = self.db.get(user_sql)
-        if not user:
+        user = UserManager.get_user_withid(uid)
+        if user is None:
             return self.write("sorry!the page you request does not exists.")
-        if(type > -1):
-            work_sql = ("select * from user join work on work.author_id="
-                        "user.uid where work.author_id=%d and "
-                        "type=%d") % (uid, type)
-        else:
-            work_sql = ("select * from user join work on work.author_id="
-                        "user.uid where user.uid=%d") % uid
         consql = ("select * from contactinfo join basicinfo on con_id="
                   "bsc_id where con_id=%d") % uid
-        rows = self.db.query(work_sql)
+        rows = WorkManager.get_user_works(uid, type)
         conrow = self.db.get(consql)
         worklist['-1'] = len(rows)
         for one in rows:
             worklist[one.type] += 1
             one.contet = one.content.replace("\'", "'")
-        userself = cuser and (cuser.uid == user.uid)
+        userself = cuser and (cuser.uid == uid)
         is_authenticate = int(user.status) == USER_STATUS["authenticate"]
         followed = False
         if not userself and cuser:
@@ -186,10 +181,8 @@ class WorkDetailHandler(BaseHandler):
         wid = int(id)
         cuser = self.get_current_user()
         updsql = "update work set view=view+1 where wid=%d" % wid
-        event_sql = ("select * from user join work on work.author_id=user.uid "
-                     "where work.wid=%d") % wid
         self.db.execute(updsql)
-        row = self.db.get(event_sql)
+        row = WorkManager.get_work_byid(wid)
         row.contet = row.content.replace("\'", "'")
         copysign = SUPORT_WORK_MARKS[int(row.copysign)]
         if(row.type == '1'):
@@ -235,7 +228,7 @@ class UserPostVideoworkHandler(BaseHandler):
     @tornado.web.authenticated
     def get(self):
         cuser = self.get_current_user()
-        url = self.get_argument("backurl", "/")
+        url = self.request.headers.get("Referer", "/")
         self.render('editor1.0beta/editor-work-2.html', cuser=cuser, url=url)
 
     def post(self):
@@ -262,7 +255,7 @@ class UserPostMusicworkHandler(BaseHandler):
     @tornado.web.authenticated
     def get(self):
         cuser = self.get_current_user()
-        url = self.get_argument("backurl", "/")
+        url = self.request.headers.get("Referer", "/")
         self.render('editor1.0beta/editor-work-3.html', cuser=cuser, url=url)
 
     def post(self):
@@ -289,7 +282,7 @@ class UserPostArticleworkHandler(BaseHandler):
     @tornado.web.authenticated
     def get(self):
         cuser = self.get_current_user()
-        url = self.get_argument("backurl", "/")
+        url = self.request.headers.get("Referer", "/")
         self.render('editor1.0beta/editor-work-4.html', cuser=cuser, url=url)
 
     def post(self):
@@ -316,7 +309,7 @@ class UserPostPictureworkHandler(BaseHandler):
     @tornado.web.authenticated
     def get(self):
         cuser = self.get_current_user()
-        url = self.get_argument("backurl", "/")
+        url = self.request.headers.get("Referer", "/")
         self.render('editor1.0beta/editor-work-1.html', cuser=cuser, url=url)
 
     def post(self):
@@ -445,6 +438,7 @@ class WorkDeleteHandler(BaseHandler):
 HandlerList = [
     (r"/works", WorksHandler),
     #(r"/worksearch",WorkSearchHandler),
+    (r"/([0-9]+)/works", UserWorksHandler),
     (r"/work/([0-9]+)", WorkDetailHandler),
     (r"/user/postwork/video", UserPostVideoworkHandler),
     (r"/user/postwork/music", UserPostMusicworkHandler),
