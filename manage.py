@@ -4,6 +4,7 @@
 
 __version__ = '0.0.1'
 
+
 from tornado import database
 
 from tornado.options import define, options
@@ -45,7 +46,7 @@ def log_mysql_error(args):
         logging.error(error_msg)
 
 
-def do_db_request(sql, *args):
+def do_query_request(sql, *args):
 
     '''do real db request with sql and args'''
 
@@ -71,14 +72,8 @@ class WorkManager:
                    "W.time desc limit %s")
         if offset is not None:
             args.insert(0, offset)
-            worksql = worksql + ",%s"
-        try:
-            con = create_connection(**options.dbsettings)
-
-            return con.query(worksql, *args)
-        except Exception, e:
-            log_mysql_error(e)
-            return None
+            worksql = ','.join((worksql, '%s'))
+        return do_query_request(worksql, *args)
 
     @staticmethod
     def get_work_byid(wid):
@@ -113,14 +108,7 @@ class WorkManager:
                    "as U join work as W on W.author_id=U.uid where U.uid=%s"
                    " and W.type=%s order by W.time desc")
             args.append(type)
-        try:
-
-            con = create_connection(**options.dbsettings)
-            return con.query(sql, *args)
-        except Exception, e:
-
-            log_mysql_error(e)
-            return None
+        return do_query_request(sql, *args)
 
     @staticmethod
     def update_work_view(wid, num):
@@ -204,15 +192,7 @@ class RecordManager:
             sql = ("select E.eid,E.title,E.content,E.type,E.place,E.lable,"
                    "E.time from event as E where E.author_id=%s order by "
                    "E.time desc")
-        try:
-
-            con = create_connection(**options.dbsettings)
-
-            return con.query(sql, *args)
-
-        except Exception, e:
-            log_mysql_error(e)
-            return None
+        return do_query_request(sql, *args)
 
     @staticmethod
     def get_latest_records(limit, offset=None):
@@ -227,14 +207,8 @@ class RecordManager:
         if offset is not None:
 
             args.insert(0, offset)
-            sql += ",%s"
-        try:
-
-            con = create_connection(**options.dbsettings)
-            return con.query(sql, *args)
-        except Exception, e:
-            log_mysql_error(e)
-            return None
+            sql = ','.join((sql, '%s'))
+        return do_query_request(sql, *args)
 
     @staticmethod
     def get_record_byid(rid):
@@ -361,6 +335,25 @@ class UserManager:
             return None
 
     @staticmethod
+    def get_pro_users():
+
+        sql = ("select U.uid,U.account,U.img,U.status,U.time,BI.job,BI.area "
+               "from user as U join basicinfo as BI on U.uid=BI.bsc_id where "
+               "U.status >= %s")
+        return do_query_request(sql, options.userstatus['infoset'])
+
+    @staticmethod
+    def get_latest_users(limit, offset=None):
+
+        args = [options.userstatus['normal'], limit]
+        sql = ("select uid,account,img from user where status >= %s order by "
+               "time limit %s")
+        if offset:
+            args.insert(1, offset)
+            sql = ','.join((sql, '%s'))
+        return do_query_request(sql, *args)
+
+    @staticmethod
     def new_user(*args):
 
         sql = ("insert into user(uid,account,email,password,img,"
@@ -427,15 +420,9 @@ class ReviewManager:
                "ER join user as U on ER.reviewuid=U.uid order by ER.time desc "
                "limit %s")
         if offset is not None:
-            sql += ",%s"
+            sql = ','.join((sql, '%s'))
             args.insert(0, offset)
-        try:
-
-            con = create_connection(**options.dbsettings)
-            return con.query(sql, *args)
-        except Exception, e:
-            log_mysql_error(e)
-            return None
+        return do_query_request(sql, *args)
 
     @staticmethod
     def new_record_review(*args):
@@ -456,13 +443,7 @@ class ReviewManager:
         sql = ("select ER.content,ER.time,U.uid,U.account,U.img from "
                "eventreview as ER join user as U on ER.reviewuid=U.uid "
                "where ER.revieweid=%s")
-        try:
-            con = create_connection(**options.dbsettings)
-            return con.query(sql, rid)
-        except Exception, e:
-
-            log_mysql_error(e)
-            return None
+        return do_query_request(sql, rid)
 
     @staticmethod
     def new_work_review(*args):
@@ -483,13 +464,7 @@ class ReviewManager:
         sql = ("select WR.content,WR.time,U.uid,U.account,U.img from "
                "workreview as WR join user as U on WR.reviewuid=U.uid "
                "where WR.reviewwid=%s")
-        try:
-            con = create_connection(**options.dbsettings)
-            return con.query(sql, wid)
-        except Exception, e:
-
-            log_mysql_error(e)
-            return None
+        return do_query_request(sql, wid)
 
 
 class ViewManager:

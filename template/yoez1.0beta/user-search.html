@@ -14,7 +14,6 @@
 <script type="text/javascript" src="http://static.ueue.cc/www/js/index.js"></script>
 <script type="text/javascript" src="http://static.ueue.cc/www/js/jquery.form-2.67.js"></script>
 <script type="text/javascript" src="http://static.ueue.cc/www/js/common.js"></script>
-<script src="http://tjs.sjs.sinajs.cn/open/api/js/wb.js" type="text/javascript" charset="utf-8"></script>
 </head>
 <body>
 <!--header begain-->
@@ -411,131 +410,13 @@
 				</div>
 				<div class="ue-user-right-list">
 					<ul>
+					  {% for u in users %}
 						<li>
-							<a href="#">
-								<img src="http://static.ueue.cc/www/img/common/avt1.jpg" width="50" height="50" alt="姓名" title="姓名"/>
+							<a href="/{{u.uid}}">
+								<img src="{{u.img}}" width="50" height="50" alt="{{u.account}}" title="{{u.account}}"/>
 							</a>
 						</li>
-						<li>
-							<a href="#">
-								<img src="http://static.ueue.cc/www/img/common/avt2.jpg" width="50" height="50" alt="姓名" title="姓名"/>
-							</a>
-						</li>
-						<li>
-							<a href="#">
-								<img src="http://static.ueue.cc/www/img/common/avt3.jpg" width="50" height="50" alt="姓名" title="姓名"/>
-							</a>
-						</li>
-						<li>
-							<a href="#">
-								<img src="http://static.ueue.cc/www/img/common/avt4.jpg" width="50" height="50" alt="姓名" title="姓名"/>
-							</a>
-						</li>
-						<li>
-							<a href="#">
-								<img src="http://static.ueue.cc/www/img/common/avt5.jpg" width="50" height="50" alt="姓名" title="姓名"/>
-							</a>
-						</li>
-						<li>
-							<a href="#">
-								<img src="http://static.ueue.cc/www/img/common/avt6.jpg" width="50" height="50" alt="姓名" title="姓名"/>
-							</a>
-						</li>
-						<li>
-							<a href="#">
-								<img src="http://static.ueue.cc/www/img/common/avt1.jpg" width="50" height="50" alt="姓名" title="姓名"/>
-							</a>
-						</li>
-						<li>
-							<a href="#">
-								<img src="http://static.ueue.cc/www/img/common/avt2.jpg" width="50" height="50" alt="姓名" title="姓名"/>
-							</a>
-						</li>
-						<li>
-							<a href="#">
-								<img src="http://static.ueue.cc/www/img/common/avt3.jpg" width="50" height="50" alt="姓名" title="姓名"/>
-							</a>
-						</li>
-						<li>
-							<a href="#">
-								<img src="http://static.ueue.cc/www/img/common/avt4.jpg" width="50" height="50" alt="姓名" title="姓名"/>
-							</a>
-						</li>
-						<li>
-							<a href="#">
-								<img src="http://static.ueue.cc/www/img/common/avt5.jpg" width="50" height="50" alt="姓名" title="姓名"/>
-							</a>
-						</li>
-						<li>
-							<a href="#">
-								<img src="http://static.ueue.cc/www/img/common/avt6.jpg" width="50" height="50" alt="姓名" title="姓名"/>
-							</a>
-						</li>
-						<li>
-							<a href="#">
-								<img src="http://static.ueue.cc/www/img/common/avt1.jpg" width="50" height="50" alt="姓名" title="姓名"/>
-							</a>
-						</li>
-						<li>
-							<a href="#">
-								<img src="http://static.ueue.cc/www/img/common/avt2.jpg" width="50" height="50" alt="姓名" title="姓名"/>
-							</a>
-						</li>
-						<li>
-							<a href="#">
-								<img src="http://static.ueue.cc/www/img/common/avt3.jpg" width="50" height="50" alt="姓名" title="姓名"/>
-							</a>
-						</li>
-						<li>
-							<a href="#">
-								<img src="http://static.ueue.cc/www/img/common/avt4.jpg" width="50" height="50" alt="姓名" title="姓名"/>
-							</a>
-						</li>
-						<li>
-							<a href="#">
-								<img src="http://static.ueue.cc/www/img/common/avt5.jpg" width="50" height="50" alt="姓名" title="姓名"/>
-							</a>
-						</li>
-						<li>
-							<a href="#">
-								<img src="http://static.ueue.cc/www/img/common/avt6.jpg" width="50" height="50" alt="姓名" title="姓名"/>
-							</a>
-						</li>
-						<li>
-							<a href="#">
-								<img src="http://static.ueue.cc/www/img/common/avt.jpg" width="50" height="50" alt="姓名" title="姓名"/>
-							</a>
-						</li>
-						<li>
-							<a href="#">
-								<img src="http://static.ueue.cc/www/img/common/avt8.jpg" width="50" height="50" alt="姓名" title="姓名"/>
-							</a>
-						</li>
-						<li>
-							<a href="#">
-								<img src="http://static.ueue.cc/www/img/common/avt3.jpg" width="50" height="50" alt="姓名" title="姓名"/>
-							</a>
-						</li>
-						<li>
-							<a href="#">
-								<img src="http://static.ueue.cc/www/img/common/avt7.jpg" width="50" height="50" alt="姓名" title="姓名"/>
-							</a>
-						</li>
-						<li>
-							<a href="#">
-								<img src="http://static.ueue.cc/www/img/common/avt5.jpg" width="50" height="50" alt="姓名" title="姓名"/>
-							</a>
-						</li>
-						<li>
-							<a href="#">
-								<img src="http://static.ueue.cc/www/img/common/avt6.jpg" width="50" height="50" alt="姓名" title="姓名"/>
-							</a>
-						</li>
-						<li>
-							<a href="#">
-								<img src="http://static.ueue.cc/www/img/common/avt.jpg" width="50" height="50" alt="姓名" title="姓名"/>
-							</a>
-						</li>
+					  {% end %}
 					</ul>
 				</div>
 			</div>
@@ -616,5 +497,6 @@ $(".yz-idx-show-search-tag li a").click(function(event){
 
 
 </script>
+<script src="http://tjs.sjs.sinajs.cn/open/api/js/wb.js" type="text/javascript" charset="utf-8"></script>
 </body>
 </html>

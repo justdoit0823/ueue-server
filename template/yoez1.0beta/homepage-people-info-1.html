@@ -75,7 +75,7 @@
 						<span>体重</span>
 						{% if user.weight %}{{user.weight.split('&')[0]}} Kg{% else %}{{deftxt}}{% end %}
 					</p>
-					{% if contact.sex %}
+					{% if isw %}
 					<p>
 						<span>三围</span>
 						{{sanweistr}}

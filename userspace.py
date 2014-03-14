@@ -124,14 +124,14 @@ class UserProfileHandler(BaseHandler):
                       "flwid=%d") % (cuser.uid, uid)
             flwrst = self.db.get(flwsql)
             followed = flwrst and int(flwrst.relation)
-        if user.extend:
+        isw = int(contact.sex)
+        if isw and user.extend:
             sanwei = user.extend.split("&")[0]
             sanweistr = formate_sanwei_str(sanwei)
-        #print sanwei
         self.render("yoez1.0beta/homepage-people-info-1.html", user=user,
                     cuser=cuser, userself=userself, contact=contact,
                     is_auth=is_authenticate, followed=followed,
-                    deftxt=DEFAULT_TEXT, sanweistr=sanweistr)
+                    deftxt=DEFAULT_TEXT, isw=isw, sanweistr=sanweistr)
 
 
 HandlerList = [

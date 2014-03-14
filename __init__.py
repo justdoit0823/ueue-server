@@ -29,9 +29,9 @@ define("mysql_host", default="127.0.0.1:3306", help="ueue database host")
 define("mysql_database", default="yoez", help="ueue database name")
 define("mysql_user", default="justdoit", help="ueue database user")
 define("mysql_password", default='', help="ueue database password")
-define("dbsettings", default={}, help="ueue database settings")
+define("dbsettings", default={}, help="ueue database settings", type=dict)
 define("noreply_password",
-       default=None, help="signup email check account password")
+       default='', help="signup email check account password")
 
 define("server_port0", default=10000, help="run on the given port", type=int)
 define("server_port1", default=10001, help="run on the given port", type=int)
@@ -40,6 +40,8 @@ define("server_port3", default=10003, help="run on the given port", type=int)
 define("pidfile", default=None, help="pid file for the daemon process",
        type=str)
 
+
+define("userstatus", default={}, help="user status dict", type=dict)
 # define site server hosts
 
 ROOT_HOST = "ueue.cc"
@@ -145,12 +147,11 @@ class BaseHandler(tornado.web.RequestHandler):
                 return ()
         return tuple(values)
 
-    @staticmethod
     def get_previous_url(self, default='/'):
 
         '''use the Referer in http header to indicate the previous url'''
 
-        url = self.rquest.headers.get("Referer", default)
+        url = self.request.headers.get("Referer", default)
         if url.find(ROOT_HOST) == -1:
             url = WEB_HOST
         return url
@@ -203,6 +204,7 @@ def initconfig(path):
         'user': options.mysql_user,
         'password': options.mysql_password,
     }
+    options.userstatus = USER_STATUS
 
 
 #set image size

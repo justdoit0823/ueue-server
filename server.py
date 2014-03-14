@@ -27,6 +27,8 @@ import logging
 
 from manage import WorkManager, RecordManager, ReviewManager
 
+from manage import UserManager
+
 #rewrite RequestHandler
 
 BUF_READ_SIZE = 4096
@@ -45,10 +47,10 @@ class HomeHandler(BaseHandler):
 class ProfessionalHandler(BaseHandler):
     def get(self):
         cuser = self.get_current_user()
-        usersql = ("select * from user join basicinfo on uid=bsc_id where "
-                   "status >= %s")
-        rows = self.db.query(usersql, USER_STATUS["infoset"])
-        self.render("yoez1.0beta/user-search.html", cuser=cuser, rows=rows)
+        rows = UserManager.get_pro_users()
+        users = UserManager.get_latest_users(30)
+        self.render("yoez1.0beta/user-search.html", cuser=cuser, rows=rows,
+                    users=users)
 
 
 class ClubHandler(BaseHandler):
