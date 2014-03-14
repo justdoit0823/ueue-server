@@ -18,7 +18,7 @@
 <!--header begain-->
 {{modules.Header(cuser)}}
 <!--header end-->
-{{modules.HomepageContent(user,basic,userself,followed)}}
+{{modules.HomepageContent(user, userself, followed)}}
 <!--TOP END-->
 <div class="yz-idx-body z cl">
 	<div class="wp1000 cl ue-all mgt60">
@@ -30,13 +30,13 @@
                 <div class="ue-left-text w200">
                 	<p>
                     	<span>电话</span><br>
-						<span>{% if user.telphone %}{{user.telphone.split("&")[0]}}{% else %}{{deftxt}}{% end %}</span><br>
+						<span>{% if contact.telphone %}{{contact.telphone.split("&")[0]}}{% else %}{{deftxt}}{% end %}</span><br>
 						<hr>
 						<span>邮箱</span><br>
-						<span>{% if user.conmail %}{{user.conmail.split("&")[0]}}{% else %}{{deftxt}}{% end %}</span><br>
+						<span>{% if contact.conmail %}{{contact.conmail.split("&")[0]}}{% else %}{{deftxt}}{% end %}</span><br>
 						<hr>
 						<span>联络地址</span><br>
-						<span>{% if user.conaddress %}{{user.conaddress.split("&")[0]}}{% else %}{{deftxt}}{% end %}</span><br>
+						<span>{% if contact.conaddress %}{{contact.conaddress.split("&")[0]}}{% else %}{{deftxt}}{% end %}</span><br>
                     </p>
                 </div>
             </div>
@@ -49,36 +49,38 @@
 				<div class="ue-hp-info">
 					<p>
 						<span>姓名 / 绰号</span>
-						{% if basic.uname %}{{basic.uname}}{% else %}{{deftxt}}{% end %}
+						{% if user.uname %}{{user.uname}}{% else %}{{deftxt}}{% end %}
 					</p>
 					<p>
 						<span>所在地</span>
-						{% if basic.area %}{{basic.area}}{% else %}{{deftxt}}{% end %}
+						{% if user.area %}{{user.area}}{% else %}{{deftxt}}{% end %}
 					</p>
 					<p>
 						<span>职业</span>
-						{% if basic.job %}{{basic.job}}{% else %}{{deftxt}}{% end %}
+						{% if user.job %}{{user.job}}{% else %}{{deftxt}}{% end %}
 					</p>
 					<p>
 						<span>所属机构</span>
-						{% if basic.organ %}{{basic.organ.split('&')[0]}}{% else %}{{deftxt}}{% end %}
+						{% if user.organ %}{{user.organ.split('&')[0]}}{% else %}{{deftxt}}{% end %}
 					</p>
 					<p>
 						<span>生日</span>
-						{% if basic.birth %}{{basic.birth.split('&')[0]}}{% else %}{{deftxt}}{% end %}
+						{% if user.birth %}{{user.birth.split('&')[0]}}{% else %}{{deftxt}}{% end %}
 					</p>
 					<p>
 						<span>身高</span>
-						{% if basic.organ %}{{basic.height.split('&')[0]}} cm{% else %}{{deftxt}}{% end %}
+						{% if user.height %}{{user.height.split('&')[0]}} cm{% else %}{{deftxt}}{% end %}
 					</p>
 					<p>
 						<span>体重</span>
-						{% if basic.organ %}{{basic.weight.split('&')[0]}} Kg{% else %}{{deftxt}}{% end %}
+						{% if user.weight %}{{user.weight.split('&')[0]}} Kg{% else %}{{deftxt}}{% end %}
 					</p>
+					{% if contact.sex %}
 					<p>
 						<span>三围</span>
-						{% if sanwei %}B/{% if sanwei[0] %}{{sanwei[0]}}In.{% else %}{{deftxt}}{% end %} W/{% if sanwei[1] %}{{sanwei[1]}}In.{% else %}{{deftxt}}{% end %} H/{% if sanwei[2] %}{{sanwei[2]}}In.{% else %}{{deftxt}}{% end %}{% else %}{{deftxt}}{% end %}
+						{{sanweistr}}
 					</p>
+					{% end %}
 					<p>
 						<span>鞋码</span>
 						38

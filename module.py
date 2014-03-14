@@ -13,23 +13,23 @@ import calendar
 
 from __init__ import DEFAULT_TEXT, USER_STATUS
 
-MonthList = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
-             "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+MonthList = ("Jan", "Feb", "Mar", "Apr", "May", "Jun",
+             "Jul", "Aug", "Sep", "Oct", "Nov", "Dec")
 
-WORKLICONTENT = ["<img src='cover' width='298' height='185'><span></span>",
+WORKLICONTENT = ("<img src='cover' width='298' height='185'><span></span>",
                  "<span></span>", "<img src='cover' width='298' height='185'>",
-                 "<p>content</p>"]
+                 "<p>content</p>")
 
-WORKLIKEY = ["cover", "title", "cover", "content"]
+WORKLIKEY = ("cover", "title", "cover", "content")
 
-WORKTYPEKEY = ['video', 'voice', 'pic', 'txt']
+WORKTYPEKEY = ('video', 'voice', 'pic', 'txt')
 
-EVENTLIKEY = ["公益参与", "通告媒体", "获奖荣誉", "机构招募", "发表声明",
-              "媒体报道", "经验分享", "赛事活动", "官方发布"]
+EVENTLIKEY = ("公益参与", "通告媒体", "获奖荣誉", "机构招募", "发表声明",
+              "媒体报道", "经验分享", "赛事活动", "官方发布")
 
-MESSAGES = ["系统消息", "回复通知", "商业消息"]
+MESSAGES = ("系统消息", "回复通知", "商业消息")
 
-MESSAGECLASS = ["system", "reply", "other"]
+MESSAGECLASS = ("system", "reply", "other")
 
 
 class UserModule(tornado.web.UIModule):
@@ -158,11 +158,10 @@ class BlackFooterModule(tornado.web.UIModule):
 
 class HomepageContentModule(tornado.web.UIModule):
 
-    def render(self, user, info, userself=True, followed=False):
+    def render(self, user, userself=True, followed=False):
 
         return self.render_string("modules/homepage_content.html", user=user,
-                                  info=info, userself=userself,
-                                  followed=followed)
+                                  followed=followed, userself=userself)
 
 
 class UserMessageModule(tornado.web.UIModule):

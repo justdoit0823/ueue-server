@@ -18,18 +18,27 @@ import re
 from manage import WorkManager, UserManager
 
 
+def formate_sanwei_str(swstr):
+
+    if not swstr:
+        return DEFAULT_TEXT
+    sanwei_prefix = ['B/', 'W/', 'H/']
+    sw = swstr.split('-')
+    swlist = []
+    for i, s in enumerate(sw):
+        swlist.append(''.join((sanwei_prefix[i], s)))
+    return ' '.join(swlist)
+
+
 class UserSpaceHandler(BaseHandler):
     def get(self, id):
         uid = int(id)
         cuser = self.get_current_user()
         worklist = {'-1': 0, '0': 0, '1': 0, '2': 0, '3': 0}
-        user = UserManager.get_user_withid(uid)
+        user = UserManager.get_user_basic(uid)
         if not user:
             return self.write('sorry!the page you request does not exists.')
-        contact_sql = ("select * from contactinfo join basicinfo on "
-                       "con_id=bsc_id where con_id=%d") % uid
         rows = WorkManager.get_user_works(uid)
-        conrow = self.db.get(contact_sql)
         worklist['-1'] = len(rows)
         for one in rows:
             worklist[one.type] += 1
@@ -42,7 +51,7 @@ class UserSpaceHandler(BaseHandler):
             followed = flwrst and int(flwrst.relation)
         is_authenticate = int(user.status) == USER_STATUS["authenticate"]
         self.render('yoez1.0beta/homepage-people-show-1.html', user=user,
-                    cuser=cuser, rows=rows, conrow=conrow, userself=userself,
+                    cuser=cuser, rows=rows, userself=userself,
                     followed=followed, is_auth=is_authenticate,
                     deftxt=DEFAULT_TEXT, worklist=worklist)
 
@@ -92,44 +101,37 @@ class UserFocusHandler(BaseHandler):
     @tornado.web.authenticated
     def get(self):
         cuser = self.get_current_user()
+        user = UserManager.get_user_basic(cuser.uid)
         which = self.get_argument("type", "1")
-        basicsql = ("select * from basicinfo join property on basicinfo.bsc_id"
-                    "=property.proper_id where bsc_id=%d") % cuser.uid
-        basic = self.db.get(basicsql)
         self.render("yoez1.0beta/homepage-people-focus-"+which+".html",
-                    cuser=cuser, basic=basic)
+                    cuser=cuser, user=user)
 
 
 class UserProfileHandler(BaseHandler):
     def get(self, id):
         followed = False
-        sanwei = None
+        sanweistr = ''
         uid = int(id)
-        cuser = self.get_current_user()
-        user_sql = ("select * from user join contactinfo on user.uid="
-                    "contactinfo.con_id where user.uid=%d") % uid
-        user = self.db.get(user_sql)
+        user = UserManager.get_full_basic(uid)
         if not user:
             return self.write('sorry!the page you request does not exists.')
+        cuser = self.get_current_user()
         userself = cuser and (user.uid == cuser.uid)
-        basicsql = ("select * from basicinfo join property on basicinfo."
-                    "bsc_id=property.proper_id where bsc_id=%d") % uid
-        basic = self.db.get(basicsql)
+        contact = UserManager.get_contact_property(uid)
         is_authenticate = int(user.status) == USER_STATUS["authenticate"]
         if not userself and cuser:
             flwsql = ("select * from follow where fid=%d and "
                       "flwid=%d") % (cuser.uid, uid)
             flwrst = self.db.get(flwsql)
             followed = flwrst and int(flwrst.relation)
-        if basic.extend:
-            sanwei = basic.extend.split("&")[0]
-            if sanwei:
-                sanwei = sanwei.split("-")
+        if user.extend:
+            sanwei = user.extend.split("&")[0]
+            sanweistr = formate_sanwei_str(sanwei)
         #print sanwei
         self.render("yoez1.0beta/homepage-people-info-1.html", user=user,
-                    cuser=cuser, userself=userself, basic=basic,
+                    cuser=cuser, userself=userself, contact=contact,
                     is_auth=is_authenticate, followed=followed,
-                    deftxt=DEFAULT_TEXT, sanwei=sanwei)
+                    deftxt=DEFAULT_TEXT, sanweistr=sanweistr)
 
 
 HandlerList = [

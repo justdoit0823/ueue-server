@@ -8,8 +8,8 @@
 		</a>
 	</div>
 	<div class="z cl ue-hp-topbody-info">
-		{% if info and info.area %}<p>{{info.area}}</p>{% end %}
-		{% if info and info.job %}<p>{{info.job}}</p>{% end %}
+		{% if user.area %}<p>{{user.area}}</p>{% end %}
+		{% if user.job %}<p>{{user.job}}</p>{% end %}
 		<p>Member Since {{user.time[:4]}}.{{user.time[5:7]}}.{{user.time[8:10]}}</p>
 		{% if userself %}
 		<input type="button" class="ue-people-post" value="新发布 / NEW"/>

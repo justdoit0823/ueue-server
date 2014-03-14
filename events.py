@@ -33,9 +33,9 @@ SUPPORT_EVENTS = ["pubwelfare", "job", "award",
                   "recruit", "declare", "media",
                   "experience", "games", "official"]
 
-EVENTLIKEY = ["公益参与", "通告媒体", "获奖荣誉",
+EVENTLIKEY = ("公益参与", "通告媒体", "获奖荣誉",
               "机构招募", "发表声明", "媒体报道",
-              "经验分享", "赛事活动", "官方发布"]
+              "经验分享", "赛事活动", "官方发布")
 
 SAERCHBASE = ("select event.eid,event.title,event.type,event.place,"
               "event.lable,event.time,event.view,event.support,"
@@ -46,7 +46,7 @@ USERSEARCH = ("select uid from user join basicinfo on "
               "user.uid=basicinfo.bsc_id ")
 
 
-ORDERS = ["view", "support", "review"]
+ORDERS = ("view", "support", "review")
 
 
 CONDITIONS = {
@@ -173,18 +173,14 @@ class UserEventsHandler(BaseHandler):
         uid = int(id)
         type = int(self.get_argument("type", -1))
         cuser = self.get_current_user()
-        user = UserManager.get_user_withid(uid)
+        user = UserManager.get_user_basic(uid)
         if user is None:
             return self.write("sorry!the page you request does not exists.")
         rows = RecordManager.get_user_records(uid, type)
         for one in rows:
             one.contet = one.content.replace("\'", "'")
         userself = cuser and (uid == cuser.uid)
-        consql = ("select * from contactinfo join basicinfo on "
-                  "con_id=bsc_id where con_id=%s")
-        conrow = self.db.get(consql, uid)
-        kwargs = dict(cuser=cuser, user=user, rows=rows,
-                      conrow=conrow, userself=userself)
+        kwargs = dict(cuser=cuser, user=user, rows=rows, userself=userself)
         self.render("yoez1.0beta/homepage-people-event-1.html", **kwargs)
 
 

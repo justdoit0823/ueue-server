@@ -30,12 +30,12 @@ from manage import WorkManager, UserManager, ReviewManager
 '''The typevalue -1 is for all(default),0 for video,1 for music,
 2 for picture,3 for article.'''
 
-SUPORT_WORKS = ['video', 'music', 'picture', 'article']
+SUPORT_WORKS = ('video', 'music', 'picture', 'article')
 
-SUPORT_IMAGES = ['jpg', 'png', 'jpeg']
+SUPORT_IMAGES = ('jpg', 'png', 'jpeg')
 
-SUPORT_WORK_MARKS = ['不标记知识共享协议', '署名-非商业性使用-禁止演绎', '署名-非商业性使用-相同方式共享',
-                     '署名-非商业性使用', '署名-禁止演绎', '署名-相同方式共享', '署名']
+SUPORT_WORK_MARKS = ('不标记知识共享协议', '署名-非商业性使用-禁止演绎', '署名-非商业性使用-相同方式共享',
+                     '署名-非商业性使用', '署名-禁止演绎', '署名-相同方式共享', '署名')
 
 
 SAERCHBASE = ("select work.wid,work.title,work.type,work.content,"
@@ -48,7 +48,7 @@ USERSEARCH = ("select uid from user join basicinfo on user.uid="
               "basicinfo.bsc_id ")
 
 
-ORDERS = ["view", "support", "review"]
+ORDERS = ("view", "support", "review")
 
 
 CONDITIONS = {
@@ -151,13 +151,10 @@ class UserWorksHandler(BaseHandler):
         cuser = self.get_current_user()
         type = int(self.get_argument("type", -1))
         worklist = {'-1': 0, '0': 0, '1': 0, '2': 0, '3': 0}
-        user = UserManager.get_user_withid(uid)
+        user = UserManager.get_user_basic(uid)
         if user is None:
             return self.write("sorry!the page you request does not exists.")
-        consql = ("select * from contactinfo join basicinfo on con_id="
-                  "bsc_id where con_id=%d") % uid
         rows = WorkManager.get_user_works(uid, type)
-        conrow = self.db.get(consql)
         worklist['-1'] = len(rows)
         for one in rows:
             worklist[one.type] += 1
@@ -171,7 +168,7 @@ class UserWorksHandler(BaseHandler):
             flwrst = self.db.get(flwsql)
             followed = flwrst and int(flwrst.relation)
         self.render("yoez1.0beta/homepage-people-show-1.html", cuser=cuser,
-                    user=user, rows=rows, conrow=conrow, userself=userself,
+                    user=user, rows=rows, userself=userself,
                     is_auth=is_authenticate, followed=followed,
                     deftxt=DEFAULT_TEXT, worklist=worklist)
 

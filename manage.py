@@ -376,13 +376,42 @@ class UserManager:
     @staticmethod
     def get_user_basic(uid):
 
-        sql = ("select U.uid,U.account,U.img,U.time,BI.job,BI.area from user "
-               "as U join basicinfo as BI on U.uid=BI.bsc_id where U.uid=%s")
+        sql = ("select U.uid,U.account,U.img,U.status,U.time,BI.job,BI.area "
+               "from user as U join basicinfo as BI on U.uid=BI.bsc_id where "
+               "U.uid=%s")
         try:
-            con = create_connection(**options)
+            con = create_connection(**options.dbsettings)
             return con.get(sql, uid)
         except Exception, e:
 
+            log_mysql_error(e)
+            return None
+
+    @staticmethod
+    def get_full_basic(uid):
+
+        sql = ("select U.uid,U.account,U.img,U.status,U.time,BI.uname,BI.job,"
+               "BI.area,BI.organ,BI.height,BI.weight,BI.birth,BI.extend from "
+               "user as U join basicinfo as BI on U.uid=BI.bsc_id where "
+               "U.uid=%s")
+        try:
+            con = create_connection(**options.dbsettings)
+            return con.get(sql, uid)
+        except Exception, e:
+
+            log_mysql_error(e)
+            return None
+
+    @staticmethod
+    def get_contact_property(uid):
+
+        sql = ("select CI.telphone,CI.conmail,CI.conaddress,P.ptype,P.sex "
+               "from contactinfo as CI join property as P on "
+               "CI.con_id=P.proper_id where CI.con_id=%s")
+        try:
+            con = create_connection(**options.dbsettings)
+            return con.get(sql, uid)
+        except Exception, e:
             log_mysql_error(e)
             return None
 
