@@ -45,6 +45,19 @@ def log_mysql_error(args):
         logging.error(error_msg)
 
 
+def do_db_request(sql, *args):
+
+    '''do real db request with sql and args'''
+
+    try:
+        con = create_connection(**options.dbsettings)
+        return con.query(sql, *args)
+    except Exception, e:
+
+        log_mysql_error(e)
+        return None
+
+
 class WorkManager:
 
     @staticmethod
@@ -359,6 +372,19 @@ class UserManager:
 
             log_mysql_error(e)
             return 0
+
+    @staticmethod
+    def get_user_basic(uid):
+
+        sql = ("select U.uid,U.account,U.img,U.time,BI.job,BI.area from user "
+               "as U join basicinfo as BI on U.uid=BI.bsc_id where U.uid=%s")
+        try:
+            con = create_connection(**options)
+            return con.get(sql, uid)
+        except Exception, e:
+
+            log_mysql_error(e)
+            return None
 
 
 class ReviewManager:

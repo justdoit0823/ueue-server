@@ -34,9 +34,6 @@ BUF_READ_SIZE = 4096
 
 class HomeHandler(BaseHandler):
     def get(self):
-        print self.request
-        if self.is_db_connected is False:
-            return self.write("connect to mysql server failed.")
         cuser = self.get_current_user()
         rows = WorkManager.get_latest_works(30)
         ls = RecordManager.get_latest_records(4)

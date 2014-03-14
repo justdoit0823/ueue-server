@@ -222,7 +222,7 @@ class UserPostVideoworkHandler(BaseHandler):
     @tornado.web.authenticated
     def get(self):
         cuser = self.get_current_user()
-        url = self.request.headers.get("Referer", "/")
+        url = self.get_previous_url("/")
         self.render('editor1.0beta/editor-work-2.html', cuser=cuser, url=url)
 
     def post(self):
@@ -244,7 +244,7 @@ class UserPostMusicworkHandler(BaseHandler):
     @tornado.web.authenticated
     def get(self):
         cuser = self.get_current_user()
-        url = self.request.headers.get("Referer", "/")
+        url = self.get_previous_url("/")
         self.render('editor1.0beta/editor-work-3.html', cuser=cuser, url=url)
 
     def post(self):
@@ -266,7 +266,7 @@ class UserPostArticleworkHandler(BaseHandler):
     @tornado.web.authenticated
     def get(self):
         cuser = self.get_current_user()
-        url = self.request.headers.get("Referer", "/")
+        url = self.get_previous_url("/")
         self.render('editor1.0beta/editor-work-4.html', cuser=cuser, url=url)
 
     def post(self):
@@ -288,7 +288,7 @@ class UserPostPictureworkHandler(BaseHandler):
     @tornado.web.authenticated
     def get(self):
         cuser = self.get_current_user()
-        url = self.request.headers.get("Referer", "/")
+        url = self.get_previous_url("/")
         self.render('editor1.0beta/editor-work-1.html', cuser=cuser, url=url)
 
     def post(self):
@@ -360,9 +360,7 @@ class WorksMultiPicuploadHandler(BaseHandler):
         if uid is None:
             err_msg = "_yoez_uid argument missing from POST"
             raise tornado.web.HTTPError(403, err_msg)
-        user_sql = ("select account,uid,img,status,time from user "
-                    "where uid=%d") % int(uid)
-        cuser = self.db.get(user_sql)
+        cuser = UserManager.get_user_withid(uid)
         if cuser is None:
             raise tornado.web.HTTPError(403, "USER authenticated error!")
         workdir = os.path.dirname(sys.argv[0])

@@ -25,8 +25,6 @@ import manage
 
 import logging
 
-#mysql define
-
 define("mysql_host", default="127.0.0.1:3306", help="ueue database host")
 define("mysql_database", default="yoez", help="ueue database name")
 define("mysql_user", default="justdoit", help="ueue database user")
@@ -43,6 +41,8 @@ define("pidfile", default=None, help="pid file for the daemon process",
        type=str)
 
 # define site server hosts
+
+ROOT_HOST = "ueue.cc"
 
 ADMIN_HOST = "siteadmin.ueue.cc"
 
@@ -100,11 +100,6 @@ class BaseHandler(tornado.web.RequestHandler):
 
         self.db = manage.create_connection(**options.dbsettings)
 
-    @property
-    def is_db_connected(self):
-
-        return self.db is not None
-
     def get_current_user(self):
 
         cuser = self.get_secure_cookie("_yoez_uid")
@@ -149,6 +144,16 @@ class BaseHandler(tornado.web.RequestHandler):
                 logging.error("get argument %s's value error" % arg)
                 return ()
         return tuple(values)
+
+    @staticmethod
+    def get_previous_url(self, default='/'):
+
+        '''use the Referer in http header to indicate the previous url'''
+
+        url = self.rquest.headers.get("Referer", default)
+        if url.find(ROOT_HOST) == -1:
+            url = WEB_HOST
+        return url
 
 
 #send email

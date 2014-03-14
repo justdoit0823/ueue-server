@@ -15,21 +15,20 @@ import tornado.web
 
 import re
 
+from manage import WorkManager, UserManager
+
 
 class UserSpaceHandler(BaseHandler):
     def get(self, id):
         uid = int(id)
         cuser = self.get_current_user()
         worklist = {'-1': 0, '0': 0, '1': 0, '2': 0, '3': 0}
-        user_sql = "select * from user where uid=%d" % uid
-        user = self.db.get(user_sql)
+        user = UserManager.get_user_withid(uid)
         if not user:
             return self.write('sorry!the page you request does not exists.')
-        event_sql = ("select * from user join work on work.author_id=user.uid "
-                     "where work.author_id=%d order by work.time desc") % uid
         contact_sql = ("select * from contactinfo join basicinfo on "
                        "con_id=bsc_id where con_id=%d") % uid
-        rows = self.db.query(event_sql)
+        rows = WorkManager.get_user_works(uid)
         conrow = self.db.get(contact_sql)
         worklist['-1'] = len(rows)
         for one in rows:
@@ -58,14 +57,10 @@ class UserPsldomainHandler(BaseHandler):
         conrow = self.db.get(usersql)
         if not conrow:
             return self.write('sorry!the page you request does not exists.')
-        usersql = "select * from user where uid=%d" % conrow.con_id
-        user = self.db.get(usersql)
+        user = UserManager.get_user_withid(conrow.con_id)
         if not user:
             return self.write('sorry!the page you request does not exists.')
-        event_sql = ("select * from user join work on work.author_id"
-                     "=user.uid where work.author_id=%d order by "
-                     "work.time desc") % user.uid
-        rows = self.db.query(event_sql)
+        rows = WorkManager.get_user_works(user.uid)
         userself = cuser and (cuser.uid == user.uid)
         worklist = {'-1': 0, '0': 0, '1': 0, '2': 0, '3': 0}
         self.render('yoez1.0beta/homepage-people-show-1.html', user=user,
