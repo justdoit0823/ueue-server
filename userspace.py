@@ -83,7 +83,9 @@ class UserMessageHandler(BaseHandler):
         cuser = self.get_current_user()
         msgsql = "select * from message where muid=%d" % cuser.uid
         msgs = self.db.query(msgsql)
-        self.render("user1.0beta/message-1.html", cuser=cuser, msgs=msgs)
+        url = self.get_previous_url()
+        self.render("user1.0beta/message-1.html", cuser=cuser, msgs=msgs,
+                    url=url)
 
 
 class UserMessagesHandler(BaseHandler):

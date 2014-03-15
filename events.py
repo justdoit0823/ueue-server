@@ -291,7 +291,7 @@ class UserPostPubwelfareventHandler(BaseHandler):
     def get(self):
 
         cuser = self.get_current_user()
-        url = self.get_previous_url("/")
+        url = self.get_previous_url()
         kwargs = dict(cuser=cuser, eventxt=EVENTLIKEY[0], url=url)
         self.render('editor1.0beta/editor-event-0.html', **kwargs)
 
@@ -307,7 +307,7 @@ class UserPostJobeventHandler(BaseHandler):
     def get(self):
 
         cuser = self.get_current_user()
-        url = self.get_previous_url("/")
+        url = self.get_previous_url()
         kwargs = dict(cuser=cuser, eventxt=EVENTLIKEY[1], url=url)
         self.render('editor1.0beta/editor-event-1.html', **kwargs)
 
@@ -322,7 +322,7 @@ class UserPostAwardeventHandler(BaseHandler):
     def get(self):
 
         cuser = self.get_current_user()
-        url = self.get_previous_url("/")
+        url = self.get_previous_url()
         kwargs = dict(cuser=cuser, eventxt=EVENTLIKEY[2], url=url)
         self.render('editor1.0beta/editor-event-2.html', **kwargs)
 
@@ -338,7 +338,7 @@ class UserPostRecruiteventHandler(BaseHandler):
     def get(self):
 
         cuser = self.get_current_user()
-        url = self.get_previous_url("/")
+        url = self.get_previous_url()
         kwargs = dict(cuser=cuser, eventxt=EVENTLIKEY[3], url=url)
         self.render('editor1.0beta/editor-event-3.html', **kwargs)
 
@@ -354,7 +354,7 @@ class UserPostDeclareventHandler(BaseHandler):
     def get(self):
 
         cuser = self.get_current_user()
-        url = self.get_previous_url("/")
+        url = self.get_previous_url()
         kwargs = dict(cuser=cuser, eventxt=EVENTLIKEY[4], url=url)
         self.render('editor1.0beta/editor-event-4.html', **kwargs)
 
@@ -370,7 +370,7 @@ class UserPostMediaeventHandler(BaseHandler):
     def get(self):
 
         cuser = self.get_current_user()
-        url = self.get_previous_url("/")
+        url = self.get_previous_url()
         kwargs = dict(cuser=cuser, eventxt=EVENTLIKEY[5], url=url)
         self.render('editor1.0beta/editor-event-5.html', **kwargs)
 
@@ -386,7 +386,7 @@ class UserPostMediaeventHandler(BaseHandler):
     def get(self):
 
         cuser = self.get_current_user()
-        url = self.get_previous_url("/")
+        url = self.get_previous_url()
         kwargs = dict(cuser=cuser, eventxt=EVENTLIKEY[5], url=url)
         self.render('editor1.0beta/editor-event-5.html', **kwargs)
 
@@ -402,7 +402,7 @@ class UserPostExpeventHandler(BaseHandler):
     def get(self):
 
         cuser = self.get_current_user()
-        url = self.get_previous_url("/")
+        url = self.get_previous_url()
         kwargs = dict(cuser=cuser, eventxt=EVENTLIKEY[6], url=url)
         self.render('editor1.0beta/editor-event-6.html', **kwargs)
 
@@ -418,7 +418,7 @@ class UserPostGameseventHandler(BaseHandler):
     def get(self):
 
         cuser = self.get_current_user()
-        url = self.get_previous_url("/")
+        url = self.get_previous_url()
         kwargs = dict(cuser=cuser, eventxt=EVENTLIKEY[7], url=url)
         self.render('editor1.0beta/editor-event-7.html', **kwargs)
 
@@ -434,7 +434,7 @@ class UserPostOfficialeventHandler(BaseHandler):
     def get(self):
 
         cuser = self.get_current_user()
-        url = self.get_previous_url("/")
+        url = self.get_previous_url()
         kwargs = dict(cuser=cuser, eventxt=EVENTLIKEY[8], url=url)
         self.render('editor1.0beta/editor-event-8.html', **kwargs)
 

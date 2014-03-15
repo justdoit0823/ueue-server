@@ -46,11 +46,19 @@ define("userstatus", default={}, help="user status dict", type=dict)
 
 ROOT_HOST = "ueue.cc"
 
+ROOT_URL = "http://ueue.cc/"
+
 ADMIN_HOST = "siteadmin.ueue.cc"
+
+ADMIN_URL = "http://siteadmin.ueue.cc/"
 
 WEB_HOST = "www.ueue.cc"
 
+WWW_URL = "http://www.ueue.cc/"
+
 STATIC_HOST = "static.ueue.cc"
+
+STATIC_URL = "http://static.ueue.cc/"
 
 # define the userstatus table
 
@@ -147,13 +155,13 @@ class BaseHandler(tornado.web.RequestHandler):
                 return ()
         return tuple(values)
 
-    def get_previous_url(self, default='/'):
+    def get_previous_url(self, default=WWW_URL):
 
         '''use the Referer in http header to indicate the previous url'''
 
         url = self.request.headers.get("Referer", default)
         if url.find(ROOT_HOST) == -1:
-            url = WEB_HOST
+            url = default
         return url
 
 

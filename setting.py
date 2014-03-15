@@ -41,7 +41,8 @@ class SetAvatarHandler(BaseHandler):
     @tornado.web.authenticated
     def get(self):
         cuser = self.get_current_user()
-        return self.render("user1.0beta/user-1.html", cuser=cuser)
+        url = self.get_previous_url()
+        return self.render("user1.0beta/user-1.html", cuser=cuser, url=url)
 
     def post(self):
         cuid = int(self.get_secure_cookie("_yoez_uid"))
@@ -84,9 +85,11 @@ class SetBasicHandler(BaseHandler):
         if info.height:
             info.height = info.height.split("&")
         joblen = len(info.job)
+        url = self.get_previous_url()
         self.render("user1.0beta/user-2.html", cuser=cuser, is_woman=is_woman,
                     info=info, options=AUTHORIZE_OPTIONS, jobnum=JOB_NUM,
-                    joborder=JOB_ORDER, jobid=JOB_ID_ORDER, joblen=joblen)
+                    joborder=JOB_ORDER, jobid=JOB_ID_ORDER, joblen=joblen,
+                    url=url)
 
     def post(self):
         name = self.get_argument("name", "--")
@@ -152,9 +155,10 @@ class SetContactHandler(BaseHandler):
             info.renren = info.renren.split("&")
         if info.douban:
             info.douban = info.douban.split("&")
+        url = self.get_previous_url()
         self.render("user1.0beta/user-3.html", cuser=cuser,
                     is_auth=is_authenticate, info=info,
-                    options=AUTHORIZE_OPTIONS)
+                    options=AUTHORIZE_OPTIONS, url=url)
 
     def post(self):
         cuid = int(self.get_secure_cookie("_yoez_uid"))
@@ -196,7 +200,8 @@ class SetPasswordHandler(BaseHandler):
     @tornado.web.authenticated
     def get(self):
         cuser = self.get_current_user()
-        return self.render("user1.0beta/user-4.html", cuser=cuser)
+        url = self.get_previous_url()
+        return self.render("user1.0beta/user-4.html", cuser=cuser, url=url)
 
     def post(self):
         cuser = self.get_current_user()
@@ -223,8 +228,9 @@ class SetDomainHandler(BaseHandler):
         cuser = self.get_current_user()
         dmsql = "select * from contactinfo where con_id=%d" % cuser.uid
         domain = self.db.get(dmsql)
+        url = self.get_previous_url()
         return self.render("user1.0beta/user-5.html",
-                           cuser=cuser, domain=domain)
+                           cuser=cuser, domain=domain, url=url)
 
     def post(self):
         domain = self.get_argument("domain", None)
@@ -256,21 +262,24 @@ class SetAuthHandler(BaseHandler):
     @tornado.web.authenticated
     def get(self):
         cuser = self.get_current_user()
-        self.render("user1.0beta/user-6.html", cuser=cuser)
+        url = self.get_previous_url()
+        self.render("user1.0beta/user-6.html", cuser=cuser, url=url)
 
 
 class SetConfirmHandler(BaseHandler):
     @tornado.web.authenticated
     def get(self):
         cuser = self.get_current_user()
-        self.render("user1.0beta/user-7.html", cuser=cuser)
+        url = self.get_previous_url()
+        self.render("user1.0beta/user-7.html", cuser=cuser, url=url)
 
 
 class SetRealnameConfirmHandler(BaseHandler):
     @tornado.web.authenticated
     def get(self):
         cuser = self.get_current_user()
-        self.render("user1.0beta/user-7-1-1.html", cuser=cuser)
+        url = self.get_previous_url()
+        self.render("user1.0beta/user-7-1-1.html", cuser=cuser, url=url)
 
 
 HandlerList = [

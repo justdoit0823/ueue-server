@@ -219,7 +219,7 @@ class UserPostVideoworkHandler(BaseHandler):
     @tornado.web.authenticated
     def get(self):
         cuser = self.get_current_user()
-        url = self.get_previous_url("/")
+        url = self.get_previous_url()
         self.render('editor1.0beta/editor-work-2.html', cuser=cuser, url=url)
 
     def post(self):
@@ -241,7 +241,7 @@ class UserPostMusicworkHandler(BaseHandler):
     @tornado.web.authenticated
     def get(self):
         cuser = self.get_current_user()
-        url = self.get_previous_url("/")
+        url = self.get_previous_url()
         self.render('editor1.0beta/editor-work-3.html', cuser=cuser, url=url)
 
     def post(self):
@@ -263,7 +263,7 @@ class UserPostArticleworkHandler(BaseHandler):
     @tornado.web.authenticated
     def get(self):
         cuser = self.get_current_user()
-        url = self.get_previous_url("/")
+        url = self.get_previous_url()
         self.render('editor1.0beta/editor-work-4.html', cuser=cuser, url=url)
 
     def post(self):
@@ -285,7 +285,7 @@ class UserPostPictureworkHandler(BaseHandler):
     @tornado.web.authenticated
     def get(self):
         cuser = self.get_current_user()
-        url = self.get_previous_url("/")
+        url = self.get_previous_url()
         self.render('editor1.0beta/editor-work-1.html', cuser=cuser, url=url)
 
     def post(self):
