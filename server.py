@@ -40,7 +40,9 @@ class HomeHandler(BaseHandler):
         rows = WorkManager.get_latest_works(30)
         ls = RecordManager.get_latest_records(4)
         rvls = ReviewManager.get_latest_reviews(4)
-        kwargs = dict(cuser=cuser, sf=self, rows=rows, ls=ls, rvls=rvls)
+        tips = self.get_tool_tips(('top', 'tip'))
+        kwargs = dict(cuser=cuser, sf=self, rows=rows, ls=ls, rvls=rvls,
+                      tips=tips)
         self.render("yoez1.0beta/index.html", **kwargs)
 
 
@@ -49,8 +51,9 @@ class ProfessionalHandler(BaseHandler):
         cuser = self.get_current_user()
         rows = UserManager.get_pro_users()
         users = UserManager.get_latest_users(30)
+        tips = self.get_tool_tips(('top', 'tip'))
         self.render("yoez1.0beta/user-search.html", cuser=cuser, rows=rows,
-                    users=users)
+                    users=users, tips=tips)
 
 
 class ClubHandler(BaseHandler):

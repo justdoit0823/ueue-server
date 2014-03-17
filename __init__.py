@@ -84,6 +84,18 @@ userprofessions = {
     }
 
 
+# define tooltips
+
+TOOL_TIPS = {
+    'top': '<a href="#" title="回到顶部" id="ue-main-gotop"></a>',
+    'tip': '<a href="#" title="侵权举报" id="ue-main-tip"></a>',
+    'edit': '<a href="#" title="编辑" id="ue-main-edit"></a>',
+    'del': '<a href="#" title="删除" id="ue-main-del"></a>',
+    'open': '<a href="#" title="设置为公开" id="ue-main-open"></a>',
+    'close': '<a href="#" title="设置为保密" id="ue-main-close"></a>'
+    }
+
+
 # define authorize options
 
 AUTHORIZE_OPTIONS = {
@@ -163,6 +175,13 @@ class BaseHandler(tornado.web.RequestHandler):
         if url.find(ROOT_HOST) == -1:
             url = default
         return url
+
+    def get_tool_tips(self, tiplist):
+
+        tl = []
+        for t in tiplist:
+            tl.append(TOOL_TIPS[t])
+        return '\n'.join(tl)
 
 
 #send email

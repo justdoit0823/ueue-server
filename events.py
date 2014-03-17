@@ -165,7 +165,9 @@ class RecordHandler(BaseHandler):
         print schsql, args1+args2
         rows = self.db.query(schsql, *(args1+args2))
         cuser = self.get_current_user()
-        self.render("yoez1.0beta/event-search.html", cuser=cuser, rows=rows)
+        tips = self.get_tool_tips(('top', 'tip'))
+        self.render("yoez1.0beta/event-search.html", cuser=cuser, rows=rows,
+                    tips=tips)
 
 
 class UserEventsHandler(BaseHandler):
@@ -225,9 +227,10 @@ class EventDetailHandler(BaseHandler):
             for i in row.picture.split(";"):
                 piclist.append(dict(num=j, src=i))
                 j += 1
+        tips = self.get_tool_tips(('top', 'tip', 'del', 'open'))
         if(int(row.type) == 3):
             kwargs = dict(cuser=cuser, row=row, reviews=reviews,
-                          is_support=is_support,
+                          is_support=is_support, tips=tips,
                           type=EVENTLIKEY[int(row.type)],
                           email=row.place.split("&")[0],
                           place=row.place.split("&")[1],
@@ -235,7 +238,7 @@ class EventDetailHandler(BaseHandler):
             self.render("yoez1.0beta/event-zhaopin-content.html", **kwargs)
         else:
             kwargs = dict(cuser=cuser, row=row, reviews=reviews,
-                          is_support=is_support,
+                          is_support=is_support, tips=tips,
                           type=EVENTLIKEY[int(row.type)],
                           is_follow=is_follow, piclist=piclist)
             self.render("yoez1.0beta/event-content.html", **kwargs)

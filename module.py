@@ -137,9 +137,9 @@ class EventHomepageliModule(tornado.web.UIModule):
 
 class MainFooterModule(tornado.web.UIModule):
 
-    def render(self):
+    def render(self, tips):
 
-        return self.render_string("modules/main_footer.html")
+        return self.render_string("modules/main_footer.html", tips=tips)
 
 
 class WhiteFooterModule(tornado.web.UIModule):

@@ -141,7 +141,9 @@ class WorksHandler(BaseHandler):
         print schsql, args1+args2
         rows = self.db.query(schsql, *(args1+args2))
         cuser = self.get_current_user()
-        self.render("yoez1.0beta/work-search.html", cuser=cuser, rows=rows)
+        tips = self.get_tool_tips(('top', 'tip'))
+        self.render("yoez1.0beta/work-search.html", cuser=cuser, rows=rows,
+                    tips=tips)
 
 
 class UserWorksHandler(BaseHandler):
@@ -196,9 +198,10 @@ class WorkDetailHandler(BaseHandler):
                 is_follow = flwrst and int(flwrst.relation)
         reviews = ReviewManager.get_work_reviews(wid)
         work = SUPORT_WORKS[int(row.type)]
+        tips = self.get_tool_tips(('top', 'tip', 'edit', 'del', 'open'))
         self.render("yoez1.0beta/work-content-"+work+".html", cuser=cuser,
                     row=row, copysign=copysign, mid=mid, is_follow=is_follow,
-                    reviews=reviews)
+                    reviews=reviews, tips=tips)
 
     def post(self, id):
         wid = int(id)
@@ -219,7 +222,6 @@ class UserPostVideoworkHandler(BaseHandler):
     @tornado.web.authenticated
     def get(self):
         cuser = self.get_current_user()
-        url = self.get_previous_url()
         self.render('editor1.0beta/editor-work-2.html', cuser=cuser, url=url)
 
     def post(self):
