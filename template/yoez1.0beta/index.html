@@ -44,7 +44,40 @@
 			<a class="ue-slide-right y cl"></a>
 		</div>
 	</div>
-	<div class="yz-search y cl mgt40">
+	
+
+<div class="yz-idx-body z cl">
+	<div class="wp1000 cl ue-all mgt40">
+    	<div class="w200 z cl ue-left">
+        	{{modules.UeDescribe()}}
+        <div style="padding-top: 25px;border-top:1px solid #ccc;">
+			<wb:follow-button uid="2707118293" type="red_2" width="136" height="24" ></wb:follow-button>
+		</div>
+        </div>
+		<div class="w640 z cl ue-middle">
+			<div class="yz-idx-body-body w640 z cl">
+				<div class="yz-idx-body-title w640">
+					<p class="yz-idx-body-title-p">WORKS</p>
+				</div>
+				<ul class="cl yz-work-ul">
+					{% for row in rows %}
+					{{modules.WorkSearch(row)}}
+					{% end %}
+				</ul>
+				<div class=" yz-idx-page">
+					<a href="/works">
+					查看更多<br>
+					<span>VIEW MORE</span>
+					</a>
+				</div>
+			</div>
+			
+		</div>
+		<div class="w336 y cl">
+			
+            <div class="z cl yz-idx-right">
+				<div class="w336 yz-idx-title">
+                	<div class="yz-search y cl mgt40">
 		<div class="z cl">
 			<ul class="yz-search-type z cl">
 				<li  style="top: 0px;">
@@ -83,38 +116,6 @@
 		</div>
 	</div>
 </div>
-
-<div class="yz-idx-body z cl">
-	<div class="wp1000 cl ue-all mgt40">
-    	<div class="w200 z cl ue-left">
-        	{{modules.UeDescribe()}}
-        <div style="padding-top: 25px;border-top:1px solid #ccc;">
-			<wb:follow-button uid="2707118293" type="red_2" width="136" height="24" ></wb:follow-button>
-		</div>
-        </div>
-		<div class="w640 z cl ue-middle">
-			<div class="yz-idx-body-body w640 z cl">
-				<div class="yz-idx-body-title w640">
-					<p class="yz-idx-body-title-p">WORKS</p>
-				</div>
-				<ul class="cl yz-work-ul">
-					{% for row in rows %}
-					{{modules.WorkSearch(row)}}
-					{% end %}
-				</ul>
-				<div class=" yz-idx-page">
-					<a href="/works">
-					查看更多<br>
-					<span>VIEW MORE</span>
-					</a>
-				</div>
-			</div>
-			
-		</div>
-		<div class="w336 y cl">
-			
-            <div class="z cl yz-idx-right">
-				<div class="w336 yz-idx-title">
 					<p class="z cl en1">RECORDS</p>
 					<a class="yz-idx-report" href="/records">MORE</a>
 				</div>
