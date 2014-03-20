@@ -78,7 +78,7 @@ def do_execute_request(sql, *args):
         return result
 
 
-def do_get_request():
+def do_get_request(sql, *args):
 
     '''do real db request with sql and args'''
 
