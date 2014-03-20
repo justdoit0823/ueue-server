@@ -118,6 +118,11 @@ WWW_COOKIE_DOMAIN = "www.ueue.cc"
 
 class BaseHandler(tornado.web.RequestHandler):
 
+    def __del__(self):
+
+        self.db.close()
+        self.db = None
+
     def initialize(self):
 
         self.db = manage.create_connection(**options.dbsettings)
