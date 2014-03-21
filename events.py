@@ -27,7 +27,7 @@ from hashlib import md5
 
 from manage import RecordManager, UserManager, ReviewManager
 
-from manage import ViewManager
+from manage import ViewManager, FollowManager, SupportManager
 
 SUPPORT_EVENTS = ["pubwelfare", "job", "award",
                   "recruit", "declare", "media",
@@ -83,9 +83,6 @@ class UserPostHandler(BaseHandler):
         content = self.get_argument('content')
         content = content.replace("'", "\'")
         cuid = self.get_secure_cookie("_yoez_uid")
-        #       "lable,time) values(%s,%s,%s,%s,%s,%s,%s,%s)")
-        #args = [cuid, etype, title, content, pic, place, lable, time]
-        #return self.db.execute(sql, *args)
         RecordManager.new_record()
 
 
@@ -182,6 +179,7 @@ class UserEventsHandler(BaseHandler):
         for one in rows:
             one.contet = one.content.replace("\'", "'")
         userself = cuser and (uid == cuser.uid)
+        followed = False
         kwargs = dict(cuser=cuser, user=user, rows=rows, userself=userself)
         self.render("yoez1.0beta/homepage-people-event-1.html", **kwargs)
 
@@ -191,8 +189,7 @@ class EventDetailHandler(BaseHandler):
         eid = int(id)
         cuser = self.get_current_user()
         if cuser:
-            chksql = "select * from eventsupport where supuid=%s and supeid=%s"
-            rt = self.db.get(chksql, *[cuser.uid, eid])
+            rt = SupportManager.check_event_support(*(cuser.uid, eid))
             is_support = (rt is not None)
         else:
             is_support = False
@@ -217,9 +214,7 @@ class EventDetailHandler(BaseHandler):
             if(cuser.uid == row.uid):
                 is_follow = True
             else:
-                flwsql = ("select * from follow where fid=%d "
-                          "and flwid=%d") % (cuser.uid, row.uid)
-                flwrst = self.db.get(flwsql)
+                flwrst = FollowManager.get_follow_uid(*(cuser.uid, row.uid))
                 is_follow = flwrst and int(flwrst.relation)
         piclist = []
         j = 0

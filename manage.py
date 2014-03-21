@@ -251,6 +251,17 @@ class UserManager:
         return do_get_request(con, uid)
 
     @staticmethod
+    def update_user_psw(psw, uid):
+
+        sql = "update user set password=%s where uid=%s"
+        do_execute_request(sql, psw, uid)
+
+    @staticmethod
+    def update_user_status(st, uid):
+        sql = "update user set status=%s where uid=%s"
+        do_execute_request(sql, st, uid)
+
+    @staticmethod
     def get_user_withid(uid):
 
         sql = ("select uid,account,img,status,email,password,status,time from "
@@ -263,6 +274,13 @@ class UserManager:
         sql = ("select uid,account,img,status,password,status from user "
                "where email=%s")
         return do_get_request(sql, mail)
+
+    @staticmethod
+    def get_user_withcode(code):
+
+        sql = "select uid,account,email,status from user where code=%s"
+
+        return do_get_request(sql, code)
 
     @staticmethod
     def get_pro_users():
@@ -386,4 +404,120 @@ class ViewManager:
 
         sql = ("insert into workview (viewwid,viewuid,time) values(%s,%s,%s)")
 
-        do_execute_request(sql, *args)
+        return do_execute_request(sql, *args)
+
+
+class FollowManager:
+
+    @staticmethod
+    def get_user_relation(*args):
+
+        sql = "select fid,relation from follow where fid=%s and flwid=%s"
+        return do_get_request(sql, *args)
+
+
+class SupportManager:
+
+    @staticmethod
+    def check_event_support(*args):
+
+        sql = "select esid from eventsupport where supuid=%s and supeid=%s"
+
+        return do_get_request(sql, *args)
+
+    @staticmethod
+    def new_event_support(*args):
+
+        sql = "insert into eventsupport (supeid,supuid,time) values(%s,%s,%s)"
+
+        return do_execute_request(sql, *args)
+
+
+class BasicManager:
+
+    @staticmethod
+    def new_basic(*args):
+
+        sql = ("insert into basicinfo(bsc_id,uname,area,organ,job,height,"
+               "weight,birth,extend) values(%d,%s,%s,%s,%s,%s,%s,%s,%s)")
+        return do_execute_request(sql, *args)
+
+    @staticmethod
+    def update_basic(*args):
+
+        sql = ("update basicinfo set uname=%s,area=%s,organ=%s,job=%s,"
+               "height=%s,weight=%s,birth=%s,extend=%s where bsc_id=%s")
+        return do_execute_request(sql, *args)
+
+    @staticmethod
+    def check_basic(bid):
+
+        sql = "select bsc_id from basicinfo where bsc_id=%s"
+
+        return do_get_request(sql, bid)
+
+    @staticmethod
+    def get_basic(bid):
+
+        sql = ("select uname,area,organ,job,height,weight,birth,extend from "
+               "basicinfo where bsc_id=%s")
+        return do_get_request(sql, bid)
+
+
+class ContactManager:
+
+    @staticmethod
+    def check_contact(cid):
+
+        sql = "select con_id from contactinfo where con_id=%s"
+
+        return do_get_request(sql, cid)
+
+    @staticmethod
+    def new_contact(*args):
+
+        sql = ("insert into contactinfo(con_id,agent_id,telphone,conmail,"
+               "conaddress,sinawb,qqwb,qq,qzone,renren,douban,psldomain) "
+               "values(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)")
+        return do_execute_request(sql, *args)
+
+    @staticmethod
+    def update_contact(*args):
+
+        sql = ("update contactinfo set agent_id=%s,telphone=%s,conmail=%s,"
+               "conaddress=%s,sinawb=%s,qqwb=%s,qq=%s,qzone=%s,renren=%s,"
+               "douban=%s where con_id=%s")
+
+        return do_execute_request(sql, *args)
+
+    @staticmethod
+    def get_contact(cid):
+
+        sql = ("select agent_id,telphone,conmail,conaddress,sinawb,qqwb,qq,"
+               "qzone,renren,douban,psldomain from contactinfo where "
+               "con_id=%s")
+        return do_get_request(sql, cid)
+
+    @staticmethod
+    def get_domain(cid):
+
+        sql = "select psldomain from contactinfo where con_id=%s"
+
+        return do_get_request(sql, cid)
+
+
+class PropertyManager:
+
+    @staticmethod
+    def get_property(pid):
+
+        sql = "select proper_id,ptype,sex from property where proper_id=%s"
+
+        return do_get_request(sql, pid)
+
+    @staticmethod
+    def new_property(*args):
+
+        sql = "insert into property(proper_id,ptype,sex) values(%s,%s,%s)"
+
+        return do_query_request(sql, *args)

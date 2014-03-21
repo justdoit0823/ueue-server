@@ -26,6 +26,7 @@ from hashlib import md5
 
 from manage import WorkManager, UserManager, ReviewManager
 
+from manage import FollowManager
 
 '''The typevalue -1 is for all(default),0 for video,1 for music,
 2 for picture,3 for article.'''
@@ -165,9 +166,7 @@ class UserWorksHandler(BaseHandler):
         is_authenticate = int(user.status) == USER_STATUS["authenticate"]
         followed = False
         if not userself and cuser:
-            flwsql = ("select * from follow where fid=%d and "
-                      "flwid=%d") % (cuser.uid, uid)
-            flwrst = self.db.get(flwsql)
+            flwrst = FollowManager.get_user_relation(*(cuser.uid, uid))
             followed = flwrst and int(flwrst.relation)
         self.render("yoez1.0beta/homepage-people-show-1.html", cuser=cuser,
                     user=user, rows=rows, userself=userself,
@@ -192,9 +191,7 @@ class WorkDetailHandler(BaseHandler):
             if cuser.uid == row.uid:
                 is_follow = True
             else:
-                flwsql = ("select * from follow where fid=%d and "
-                          "flwid=%d") % (cuser.uid, row.uid)
-                flwrst = self.db.get(flwsql)
+                flwrst = FollowManager.get_user_relation(*(cuser.uid, row.uid))
                 is_follow = flwrst and int(flwrst.relation)
         reviews = ReviewManager.get_work_reviews(wid)
         work = SUPORT_WORKS[int(row.type)]

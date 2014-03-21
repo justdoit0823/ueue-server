@@ -15,7 +15,7 @@ import tornado.web
 
 import re
 
-from manage import WorkManager, UserManager
+from manage import WorkManager, UserManager, FollowManager
 
 
 def formate_sanwei_str(swstr):
@@ -45,9 +45,7 @@ class UserSpaceHandler(BaseHandler):
         userself = cuser and (cuser.uid == user.uid)
         followed = False
         if not userself and cuser:
-            flwsql = ("select * from follow where fid=%d and "
-                      "flwid=%d") % (cuser.uid, uid)
-            flwrst = self.db.get(flwsql)
+            flwrst = FollowManager.get_user_relation(*(cuser.uid, uid))
             followed = flwrst and int(flwrst.relation)
         is_authenticate = int(user.status) == USER_STATUS["authenticate"]
         self.render('yoez1.0beta/homepage-people-show-1.html', user=user,
@@ -81,8 +79,7 @@ class UserMessageHandler(BaseHandler):
     @tornado.web.authenticated
     def get(self):
         cuser = self.get_current_user()
-        msgsql = "select * from message where muid=%d" % cuser.uid
-        msgs = self.db.query(msgsql)
+        msgs = []
         url = self.get_previous_url()
         self.render("user1.0beta/message-1.html", cuser=cuser, msgs=msgs,
                     url=url)
@@ -122,9 +119,7 @@ class UserProfileHandler(BaseHandler):
         contact = UserManager.get_contact_property(uid)
         is_authenticate = int(user.status) == USER_STATUS["authenticate"]
         if not userself and cuser:
-            flwsql = ("select * from follow where fid=%d and "
-                      "flwid=%d") % (cuser.uid, uid)
-            flwrst = self.db.get(flwsql)
+            flwrst = FollowManager.get_user_relation(*(cuser.uid, uid))
             followed = flwrst and int(flwrst.relation)
         isw = int(contact.sex)
         if isw and user.extend:

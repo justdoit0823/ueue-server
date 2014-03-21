@@ -109,8 +109,7 @@ class UserSignupHandler(BaseHandler):
         uid = 0
         while(1):
             uid = random.randint(1000000, 10000000)
-            chk_sql = "select * from user where uid=%d" % uid
-            rt = self.db.get(chk_sql)
+            rt = UserManager.has_user(uid)
             if not rt:
                 break
         code = md5(str(uid)+reg_time).hexdigest()
@@ -133,8 +132,7 @@ class UserSignupHandler(BaseHandler):
 class UserResendmailHandler(BaseHandler):
     def get(self):
         code = self.get_argument('code')
-        user_sql = "select * from user where code='%s'" % code
-        rt = self.db.get(user_sql)
+        rt = UserManager.get_user_withcode(code)
         if not rt:
             msg = 'send error!pleae contact Customer Services.'
             kwargs = dict(status=0, msg=msg)
@@ -151,8 +149,7 @@ class UserActiveHandler(BaseHandler):
     def get(self):
         #cuid=int(self.get_secure_cookie("_yoez_uid"))
         code = self.get_argument("code")
-        check_sql = "select * from user where code='%s'" % code
-        result = self.db.get(check_sql)
+        result = UserManager.get_user_withcode(code)
         if(result):
             if result.status == USER_STATUS["unactive"]:
                 self.set_secure_cookie("_yoez_uid", str(result.uid), 7,
@@ -160,12 +157,8 @@ class UserActiveHandler(BaseHandler):
                 active_sql = ("update user set status=%d where "
                               "uid='%d'") % (USER_STATUS["uninit"], result.uid)
                 self.db.execute(active_sql)
-                print sys.argv[0]
-                print sys.argv
                 workdir = os.path.dirname(sys.argv[0])
                 path = "%s/static/img/user/%d" % (workdir, result.uid)
-                print os.path.dirname(sys.argv[0])
-                print path
                 os.mkdir(path)
                 self.render("register1.0beta/register-3.html")
             else:
@@ -183,14 +176,16 @@ class UserConfirmHandler(BaseHandler):
         tp = self.get_argument("type", "")
         sql = "SELECT * from user where %s='%s'" % (tp, data)
         result = self.db.get(sql)
-        if result:
-            if tp == "email":
+        if tp == "email":
+            result = UserManager.get_user_withmail(data)
+            if result:
                 tip = "该邮箱已注册，请换一个!"
             else:
-                tip = "该用户名已存在，请换一个!"
-        else:
-            if tp == "email":
                 tip = "你可以使用该邮箱注册"
+        else:
+            result = UserManager.get_user_withuid(data)
+            if result:
+                tip = "该用户名已存在，请换一个!"
             else:
                 tip = "你可以使用该用户名"
         self.write(tip)
