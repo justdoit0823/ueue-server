@@ -52,11 +52,45 @@ def do_query_request(sql, *args):
 
     try:
         con = create_connection(**options.dbsettings)
-        return con.query(sql, *args)
+        result = con.query(sql, *args)
     except Exception, e:
 
         log_mysql_error(e)
-        return None
+        result = None
+    finally:
+        con.close()
+        return result
+
+
+def do_execute_request(sql, *args):
+
+    '''do real db request with sql and args'''
+
+    try:
+        con = create_connection(**options.dbsettings)
+        result = con.execute(sql, *args)
+    except Exception, e:
+
+        log_mysql_error(e)
+        result = 0
+    finally:
+        con.close()
+        return result
+
+
+def do_get_request(sql, *args):
+
+    '''do real db request with sql and args'''
+
+    try:
+        con = create_connection(**options.dbsettings)
+        result = con.get(sql, *args)
+    except Exception, e:
+        log_mysql_error(e)
+        result = None
+    finally:
+        con.close()
+        return result
 
 
 class WorkManager:
@@ -82,14 +116,7 @@ class WorkManager:
                "W.copysign,W.lable,W.time,W.view,W.review,W.support,"
                "W.cover,W.wdescribe,U.uid,U.img,U.account from user "
                "as U join work as W on W.author_id=U.uid where W.wid=%s")
-        try:
-
-            con = create_connection(**options.dbsettings)
-            return con.get(sql, wid)
-        except Exception, e:
-
-            log_mysql_error(e)
-            return None
+        return do_get_request(sql, wid)
 
     @staticmethod
     def get_user_works(uid, type=-1):
@@ -115,48 +142,21 @@ class WorkManager:
 
         sql = "update work set view=view+%s where wid=%s"
 
-        try:
-
-            con = create_connection(**options.dbsettings)
-
-            return con.execute(sql, *(num, wid))
-
-        except Exception, e:
-
-            log_mysql_error(0)
-            return 0
+        return do_execute_request(sql, *(num, wid))
 
     @staticmethod
     def update_work_review(wid, num):
 
         sql = "update work set review=review+%s where wid=%s"
 
-        try:
-
-            con = create_connection(**options.dbsettings)
-
-            return con.execute(sql, *(num, wid))
-
-        except Exception, e:
-
-            log_mysql_error(0)
-            return 0
+        return do_execute_request(sql, *(num, wid))
 
     @staticmethod
     def update_work_support(wid, num):
 
         sql = "update work set support=support+%s where wid=%s"
 
-        try:
-
-            con = create_connection(**options.dbsettings)
-
-            return con.execute(sql, *(num, wid))
-
-        except Exception, e:
-
-            log_mysql_error(0)
-            return 0
+        return do_execute_request(sql, *(num, wid))
 
     @staticmethod
     def new_work(*args):
@@ -164,14 +164,7 @@ class WorkManager:
         sql = ("insert into work (author_id,type,title,content,wdescribe,"
                "cover,lable,copysign,teammates,time) values(%s,%s,%s,%s,%s,"
                "%s,%s,%s,%s,%s)")
-
-        try:
-            con = create_connection(**options.dbsettings)
-            return con.execute(sql, *args)
-        except Exception, e:
-
-            log_mysql_error(e)
-            return 0
+        return do_execute_request(sql, *args)
 
 
 class RecordManager:
@@ -216,76 +209,36 @@ class RecordManager:
         sql = ("select U.uid,U.account,U.img,E.title,E.content,E.picture,"
                "E.lable,E.type,E.view,E.review,E.support,E.time from user "
                "as U join event as E on U.uid=E.author_id where E.eid=%s")
-        try:
-
-            con = create_connection(**options.dbsettings)
-
-            return con.get(sql, rid)
-
-        except Exception, e:
-            log_mysql_error(e)
-            return None
+        return do_get_request(sql, rid)
 
     @staticmethod
     def update_record_view(rid, num):
 
         sql = "update event set view=view+%s where eid=%s"
 
-        try:
-
-            con = create_connection(**options.dbsettings)
-
-            return con.execute(sql, *(num, rid))
-
-        except Exception, e:
-
-            log_mysql_error(0)
-            return 0
+        return do_execute_request(sql, *(num, rid))
 
     @staticmethod
     def update_record_review(rid, num):
 
         sql = "update event set review=review+%s where eid=%s"
 
-        try:
-
-            con = create_connection(**options.dbsettings)
-
-            return con.execute(sql, *(num, rid))
-
-        except Exception, e:
-
-            log_mysql_error(0)
-            return 0
+        return do_execute_request(sql, *(num, rid))
 
     @staticmethod
     def update_record_support(rid, num):
 
         sql = "update event set support=support+%s where eid=%s"
 
-        try:
-
-            con = create_connection(**options.dbsettings)
-
-            return con.execute(sql, *(num, rid))
-
-        except Exception, e:
-
-            log_mysql_error(0)
-            return 0
+        return do_execute_request(sql, *(num, rid))
 
     @staticmethod
     def new_record(*args):
 
         sql = ("insert into event (author_id,type,title,content,picture,place,"
                "lable,time) values(%s,%s,%s,%s,%s,%s,%s,%s)")
-        try:
-            con = create_connection(**options.dbsettings)
 
-            return con.execute(*args)
-        except Exception, e:
-            log_mysql_error(e)
-            return 0
+        return do_execute_request(sql, *args)
 
 
 class UserManager:
@@ -295,44 +248,21 @@ class UserManager:
         '''check the user exists'''
 
         sql = "select uid from user where uid=%s"
-
-        try:
-
-            con = create_connection(**options.dbsettings)
-
-            return con.get(con, uid)
-
-        except Exception, e:
-            log_mysql_error(e)
-            return None
+        return do_get_request(con, uid)
 
     @staticmethod
     def get_user_withid(uid):
 
         sql = ("select uid,account,img,status,email,password,status,time from "
                "user where uid=%s")
-
-        try:
-            con = create_connection(**options.dbsettings)
-
-            return con.get(sql, uid)
-        except Exception, e:
-            log_mysql_error(e)
-            return None
+        return do_get_request(sql, uid)
 
     @staticmethod
     def get_user_withmail(mail):
 
         sql = ("select uid,account,img,status,password,status from user "
                "where email=%s")
-
-        try:
-            con = create_connection(**options.dbsettings)
-
-            return con.get(sql, mail)
-        except Exception, e:
-            log_mysql_error(e)
-            return None
+        return do_get_request(sql, mail)
 
     @staticmethod
     def get_pro_users():
@@ -358,13 +288,8 @@ class UserManager:
 
         sql = ("insert into user(uid,account,email,password,img,"
                "time,code) values (%s,%s,%s,%s,%s,%s,%s)")
-        try:
-            con = create_connection(**options.dbsettings)
-            return con.execute(sql, *args)
-        except Exception, e:
 
-            log_mysql_error(e)
-            return 0
+        return do_execute_request(sql, *args)
 
     @staticmethod
     def get_user_basic(uid):
@@ -372,13 +297,7 @@ class UserManager:
         sql = ("select U.uid,U.account,U.img,U.status,U.time,BI.job,BI.area "
                "from user as U join basicinfo as BI on U.uid=BI.bsc_id where "
                "U.uid=%s")
-        try:
-            con = create_connection(**options.dbsettings)
-            return con.get(sql, uid)
-        except Exception, e:
-
-            log_mysql_error(e)
-            return None
+        return do_get_request(sql, uid)
 
     @staticmethod
     def get_full_basic(uid):
@@ -387,13 +306,7 @@ class UserManager:
                "BI.area,BI.organ,BI.height,BI.weight,BI.birth,BI.extend from "
                "user as U join basicinfo as BI on U.uid=BI.bsc_id where "
                "U.uid=%s")
-        try:
-            con = create_connection(**options.dbsettings)
-            return con.get(sql, uid)
-        except Exception, e:
-
-            log_mysql_error(e)
-            return None
+        return do_get_request(sql, uid)
 
     @staticmethod
     def get_contact_property(uid):
@@ -401,12 +314,7 @@ class UserManager:
         sql = ("select CI.telphone,CI.conmail,CI.conaddress,P.ptype,P.sex "
                "from contactinfo as CI join property as P on "
                "CI.con_id=P.proper_id where CI.con_id=%s")
-        try:
-            con = create_connection(**options.dbsettings)
-            return con.get(sql, uid)
-        except Exception, e:
-            log_mysql_error(e)
-            return None
+        return do_get_request(sql, uid)
 
 
 class ReviewManager:
@@ -429,13 +337,8 @@ class ReviewManager:
 
         sql = ("insert into eventreview (revieweid,reviewuid,content,time "
                "values(%s,%s,%s,%s)")
-        try:
-            con = create_connection(**options.dbsettings)
 
-            return con.execute(sql, *args)
-        except Exception, e:
-            log_mysql_error(e)
-            return 0
+        return do_execute_request(sql, *args)
 
     @staticmethod
     def get_record_reviews(rid):
@@ -450,13 +353,8 @@ class ReviewManager:
 
         sql = ("insert into workreview (reviewwid,reviewuid,content,time "
                "values(%s,%s,%s,%s)")
-        try:
-            con = create_connection(**options.dbsettings)
 
-            return con.execute(sql, *args)
-        except Exception, e:
-            log_mysql_error(e)
-            return 0
+        return do_execute_request(sql, *args)
 
     @staticmethod
     def get_work_reviews(wid):
@@ -474,31 +372,18 @@ class ViewManager:
 
         sql = ("select viewuid from eventview where vieweid=%s and "
                "viewuid=%s")
-        try:
-            con = create_connection(**options.dbsettings)
-            return con.get(sql, *(rid, uid))
-        except Exception, e:
-            log_mysql_error(e)
-            return None
+        return do_get_request(sql, *(rid, uid))
 
     @staticmethod
     def new_record_view(*args):
 
         sql = ("insert into eventview (vieweid,viewuid,time) values(%s,%s,%s)")
-        try:
-            con = create_connection(**options.dbsettings)
-            return con.execute(sql, *args)
-        except Exception, e:
-            log_mysql_error(e)
-            return 0
+
+        return do_execute_request(sql, *args)
 
     @staticmethod
     def new_record_view(*args):
 
         sql = ("insert into workview (viewwid,viewuid,time) values(%s,%s,%s)")
-        try:
-            con = create_connection(**options.dbsettings)
-            return con.execute(sql, *args)
-        except Exception, e:
-            log_mysql_error(e)
-            return 0
+
+        do_execute_request(sql, *args)

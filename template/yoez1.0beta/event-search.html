@@ -365,8 +365,7 @@ var list={
 				month:mon
 			},
 			success:function(html){
-	        	$(".yz-idx-calendar-srch").prev().replaceWith(html);;
-				$(".yz-idx-calendar a").bind("mousedown",dateselect);
+	        	$(".yz-idx-calendar-srch").prev().replaceWith(html);
 	        }
 		}
 
@@ -396,7 +395,6 @@ var list={
             },
 			success:function(html) {
 				$(".yz-idx-calendar-srch").prev().replaceWith(html);
-		   		$(".yz-idx-calendar a").bind("mousedown",dateselect);
             }
      	};
 
