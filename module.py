@@ -151,9 +151,10 @@ class WhiteFooterModule(tornado.web.UIModule):
 
 class BlackFooterModule(tornado.web.UIModule):
 
-    def render(self, user):
+    def render(self, user, tips):
 
-        return self.render_string("modules/black_footer.html", user=user)
+        return self.render_string("modules/black_footer.html", user=user,
+                                  tips=tips)
 
 
 class HomepageContentModule(tornado.web.UIModule):

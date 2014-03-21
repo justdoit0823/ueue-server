@@ -219,7 +219,10 @@ class UserPostVideoworkHandler(BaseHandler):
     @tornado.web.authenticated
     def get(self):
         cuser = self.get_current_user()
-        self.render('editor1.0beta/editor-work-2.html', cuser=cuser, url=url)
+        url = self.get_previous_url()
+        tips = self.get_tool_tips(('top', 'tip'))
+        self.render('editor1.0beta/editor-work-2.html', cuser=cuser, url=url,
+                    tips=tips)
 
     def post(self):
         cuid = self.get_secure_cookie("_yoez_uid")
@@ -241,7 +244,9 @@ class UserPostMusicworkHandler(BaseHandler):
     def get(self):
         cuser = self.get_current_user()
         url = self.get_previous_url()
-        self.render('editor1.0beta/editor-work-3.html', cuser=cuser, url=url)
+        tips = self.get_tool_tips(('top', 'tip'))
+        self.render('editor1.0beta/editor-work-3.html', cuser=cuser, url=url,
+                    tips=tips)
 
     def post(self):
         cuid = self.get_secure_cookie("_yoez_uid")
@@ -263,7 +268,9 @@ class UserPostArticleworkHandler(BaseHandler):
     def get(self):
         cuser = self.get_current_user()
         url = self.get_previous_url()
-        self.render('editor1.0beta/editor-work-4.html', cuser=cuser, url=url)
+        tips = self.get_tool_tips(('top', 'tip'))
+        self.render('editor1.0beta/editor-work-4.html', cuser=cuser, url=url,
+                    tips=tips)
 
     def post(self):
         cuid = self.get_secure_cookie("_yoez_uid")
@@ -285,7 +292,9 @@ class UserPostPictureworkHandler(BaseHandler):
     def get(self):
         cuser = self.get_current_user()
         url = self.get_previous_url()
-        self.render('editor1.0beta/editor-work-1.html', cuser=cuser, url=url)
+        tips = self.get_tool_tips(('top', 'tip'))
+        self.render('editor1.0beta/editor-work-1.html', cuser=cuser, url=url,
+                    tips=tips)
 
     def post(self):
         cuid = self.get_secure_cookie("_yoez_uid")

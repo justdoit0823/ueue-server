@@ -290,7 +290,8 @@ class UserPostPubwelfareventHandler(BaseHandler):
 
         cuser = self.get_current_user()
         url = self.get_previous_url()
-        kwargs = dict(cuser=cuser, eventxt=EVENTLIKEY[0], url=url)
+        tips = self.get_tool_tips(('top', 'tip'))
+        kwargs = dict(cuser=cuser, eventxt=EVENTLIKEY[0], url=url, tips=tips)
         self.render('editor1.0beta/editor-event-0.html', **kwargs)
 
     def post(self):
@@ -306,7 +307,8 @@ class UserPostJobeventHandler(BaseHandler):
 
         cuser = self.get_current_user()
         url = self.get_previous_url()
-        kwargs = dict(cuser=cuser, eventxt=EVENTLIKEY[1], url=url)
+        tips = self.get_tool_tips(('top', 'tip'))
+        kwargs = dict(cuser=cuser, eventxt=EVENTLIKEY[1], url=url, tips=tips)
         self.render('editor1.0beta/editor-event-1.html', **kwargs)
 
     def post(self):
@@ -321,7 +323,8 @@ class UserPostAwardeventHandler(BaseHandler):
 
         cuser = self.get_current_user()
         url = self.get_previous_url()
-        kwargs = dict(cuser=cuser, eventxt=EVENTLIKEY[2], url=url)
+        tips = self.get_tool_tips(('top', 'tip'))
+        kwargs = dict(cuser=cuser, eventxt=EVENTLIKEY[2], url=url, tips=tips)
         self.render('editor1.0beta/editor-event-2.html', **kwargs)
 
     def post(self):
@@ -337,7 +340,8 @@ class UserPostRecruiteventHandler(BaseHandler):
 
         cuser = self.get_current_user()
         url = self.get_previous_url()
-        kwargs = dict(cuser=cuser, eventxt=EVENTLIKEY[3], url=url)
+        tips = self.get_tool_tips(('top', 'tip'))
+        kwargs = dict(cuser=cuser, eventxt=EVENTLIKEY[3], url=url, tips=tips)
         self.render('editor1.0beta/editor-event-3.html', **kwargs)
 
     def post(self):
@@ -353,7 +357,8 @@ class UserPostDeclareventHandler(BaseHandler):
 
         cuser = self.get_current_user()
         url = self.get_previous_url()
-        kwargs = dict(cuser=cuser, eventxt=EVENTLIKEY[4], url=url)
+        tips = self.get_tool_tips(('top', 'tip'))
+        kwargs = dict(cuser=cuser, eventxt=EVENTLIKEY[4], url=url, tips=tips)
         self.render('editor1.0beta/editor-event-4.html', **kwargs)
 
     def post(self):
@@ -369,7 +374,8 @@ class UserPostMediaeventHandler(BaseHandler):
 
         cuser = self.get_current_user()
         url = self.get_previous_url()
-        kwargs = dict(cuser=cuser, eventxt=EVENTLIKEY[5], url=url)
+        tips = self.get_tool_tips(('top', 'tip'))
+        kwargs = dict(cuser=cuser, eventxt=EVENTLIKEY[5], url=url, tips=tips)
         self.render('editor1.0beta/editor-event-5.html', **kwargs)
 
     def post(self):
@@ -385,7 +391,8 @@ class UserPostMediaeventHandler(BaseHandler):
 
         cuser = self.get_current_user()
         url = self.get_previous_url()
-        kwargs = dict(cuser=cuser, eventxt=EVENTLIKEY[5], url=url)
+        tips = self.get_tool_tips(('top', 'tip'))
+        kwargs = dict(cuser=cuser, eventxt=EVENTLIKEY[5], url=url, tips=tips)
         self.render('editor1.0beta/editor-event-5.html', **kwargs)
 
     def post(self):
@@ -401,7 +408,8 @@ class UserPostExpeventHandler(BaseHandler):
 
         cuser = self.get_current_user()
         url = self.get_previous_url()
-        kwargs = dict(cuser=cuser, eventxt=EVENTLIKEY[6], url=url)
+        tips = self.get_tool_tips(('top', 'tip'))
+        kwargs = dict(cuser=cuser, eventxt=EVENTLIKEY[6], url=url, tips=tips)
         self.render('editor1.0beta/editor-event-6.html', **kwargs)
 
     def post(self):
@@ -417,7 +425,8 @@ class UserPostGameseventHandler(BaseHandler):
 
         cuser = self.get_current_user()
         url = self.get_previous_url()
-        kwargs = dict(cuser=cuser, eventxt=EVENTLIKEY[7], url=url)
+        tips = self.get_tool_tips(('top', 'tip'))
+        kwargs = dict(cuser=cuser, eventxt=EVENTLIKEY[7], url=url, tips=tips)
         self.render('editor1.0beta/editor-event-7.html', **kwargs)
 
     def post(self):
@@ -433,7 +442,8 @@ class UserPostOfficialeventHandler(BaseHandler):
 
         cuser = self.get_current_user()
         url = self.get_previous_url()
-        kwargs = dict(cuser=cuser, eventxt=EVENTLIKEY[8], url=url)
+        tips = self.get_tool_tips(('top', 'tip'))
+        kwargs = dict(cuser=cuser, eventxt=EVENTLIKEY[8], url=url, tips=tips)
         self.render('editor1.0beta/editor-event-8.html', **kwargs)
 
     def post(self):
