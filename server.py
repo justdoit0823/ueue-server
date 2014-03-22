@@ -2,7 +2,7 @@
 
 '''
 The is a main server module,with some application settings
- to change server behaviour.After this,start the sever loop.
+to change server behaviour.After this,start the sever loop.
 
 '''
 

@@ -140,15 +140,6 @@ class BaseHandler(tornado.web.RequestHandler):
 
         self.clear_cookie("_yoez_uid", domain=WWW_COOKIE_DOMAIN)
 
-    def get_dynum(self, user):
-        dnum = 0
-        sql = ("select COUNT(id) as nid from dynamic where dyner='%s' "
-               "and handle=0")
-        dyn = self.db.get(sql, user)
-        if(dyn):
-            dnum = dyn.nid
-        return dnum
-
     def get_values(self, names):
 
         '''get values of item in names list.'''
@@ -213,15 +204,6 @@ def send(fr, to, sub, msg, passwd=None):
         s.quit()
     except Exception, e:
         print e
-
-
-#get the database password from the terminal
-
-def initdbpsw():
-
-    options.mysql_password = getpass("User database password:")
-    print "init database connection"
-    options.noreply_password = getpass("User noreply email password:")
 
 
 def initconfig(path):
