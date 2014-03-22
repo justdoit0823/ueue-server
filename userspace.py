@@ -47,10 +47,11 @@ class UserSpaceHandler(BaseHandler):
         if not userself and cuser:
             flwrst = FollowManager.get_user_relation(*(cuser.uid, uid))
             followed = flwrst and int(flwrst.relation)
-        is_authenticate = int(user.status) == USER_STATUS["authenticate"]
+        is_auth = int(user.status) == USER_STATUS["authenticate"]
+        tips = self.get_tool_tips(('top', 'tip'))
         self.render('yoez1.0beta/homepage-people-show-1.html', user=user,
                     cuser=cuser, rows=rows, userself=userself,
-                    followed=followed, is_auth=is_authenticate,
+                    followed=followed, is_auth=is_auth, tips=tips,
                     deftxt=DEFAULT_TEXT, worklist=worklist)
 
 
@@ -70,9 +71,10 @@ class UserPsldomainHandler(BaseHandler):
         rows = WorkManager.get_user_works(user.uid)
         userself = cuser and (cuser.uid == user.uid)
         worklist = {'-1': 0, '0': 0, '1': 0, '2': 0, '3': 0}
+        tips = self.get_tool_tips(('top', 'tip'))
         self.render('yoez1.0beta/homepage-people-show-1.html', user=user,
                     cuser=cuser, rows=rows, conrow=conrow, userself=userself,
-                    followed=False, worklist=worklist)
+                    followed=False, worklist=worklist, tips=tips)
 
 
 class UserMessageHandler(BaseHandler):
@@ -102,8 +104,9 @@ class UserFocusHandler(BaseHandler):
         cuser = self.get_current_user()
         user = UserManager.get_user_basic(cuser.uid)
         which = self.get_argument("type", "1")
+        tips = self.get_tool_tips(('top', 'tip'))
         self.render("yoez1.0beta/homepage-people-focus-"+which+".html",
-                    cuser=cuser, user=user)
+                    cuser=cuser, user=user, tips=tips)
 
 
 class UserProfileHandler(BaseHandler):
@@ -125,9 +128,10 @@ class UserProfileHandler(BaseHandler):
         if isw and user.extend:
             sanwei = user.extend.split("&")[0]
             sanweistr = formate_sanwei_str(sanwei)
+        tips = self.get_tool_tips(('top', 'tip'))
         self.render("yoez1.0beta/homepage-people-info-1.html", user=user,
                     cuser=cuser, userself=userself, contact=contact,
-                    is_auth=is_authenticate, followed=followed,
+                    is_auth=is_authenticate, followed=followed, tips=tips,
                     deftxt=DEFAULT_TEXT, isw=isw, sanweistr=sanweistr)
 
 

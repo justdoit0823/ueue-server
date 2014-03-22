@@ -180,7 +180,9 @@ class UserEventsHandler(BaseHandler):
             one.contet = one.content.replace("\'", "'")
         userself = cuser and (uid == cuser.uid)
         followed = False
-        kwargs = dict(cuser=cuser, user=user, rows=rows, userself=userself)
+        tips = self.get_tool_tips(('top', 'tip'))
+        kwargs = dict(cuser=cuser, user=user, rows=rows, userself=userself,
+                      tips=tips)
         self.render("yoez1.0beta/homepage-people-event-1.html", **kwargs)
 
 

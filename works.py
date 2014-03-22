@@ -165,11 +165,12 @@ class UserWorksHandler(BaseHandler):
         userself = cuser and (cuser.uid == uid)
         is_authenticate = int(user.status) == USER_STATUS["authenticate"]
         followed = False
+        tips = self.get_tool_tips(('top', 'tip'))
         if not userself and cuser:
             flwrst = FollowManager.get_user_relation(*(cuser.uid, uid))
             followed = flwrst and int(flwrst.relation)
         self.render("yoez1.0beta/homepage-people-show-1.html", cuser=cuser,
-                    user=user, rows=rows, userself=userself,
+                    user=user, rows=rows, userself=userself, tips=tips,
                     is_auth=is_authenticate, followed=followed,
                     deftxt=DEFAULT_TEXT, worklist=worklist)
 
