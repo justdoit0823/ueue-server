@@ -39,7 +39,9 @@ from hashlib import sha224, md5
 import tornado.web
 from tornado.options import define, options
 
-from manage import UserManager
+from manage import UserManager, PropertyManager
+
+from manage import BasicManager, ContactManager
 
 define("noreply_account", default="noreply@ueue.cc",
        help="signup email check account")
@@ -154,9 +156,8 @@ class UserActiveHandler(BaseHandler):
             if result.status == USER_STATUS["unactive"]:
                 self.set_secure_cookie("_yoez_uid", str(result.uid), 7,
                                        domain=WWW_COOKIE_DOMAIN)
-                active_sql = ("update user set status=%d where "
-                              "uid='%d'") % (USER_STATUS["uninit"], result.uid)
-                self.db.execute(active_sql)
+                UserManager.update_user_status(options.userstatus['uninit'],
+                                               result.uid)
                 workdir = os.path.dirname(sys.argv[0])
                 path = "%s/static/img/user/%d" % (workdir, result.uid)
                 os.mkdir(path)
@@ -174,8 +175,6 @@ class UserConfirmHandler(BaseHandler):
     def post(self):
         data = self.get_argument("user_d", "")
         tp = self.get_argument("type", "")
-        sql = "SELECT * from user where %s='%s'" % (tp, data)
-        result = self.db.get(sql)
         if tp == "email":
             result = UserManager.get_user_withmail(data)
             if result:
@@ -206,20 +205,16 @@ class UserInitializeHandler(BaseHandler):
         sex = self.get_argument("sex", "0")
         img = self.get_argument("avatar")
         setrst = set_image_size((200, 200), img)
-        upd_sql = ("update user set img='%s',status=%d where "
-                   "uid=%d") % (img, USER_STATUS["normal"], cuid)
-        chk_sql = "select proper_id from  property where proper_id=%d" % cuid
-        chk = self.db.get(chk_sql)
+        chk = PropertyManager.get_property(cuid)
         if not chk:
-            pro_sql = ("insert into property(proper_id,ptype,sex) values "
-                       "(%d,'%s','%s')") % (cuid, usertype, sex)
-            bsc_sql = "insert into basicinfo(bsc_id) values(%d)" % (cuid)
-            con_sql = "insert into contactinfo(con_id) values(%d)" % (cuid)
-            self.db.execute(pro_sql)
-            self.db.execute(bsc_sql)
-            self.db.execute(con_sql)
+            args = [None] * 9
+            args[0] = cuid
+            PropertyManager.new_property(*(cuid, usertype, sex))
+            BasicManager.new_basic(*args)
+            ContactManager.new_contact(*args)
         if setrst:
-            self.db.execute(upd_sql)
+            kwargs = {'img': img, 'status': options.userstatus['normal']}
+            UserManager.update_user(cuid, **kwargs)
             result = dict(url="/"+str(cuid), status=1, code='')
         else:
             result = dict(url="/", status=0, code='set image error!')

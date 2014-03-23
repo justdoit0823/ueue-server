@@ -35,6 +35,18 @@ def formate_errmsg(args):
     return " ".join(args)
 
 
+def formate_update_sql(tb, **kwargs):
+
+    _str = []
+    _val = []
+    _sql = ['update', tb, 'set']
+    for k in kwargs:
+        _str.appned(k + '=%s')
+        _val.append(kwargs[k])
+    _sql .append(','.join(_str))
+    return (' '.join(_sql), _val)
+
+
 def log_mysql_error(args):
 
     if args:
@@ -72,7 +84,7 @@ def do_execute_request(sql, *args):
     except Exception, e:
 
         log_mysql_error(e)
-        result = 0
+        result = -1
     finally:
         con.close()
         return result
@@ -166,6 +178,20 @@ class WorkManager:
                "%s,%s,%s,%s,%s)")
         return do_execute_request(sql, *args)
 
+    @staticmethod
+    def del_work(wid):
+
+        sql = "delete from work where wid=%s"
+
+        return do_execute_request(sql, wid)
+
+    @staticmethod
+    def check_user_work(uid, wid):
+
+        sql = "select wid from work where wid=%s and author_id=%s"
+
+        return do_get_request(sql, wid, uid)
+
 
 class RecordManager:
 
@@ -249,6 +275,15 @@ class UserManager:
 
         sql = "select uid from user where uid=%s"
         return do_get_request(con, uid)
+
+    @staticmethod
+    def update_user(uid, **kwargs):
+
+        sql_prefix, args = formate_update_sql('user', **kwargs)
+        whcase = 'where uid=%s'
+        sql = ' '.join(sql, whcase)
+        args.append(uid)
+        return do_execute_request(sql, *args)
 
     @staticmethod
     def update_user_psw(psw, uid):
@@ -439,7 +474,7 @@ class BasicManager:
     def new_basic(*args):
 
         sql = ("insert into basicinfo(bsc_id,uname,area,organ,job,height,"
-               "weight,birth,extend) values(%d,%s,%s,%s,%s,%s,%s,%s,%s)")
+               "weight,birth,extend) values(%s,%s,%s,%s,%s,%s,%s,%s,%s)")
         return do_execute_request(sql, *args)
 
     @staticmethod

@@ -140,7 +140,7 @@ class WorksHandler(BaseHandler):
                 wrkwhcond = " where user.uid in ("+usrsql+") "
         schsql = SAERCHBASE+wrkwhcond+ordcond
         print schsql, args1+args2
-        rows = self.db.query(schsql, *(args1+args2))
+        rows = []  # self.db.query(schsql, *(args1+args2))
         cuser = self.get_current_user()
         tips = self.get_tool_tips(('top', 'tip'))
         self.render("yoez1.0beta/work-search.html", cuser=cuser, rows=rows,
@@ -181,6 +181,8 @@ class WorkDetailHandler(BaseHandler):
         cuser = self.get_current_user()
         WorkManager.update_work_view(wid, 1)
         row = WorkManager.get_work_byid(wid)
+        if row is None:
+            return self.write("sorry!the page you request does not exists.")
         row.contet = row.content.replace("\'", "'")
         copysign = SUPORT_WORK_MARKS[int(row.copysign)]
         if(row.type == '1'):
@@ -399,13 +401,9 @@ class WorkDeleteHandler(BaseHandler):
         cuid = int(self.get_secure_cookie("_yoez_uid"))
         wid = int(wid)
         idx = self.get_argument("index")
-        chksql = ("select wid from work where wid=%d and "
-                  "author_id=%d") % (wid, cuid)
-        chkrst = self.db.get(chksql)
-        hdlrst = {}
+        chkrst = WorkManager.check_user_work(cuid, wid)
         if chkrst:
-            delsql = "delete from work where wid=%d" % wid
-            self.db.execute(delsql)
+            WorkManager.del_work(wid)
             hdlrst = dict(status=1, index=idx, msg="delete success!")
         else:
             hdlrst = dict(status=0, msg="delete failure!")

@@ -160,7 +160,7 @@ class RecordHandler(BaseHandler):
                 rcdwhcond = " where user.uid in ("+usrsql+") "
         schsql = SAERCHBASE+rcdwhcond+ordcond
         print schsql, args1+args2
-        rows = self.db.query(schsql, *(args1+args2))
+        rows = []  # self.db.query(schsql, *(args1+args2))
         cuser = self.get_current_user()
         tips = self.get_tool_tips(('top', 'tip'))
         self.render("yoez1.0beta/event-search.html", cuser=cuser, rows=rows,
