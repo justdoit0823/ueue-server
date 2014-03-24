@@ -110,13 +110,13 @@ class SetBasicHandler(BaseHandler):
         cuser = self.get_current_user()
         is_set = BasicManager.check_basic(cuser.uid)
         if is_set:
-            args.append(cuid)
+            args.append(cuser.uid)
             BasicManager.update_basic(*args)
             if cuser.status < options.userstatus["infoset"]:
                 UserManager.update_user_status(options.userstatus["infoset"],
                                                cuser.uid)
         else:
-            args.insert(0, cuid)
+            args.insert(0, cuser.uid)
             BasicManager.new_basic(*args)
             UserManager.update_user_status(options.userstatus["infoset"],
                                            cuser.uid)

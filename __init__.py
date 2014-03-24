@@ -13,7 +13,6 @@ import sys
 import smtplib
 import os
 import email.utils
-from tornado import database
 
 from email.mime.text import MIMEText
 
