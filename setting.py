@@ -10,7 +10,7 @@ Also,the 3th auth and user confirm are here.
 
 
 from __init__ import BaseHandler
-from __init__ import USER_STATUS, AUTHORIZE_OPTIONS, set_image_size
+from __init__ import AUTHORIZE_OPTIONS, set_image_size
 
 import tornado.web
 
@@ -49,7 +49,7 @@ class SettingHandler(BaseHandler):
     @tornado.web.authenticated
     def get(self):
         cuser = self.get_current_user()
-        if(cuser.status >= USER_STATUS["normal"]):
+        if(cuser.status >= options.userstatus['normal']):
             self.redirect("/user/set-basic")
         else:
             self.redirect("/user/action/init")
@@ -190,23 +190,19 @@ class SetDomainHandler(BaseHandler):
         result = dict(status=0, msg="缺少参数")
         if domain:
             cuid = int(self.get_secure_cookie("_yoez_uid"))
-            is_domain_set = self.db.get(("select con_id from contactinfo "
-                                         "where con_id=%d") % cuid)
+            is_domain_set = ContactManager(cuid)
             if not is_domain_set:
-                addsql = ("insert into contactinfo(con_id,psldomain) values"
-                          "(%d,'%s')") % (cuid, domain)
-                self.db.execute(updsql)
+                args = [None] * 9
+                args[0] = cuid
+                args[11] = domain
+                ContactManager.new_contact(*args)
                 result = dict(status=1, msg="设置成功")
             else:
-                chksql = ("select psldomain from contactinfo where psldomain"
-                          "='%s'") % domain
-                chkrst = self.db.get(chksql)
+                chkrst = ContactManager.check_domain(domain)
                 if chkrst:
                     result = dict(status=0, msg="该域名已存在，请再选一个")
                 else:
-                    updsql = ("update contactinfo set psldomain='%s' where "
-                              "con_id=%d") % (domain, cuid)
-                    self.db.execute(updsql)
+                    ContactManager.update_domain(cuid, domain)
                     result = dict(status=1, msg="设置成功")
         self.write(result)
 

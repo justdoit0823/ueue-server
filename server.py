@@ -15,7 +15,7 @@ import sys
 import re
 import os
 import time
-from __init__ import BaseHandler, USER_STATUS, initconfig
+from __init__ import BaseHandler, initconfig
 import works
 import events
 import userspace

@@ -29,7 +29,7 @@ status for the user:
 '''
 
 from __init__ import BaseHandler, send, set_image_size
-from __init__ import WWW_COOKIE_DOMAIN, USER_STATUS
+from __init__ import WWW_COOKIE_DOMAIN
 
 import time
 import random
@@ -37,11 +37,12 @@ import sys
 import os
 from hashlib import sha224, md5
 import tornado.web
+import logging
 from tornado.options import define, options
 
 from manage import UserManager, PropertyManager
 
-from manage import BasicManager, ContactManager
+from manage import BasicManager, ContactManager, FollowManager
 
 define("noreply_account", default="noreply@ueue.cc",
        help="signup email check account")
@@ -67,8 +68,8 @@ class UserLoginHandler(BaseHandler):
             salt = ""
             check = check_password(psw, salt, result.password)
             if check:
-                if(result.status > USER_STATUS["unactive"]):
-                    if(result.status == USER_STATUS["lock"]):
+                if(result.status > options.userstatus['unactive']):
+                    if(result.status == options.userstatus['lock']):
                         json = dict(error=1, msg='你的帐号以被暂停使用，请联系客服', url=go)
                     else:
                         self.set_secure_cookie("_yoez_uid",
@@ -153,7 +154,7 @@ class UserActiveHandler(BaseHandler):
         code = self.get_argument("code")
         result = UserManager.get_user_withcode(code)
         if(result):
-            if result.status == USER_STATUS["unactive"]:
+            if result.status == options.userstatus['unactive']:
                 self.set_secure_cookie("_yoez_uid", str(result.uid), 7,
                                        domain=WWW_COOKIE_DOMAIN)
                 UserManager.update_user_status(options.userstatus['uninit'],
@@ -195,7 +196,7 @@ class UserInitializeHandler(BaseHandler):
     @tornado.web.authenticated
     def get(self):
         cuser = self.get_current_user()
-        if(cuser.status >= USER_STATUS["normal"]):
+        if(cuser.status >= options.userstatus['normal']):
             return self.redirect("/user/set-basic")
         self.render("user1.0beta/user-beginning-1.html", cuser=cuser)
 
@@ -228,38 +229,29 @@ class UserFollowHandler(BaseHandler):
 
     def follow(self, flwid):
         cuid = int(self.get_secure_cookie("_yoez_uid"))
-        chksql = "select * from follow where flwid=%d" % (flwid)
-        result = self.db.get(chksql)
+        result = FollowManager.get_user_relation(cuid, flwid)
         if result:
             if int(result.relation):
-                print "repeat follow"
+                logging.warn("repeat follow at UserFollowHandler")
             else:
-                updsql = ("update follow set relation='1' where fid=%d "
-                          "and flwid=%d") % (cuid, flwid)
-                self.db.execute(updsql)
+                FollowManager.update_user_relation(cuid, flwid)
         else:
-            addsql = ("insert into follow(fid,flwid,relation) values "
-                      "(%d,%d,'1')") % (cuid, flwid)
-            self.db.execute(addsql)
+            FollowManager.new_user_relation(cuid, flwid, 1)
 
     def cancel(self, flwid):
         cuid = int(self.get_secure_cookie("_yoez_uid"))
-        chksql = "select * from follow where flwid=%d" % flwid
-        result = self.db.get(chksql)
+        result = FollowManager.get_user_relation(cuid, flwid)
         if result:
             if int(result.relation):
-                updsql = ("update follow set relation='0' where fid=%d "
-                          "and flwid=%d") % (cuid, flwid)
-                self.db.execute(updsql)
+                FollowManager.update_user_relation(cuid, flwid, 0)
             else:
-                print "cancel error!"
+                logging.warn("don't need to cancel!")
         else:
-            print "cancel error!"
+            logging.warn("don't need to cancel!")
 
     def post(self):
         action = self.get_argument("action", None)
         flwid = int(self.get_argument("flwid", None))
-        result = {}
         if not action:
             result = dict(status=0, msg="unknow action!")
             return self.write(result)

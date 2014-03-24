@@ -60,9 +60,7 @@ class UserPsldomainHandler(BaseHandler):
     def get(self, idf, ids):
         domain = idf+ids
         cuser = self.get_current_user()
-        usersql = ("select * from contactinfo join basicinfo on con_id=bsc_id "
-                   "where psldomain='%s'") % domain
-        conrow = self.db.get(usersql)
+        conrow = None
         if not conrow:
             return self.write('sorry!the page you request does not exists.')
         user = UserManager.get_user_withid(conrow.con_id)
@@ -137,7 +135,7 @@ class UserProfileHandler(BaseHandler):
 
 HandlerList = [
     (r"/([0-9]+)", UserSpaceHandler),
-    (r"/u/([^0-9/]+)([^/]+)", UserPsldomainHandler),
+    #(r"/u/([^0-9/]+)([^/]+)", UserPsldomainHandler),
     (r"/user/message", UserMessageHandler),
     (r"/user/messages", UserMessagesHandler),
     (r"/user/focus", UserFocusHandler),

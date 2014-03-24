@@ -445,10 +445,22 @@ class ViewManager:
 class FollowManager:
 
     @staticmethod
-    def get_user_relation(*args):
+    def get_user_relation(fid, flwid):
 
         sql = "select fid,relation from follow where fid=%s and flwid=%s"
-        return do_get_request(sql, *args)
+        return do_get_request(sql, fid, flwid)
+
+    @staticmethod
+    def update_user_relation(fid, flwid, relation=1):
+
+        sql = "update follow set relation=%s where fid=%s and flwid=%s"
+        return do_execute_request(sql, relation, fid, flwid)
+
+    @staticmethod
+    def new_user_relation(fid, flwid, relation=1):
+
+        sql = "insert into follow(fid,flwid,relation) values (%s,%s,%s)"
+        return do_execute_request(sql, fid, flwid, relation)
 
 
 class SupportManager:
@@ -539,6 +551,19 @@ class ContactManager:
         sql = "select psldomain from contactinfo where con_id=%s"
 
         return do_get_request(sql, cid)
+
+    @staticmethod
+    def update_domain(cid, dm):
+
+        sql = "update contactinfo set psldomain=%s where con_id=%s"
+
+        return do_execute_request(sql, dm, cid)
+
+    @staticmethod
+    def check_domain(dm):
+
+        sql = "select psldomain from contactinfo where psldomain=%s"
+        return do_get_request(sql, dm)
 
 
 class PropertyManager:

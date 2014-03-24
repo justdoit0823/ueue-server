@@ -508,6 +508,6 @@ HandlerList = [
     (r"/user/postevent/games", UserPostGameseventHandler),
     (r"/user/postevent/official", UserPostOfficialeventHandler),
     (r"/user/events/picupload", EventsPicuploadHandler),
-    (r"/events/([0-9]+)/agree", EventsAgreeHandler),
+    #(r"/events/([0-9]+)/agree", EventsAgreeHandler),
     (r"/events/calendar", EventsCalendarHandler),
     ]

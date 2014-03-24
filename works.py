@@ -8,7 +8,7 @@ The details are view,search,post,edit,delete...
 '''
 
 
-from __init__ import BaseHandler, USER_STATUS
+from __init__ import BaseHandler
 
 from userspace import DEFAULT_TEXT
 
@@ -163,7 +163,7 @@ class UserWorksHandler(BaseHandler):
             worklist[one.type] += 1
             one.contet = one.content.replace("\'", "'")
         userself = cuser and (cuser.uid == uid)
-        is_authenticate = int(user.status) == USER_STATUS["authenticate"]
+        is_auth = int(user.status) == options.userstatus['authenticate']
         followed = False
         tips = self.get_tool_tips(('top', 'tip'))
         if not userself and cuser:
@@ -171,7 +171,7 @@ class UserWorksHandler(BaseHandler):
             followed = flwrst and int(flwrst.relation)
         self.render("yoez1.0beta/homepage-people-show-1.html", cuser=cuser,
                     user=user, rows=rows, userself=userself, tips=tips,
-                    is_auth=is_authenticate, followed=followed,
+                    is_auth=is_auth, followed=followed,
                     deftxt=DEFAULT_TEXT, worklist=worklist)
 
 
