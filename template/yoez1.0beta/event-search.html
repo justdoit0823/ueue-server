@@ -8,13 +8,13 @@
 <meta name="author" content="优意座标™|YOEZ.CC团队" />
 <meta name="copyright" content="Copyright优意座标™" />
 <link rel="stylesheet" type="text/css" href="http://static.ueue.cc/www/css/common.css">
-<link rel="stylesheet" type="text/css" href="http://static.ueue.cc/www/css/index.css">
+<link rel="stylesheet" type="text/css" href="../../../ueue-static/www/css/index.css">
 <script type="text/javascript" src="http://static.ueue.cc/www/js/jquery-1.8.3.js"></script>
 <script type="text/javascript" src="http://static.ueue.cc/www/js/jquery.form-2.67.js"></script>
 <script type="text/javascript" src="http://static.ueue.cc/www/js/common.js"></script>
 <script type="text/javascript" src="http://static.ueue.cc/www/js/index.js"></script>
 </head>
-<body onselectstart="return false;">
+<body>
 <!--header begain-->
 {{modules.Header(cuser,request.uri)}}
 <!--TOP BEGIN-->
@@ -33,173 +33,34 @@
 <!--TOP END-->
 <!--SEARCH BEGAIN-->
 
-<div class="yz-idx-search wp1000">
-	<ul class="yz-idx-event-search-tag z cl mgt40">
-		<li class="yz-idx-event-search-tag1 z cl js-list">
-			<span class="chs"><i class="yz-idx-clickicon"></i>记录归档</span>
-			<div class="yz-idx-event-search-tag1-list js-list-1">
-				<a href="/records?type=-1">全部记录</a>
-				<a href="/records?type=0">公益参与</a>
-				<a href="/records?type=1">通告媒体</a>
-				<a href="/records?type=2">获奖荣誉</a>
-				<a href="/records?type=3">机构招募</a>
-				<a href="/records?type=4">发表声明</a>
-				<a href="/records?type=5">媒体报道</a>
-				<a href="/records?type=6">经验分享</a>
-				<a href="/records?type=7">赛事活动</a>
-				<a href="/records?type=8">官方发布</a>
-			</div>
-	  </li>
-
-		<li class="yz-idx-event-search-tag2 z cl js-list">
-			<span class="chs"><i class="yz-idx-clickicon"></i>行业领域</span>
-			<div class="yz-idx-event-search-tag2-list js-list-1">
-				<div class="yz-idx-event-search-tag2-list-title">
-					<a id="tab-1" class="yz-idx-event-search-tag2-list-title-on">演员模特</a>
-					<a id="tab-2">影视幕后</a>
-					<a id="tab-3">音乐制作</a>
-					<a id="tab-4">摄影造型</a>
-					<a id="tab-5">设计创意</a>
-					<a id="tab-6">广告传媒</a>
-					<a id="tab-7">更多行业</a>
-				</div>
-				<div class="tab-list">		
-					<div class="tab-1">
-						<!--<a href="/records?trade=0">全部行业</a>-->	
-						<a href="/records?trade=影视表演">影视表演</a>
-						<a href="/records?trade=话剧表演">话剧表演</a>
-						<a href="/records?trade=时装模特">时装模特</a>
-						<a href="/records?trade=平面模特">平面模特</a>
-						<a href="/records?trade=车模">车模</a>
-						<a href="/records?trade=舞蹈表演">舞蹈表演</a>
-						<a href="/records?trade=曲艺表演">曲艺表演</a>
-						<a href="/records?trade=魔术表演">魔术表演</a>
-						<a href="/records?trade=杂技表演">杂技表演</a>
-						<a href="/records?trade=表演相关">表演相关</a>
-						<a href="/records?trade=模特相关">模特相关</a>
-					</div>
-					<div class="tab-2">
-						<!--<a href="#">全部行业</a>-->	
-						<a href="/records?trade=影视导演">影视导演</a>
-						<a href="/records?trade=制片">制片</a>
-						<a href="/records?trade=影视监制">影视监制</a>
-						<a href="/records?trade=出品发行">出品发行</a>
-						<a href="/records?trade=编剧">编剧</a>
-						<a href="/records?trade=影视摄像">影视摄像</a>
-						<a href="/records?trade=后期特效">后期特效</a>
-						<a href="/records?trade=影视美术">影视美术</a>
-						<a href="/records?trade=场景设计">场景设计</a>
-						<a href="/records?trade=配音">配音</a>
-						<a href="/records?trade=字幕">字幕</a>
-						<a href="/records?trade=影视相关">影视相关</a>
-					</div>
-					<div class="tab-3">
-						<!--<a href="#">全部行业</a>-->	
-						<a href="/records?trade=歌手">歌手</a>
-						<a href="/records?trade=乐手">乐手</a>
-						<a href="/records?trade=乐队">乐队</a>
-						<a href="/records?trade=音乐制作">音乐制作</a>
-						<a href="/records?trade=DJ">DJ</a>
-						<a href="/records?trade=词曲\/编曲">词曲/编曲</a>
-						<a href="/records?trade=录音\/混音">录音/混音</a>
-						<a href="/records?trade=音乐后期">音乐后期</a>
-						<a href="/records?trade=音乐相关">音乐相关</a>
-					</div>
-					<div class="tab-4">
-						<!--<a href="#">全部行业</a>-->	
-						<a href="/records?trade=时装摄影">时装摄影</a>
-						<a href="/records?trade=人像摄影">人像摄影</a>
-						<a href="/records?trade=广告摄影">广告摄影</a>
-						<a href="/records?trade=风光摄影">风光摄影</a>
-						<a href="/records?trade=纪实摄影">纪实摄影</a>
-						<a href="/records?trade=图片后期">图片后期</a>
-						<a href="/records?trade=化妆">化妆</a>
-						<a href="/records?trade=服装造型">服装造型</a>
-						<a href="/records?trade=发型">发型</a>
-						<a href="/records?trade=摄影相关">摄影相关</a>
-						<a href="/records?trade=造型相关">造型相关</a>
-					</div>
-					<div class="tab-5">
-						<!--<a href="#">全部行业</a>-->	
-						<a href="/records?trade=平面设计">平面设计</a>
-						<a href="/records?trade=三维设计">三维设计</a>
-						<a href="/records?trade=视觉设计">视觉设计</a>
-						<a href="/records?trade=工业设计">工业设计</a>
-						<a href="/records?trade=游戏设计">游戏设计</a>
-						<a href="/records?trade=动漫设计">动漫设计</a>
-						<a href="/records?trade=UI\/UE">UI/UE</a>
-						<a href="/records?trade=建筑设计">建筑设计</a>
-						<a href="/records?trade=景观设计">景观设计</a>
-						<a href="/records?trade=空间设计">空间设计</a>
-						<a href="/records?trade=视频设计">视频设计</a>
-						<a href="/records?trade=服装设计">服装设计</a>
-						<a href="/records?trade=珠宝设计">珠宝设计</a>
-						<a href="/records?trade=插画设计">插画设计</a>
-						<a href="/records?trade=纹身设计">纹身设计</a>
-						<a href="/records?trade=创意执行">创意执行</a>
-						<a href="/records?trade=设计相关">设计相关</a>
-					</div>
-					<div class="tab-6">
-						<!--<a href="#">全部行业</a>-->	
-						<a href="/records?trade=广告创意">广告创意</a>
-						<a href="/records?trade=美术顾问">美术顾问</a>
-						<a href="/records?trade=策略\/文案">策略/文案</a>
-						<a href="/records?trade=活动策划">活动策划</a>
-						<a href="/records?trade=活动执行">活动执行</a>
-						<a href="/records?trade=主编">主编</a>
-						<a href="/records?trade=编辑">编辑</a>
-						<a href="/records?trade=美术编辑">美术编辑</a>
-						<a href="/records?trade=采编">采编</a>
-						<a href="/records?trade=记者">记者</a>
-						<a href="/records?trade=广告相关">广告相关</a>
-						<a href="/records?trade=媒体相关">媒体相关</a>
-					</div>
-					<div class="tab-7">
-						<a href="/records?trade=公益">公益</a>
-						<a href="/records?trade=经纪人">经纪人</a>
-						<a href="/records?trade=练习生">练习生</a>
-						<a href="/records?trade=学生">学生</a>
-						<a href="/records?trade=旅游体验">旅游体验</a>
-						<a href="/records?trade=写作">写作</a>
-						<a href="/records?trade=绘画">绘画</a>
-						<a href="/records?trade=书法">书法</a>
-						<a href="/records?trade=雕塑">雕塑</a>
-						<a href="/records?trade=戏剧">戏剧</a>
-						<a href="/records?trade=收藏鉴定">收藏鉴定</a>
-						<a href="/records?trade=行为艺术">行为艺术</a>
-						<a href="/records?trade=视觉艺术">视觉艺术</a>
-						<a href="/records?trade=艺术相关">艺术相关</a>
-						<a href="/records?trade=其他行业">其他行业</a>
-					</div>
-				</div>
+<div class="yz-idx-search wp1000 cl">
+<div class="yz-idx-event-search-tag z cl">
+	<div class="ue-search-left z cl">
+		<p>
+			记录类型 > <span>全部记录</span> ▼
+		</p>
+		<div class="ue-search-recorde-nav">
+			<a href="#">全部记录</a>
+			<a href="#">通告媒体</a><!--仅媒体人可见-->
+			<a href="#">机构招募</a>
+			<a href="#">赛事活动</a>
+			<a href="#">公益参与</a>
+			<a href="#">获奖荣誉</a>
+			<a href="#">媒体报道</a>
 		</div>
-	  </li>
+	</div>
+	<div class="ue-search-right y cl">
+		<a href="#" class="active">全部行业</a>
+		<a href="#">演员&amp;模特</a>
+		<a href="#">影视幕后</a>
+		<a href="#">音乐&amp;制作</a>
+		<a href="#">摄影&amp;造型</a>
+		<a href="#">设计创意</a>
+		<a href="#">广告传媒</a>
+		<a href="#">其他行业</a>
+	</div>
 
-		<li class="yz-idx-event-search-tag3 z cl js-list">
-			<span class="chs"><i class="yz-idx-clickicon"></i>热度排序</span>
-			<div class="yz-idx-event-search-tag3-list js-list-1">
-				<a href="/records?hotsort=0" class="event-icon6">所有记录</a>
-				<a href="/records?hotsort=1" class="show-icon8">最多查看</a>
-				<a href="/records?hotsort=2" class="show-icon7">最多支持</a>
-				<a href="/records?hotsort=3" class="show-icon9">最多评论</a>
-				<a href="/records?hotsort=4" class="event-icon10">最多报道</a>
-			</div>
-	  </li>
-
-		<li class="yz-idx-event-search-tag4 z cl js-list">
-			<span class="chs"><i class="yz-idx-clickicon"></i>用户类型</span>
-			<div class="yz-idx-event-search-tag4-list js-list-1">
-				<a href="/records?user=-1" class="show-icon11">全部用户</a>
-				<a href="/records?user=1" class="show-icon12">我记忆的</a>
-				<a href="/records?user=2" class="show-icon13">文创人</a>
-				<a href="/records?user=3" class="show-icon14">媒体人</a>
-				<a href="/records?user=4" class="show-icon15">机构</a>
-			</div>
-	  </li>
-
-		<li class="yz-idx-event-search-tag5 z cl js-list">
-			<span class="chs"><i class="yz-idx-clickicon"></i>热门标签</span>		</li>
-	</ul>
+</div>
 	<div class="yz-search y cl mgt40">
 		<div class="z cl">
 			<ul class="yz-search-type z cl">
