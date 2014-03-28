@@ -9,7 +9,7 @@
 <meta name="copyright" content="Copyright优意座标™" />
 <link rel="stylesheet" type="text/css" href="http://static.ueue.cc/www/css/common.css">
 <link rel="stylesheet" type="text/css" href="http://static.ueue.cc/www/css/index.css">
-<script type="text/javascript" src="http://static.ueue.cc/www/js/jquery-1.6.4.js"></script>
+<script type="text/javascript" src="http://static.ueue.cc/www/js/jquery-1.8.3.js"></script>
 <script type="text/javascript" src="http://static.ueue.cc/www/js/common.js"></script>
 <script type="text/javascript" src="http://static.ueue.cc/www/js/index.js"></script>
 </head>
@@ -17,7 +17,7 @@
 <!--header begain-->
 {{modules.Header(cuser,request.uri)}}
 <!--header end-->
-{{modules.HomepageContent(cuser,basic)}}
+{{modules.HomepageContent(user)}}
 <!--TOP END-->
 <div class="yz-idx-body z cl">
 	<div class="wp1000 cl ue-all mgt60">
@@ -265,7 +265,7 @@ $(this).nextAll(".yz-hp-focus-hover").hide(0);
 
 <!--footer begain-->
 
-{{modules.BlackFooter(cuser)}}
+{{modules.BlackFooter(cuser,tips)}}
 <div class="wp1000 cl" style="overflow: hidden;">
 	<div class="yz-hp-info-topbuttoff z cl">
 		<span></span>

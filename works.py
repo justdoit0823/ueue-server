@@ -8,7 +8,7 @@ The details are view,search,post,edit,delete...
 '''
 
 
-from __init__ import BaseHandler, USER_STATUS
+from __init__ import BaseHandler
 
 from userspace import DEFAULT_TEXT
 
@@ -24,15 +24,19 @@ import re
 
 from hashlib import md5
 
+from manage import WorkManager, UserManager, ReviewManager
+
+from manage import FollowManager
+
 '''The typevalue -1 is for all(default),0 for video,1 for music,
 2 for picture,3 for article.'''
 
-SUPORT_WORKS = ['video', 'music', 'picture', 'article']
+SUPORT_WORKS = ('video', 'music', 'picture', 'article')
 
-SUPORT_IMAGES = ['jpg', 'png', 'jpeg']
+SUPORT_IMAGES = ('jpg', 'png', 'jpeg')
 
-SUPORT_WORK_MARKS = ['不标记知识共享协议', '署名-非商业性使用-禁止演绎', '署名-非商业性使用-相同方式共享',
-                     '署名-非商业性使用', '署名-禁止演绎', '署名-相同方式共享', '署名']
+SUPORT_WORK_MARKS = ('不标记知识共享协议', '署名-非商业性使用-禁止演绎', '署名-非商业性使用-相同方式共享',
+                     '署名-非商业性使用', '署名-禁止演绎', '署名-相同方式共享', '署名')
 
 
 SAERCHBASE = ("select work.wid,work.title,work.type,work.content,"
@@ -45,7 +49,7 @@ USERSEARCH = ("select uid from user join basicinfo on user.uid="
               "basicinfo.bsc_id ")
 
 
-ORDERS = ["view", "support", "review"]
+ORDERS = ("view", "support", "review")
 
 
 CONDITIONS = {
@@ -136,9 +140,11 @@ class WorksHandler(BaseHandler):
                 wrkwhcond = " where user.uid in ("+usrsql+") "
         schsql = SAERCHBASE+wrkwhcond+ordcond
         print schsql, args1+args2
-        rows = self.db.query(schsql, *(args1+args2))
+        rows = []  # self.db.query(schsql, *(args1+args2))
         cuser = self.get_current_user()
-        self.render("yoez1.0beta/work-search.html", cuser=cuser, rows=rows)
+        tips = self.get_tool_tips(('top', 'tip'))
+        self.render("yoez1.0beta/work-search.html", cuser=cuser, rows=rows,
+                    tips=tips)
 
 
 class UserWorksHandler(BaseHandler):
@@ -148,36 +154,24 @@ class UserWorksHandler(BaseHandler):
         cuser = self.get_current_user()
         type = int(self.get_argument("type", -1))
         worklist = {'-1': 0, '0': 0, '1': 0, '2': 0, '3': 0}
-        user_sql = "select * from user where uid=%d" % uid
-        user = self.db.get(user_sql)
-        if not user:
+        user = UserManager.get_user_basic(uid)
+        if user is None:
             return self.write("sorry!the page you request does not exists.")
-        if(type > -1):
-            work_sql = ("select * from user join work on work.author_id="
-                        "user.uid where work.author_id=%d and "
-                        "type=%d") % (uid, type)
-        else:
-            work_sql = ("select * from user join work on work.author_id="
-                        "user.uid where user.uid=%d") % uid
-        consql = ("select * from contactinfo join basicinfo on con_id="
-                  "bsc_id where con_id=%d") % uid
-        rows = self.db.query(work_sql)
-        conrow = self.db.get(consql)
+        rows = WorkManager.get_user_works(uid, type)
         worklist['-1'] = len(rows)
         for one in rows:
             worklist[one.type] += 1
             one.contet = one.content.replace("\'", "'")
-        userself = cuser and (cuser.uid == user.uid)
-        is_authenticate = int(user.status) == USER_STATUS["authenticate"]
+        userself = cuser and (cuser.uid == uid)
+        is_auth = int(user.status) == options.userstatus['authenticate']
         followed = False
+        tips = self.get_tool_tips(('top', 'tip'))
         if not userself and cuser:
-            flwsql = ("select * from follow where fid=%d and "
-                      "flwid=%d") % (cuser.uid, uid)
-            flwrst = self.db.get(flwsql)
+            flwrst = FollowManager.get_user_relation(*(cuser.uid, uid))
             followed = flwrst and int(flwrst.relation)
         self.render("yoez1.0beta/homepage-people-show-1.html", cuser=cuser,
-                    user=user, rows=rows, conrow=conrow, userself=userself,
-                    is_auth=is_authenticate, followed=followed,
+                    user=user, rows=rows, userself=userself, tips=tips,
+                    is_auth=is_auth, followed=followed,
                     deftxt=DEFAULT_TEXT, worklist=worklist)
 
 
@@ -185,11 +179,10 @@ class WorkDetailHandler(BaseHandler):
     def get(self, id):
         wid = int(id)
         cuser = self.get_current_user()
-        updsql = "update work set view=view+1 where wid=%d" % wid
-        event_sql = ("select * from user join work on work.author_id=user.uid "
-                     "where work.wid=%d") % wid
-        self.db.execute(updsql)
-        row = self.db.get(event_sql)
+        WorkManager.update_work_view(wid, 1)
+        row = WorkManager.get_work_byid(wid)
+        if row is None:
+            return self.write("sorry!the page you request does not exists.")
         row.contet = row.content.replace("\'", "'")
         copysign = SUPORT_WORK_MARKS[int(row.copysign)]
         if(row.type == '1'):
@@ -201,17 +194,14 @@ class WorkDetailHandler(BaseHandler):
             if cuser.uid == row.uid:
                 is_follow = True
             else:
-                flwsql = ("select * from follow where fid=%d and "
-                          "flwid=%d") % (cuser.uid, row.uid)
-                flwrst = self.db.get(flwsql)
+                flwrst = FollowManager.get_user_relation(*(cuser.uid, row.uid))
                 is_follow = flwrst and int(flwrst.relation)
-        revsql = ("select * from user join workreview on workreview.reviewuid"
-                  "=user.uid where workreview.reviewwid=%d") % wid
-        reviews = self.db.query(revsql)
+        reviews = ReviewManager.get_work_reviews(wid)
         work = SUPORT_WORKS[int(row.type)]
+        tips = self.get_tool_tips(('top', 'tip', 'edit', 'del', 'open'))
         self.render("yoez1.0beta/work-content-"+work+".html", cuser=cuser,
                     row=row, copysign=copysign, mid=mid, is_follow=is_follow,
-                    reviews=reviews)
+                    reviews=reviews, tips=tips)
 
     def post(self, id):
         wid = int(id)
@@ -219,11 +209,8 @@ class WorkDetailHandler(BaseHandler):
         content = self.get_argument("rcontent")
         content = content.replace("'", "\'")
         at = time.strftime("%Y-%m-%d %X", time.localtime())
-        updsql = "update work set review=review+1 where wid=%d" % wid
-        addsql = ("insert into workreview (reviewwid,reviewuid,content,time) "
-                  "values(%d,%d,'%s','%s')") % (wid, cuser.uid, content, at)
-        self.db.execute(addsql)
-        self.db.execute(updsql)
+        ReviewManager.new_work_review(*(wid, cuser.uid, content, at))
+        WorkManager.update_work_review(wid, 1)
         one = dict(uid=cuser.uid, img=cuser.img, account=cuser.account,
                    content=content.replace("\'", "'"), time=at)
         rmsg = self.render_string("modules/user_review_content.html", one=one)
@@ -235,25 +222,22 @@ class UserPostVideoworkHandler(BaseHandler):
     @tornado.web.authenticated
     def get(self):
         cuser = self.get_current_user()
-        url = self.get_argument("backurl", "/")
-        self.render('editor1.0beta/editor-work-2.html', cuser=cuser, url=url)
+        url = self.get_previous_url()
+        tips = self.get_tool_tips(('top', 'tip'))
+        self.render('editor1.0beta/editor-work-2.html', cuser=cuser, url=url,
+                    tips=tips)
 
     def post(self):
         cuid = self.get_secure_cookie("_yoez_uid")
-        title = self.get_argument("title")
-        content = self.get_argument("content")
-        describe = self.get_argument("describe", "")
-        teammates = self.get_argument("teammates", "")
-        lable = self.get_argument("lable")
-        cover = self.get_argument("cover")
         type = '0'
-        copysign = self.get_argument("copysign")
+        values = self.get_values(('title', 'content', ('describe', ''),
+                                  'cover', 'lable', 'copysign',
+                                  ('teammates', '')))
+        if not values:
+            return self.write({'status': 0, 'code': "missing argument."})
         at = time.strftime("%Y-%m-%d %X", time.localtime())
-        addsql = ("insert into work (author_id,type,title,content,wdescribe,"
-                  "cover,lable,copysign,teammates,time) values(%s,%s,%s,%s,%s,"
-                  "%s,%s,%s,%s,%s)")
-        self.db.execute(addsql, cuid, type, title, content, describe, cover,
-                        lable, copysign, teammates, at)
+        args = (cuid, type) + values + (at,)
+        WorkManager.new_work(*args)
         result = dict(status=1, code='')
         self.write(result)
 
@@ -262,25 +246,22 @@ class UserPostMusicworkHandler(BaseHandler):
     @tornado.web.authenticated
     def get(self):
         cuser = self.get_current_user()
-        url = self.get_argument("backurl", "/")
-        self.render('editor1.0beta/editor-work-3.html', cuser=cuser, url=url)
+        url = self.get_previous_url()
+        tips = self.get_tool_tips(('top', 'tip'))
+        self.render('editor1.0beta/editor-work-3.html', cuser=cuser, url=url,
+                    tips=tips)
 
     def post(self):
         cuid = self.get_secure_cookie("_yoez_uid")
-        title = self.get_argument("title")
-        content = self.get_argument("content")
-        describe = self.get_argument("describe", "")
-        teammates = self.get_argument("teammates", "")
-        lable = self.get_argument("lable")
-        cover = "/static/img/music.png"
         type = '1'
-        copysign = self.get_argument("copysign")
+        values = self.get_values(('title', 'content', ('describe', ''),
+                                  ('cover', ''), 'lable', 'copysign',
+                                  ('teammates', '')))
+        if not values:
+            return self.write({'status': 0, 'code': "missing argument."})
         at = time.strftime("%Y-%m-%d %X", time.localtime())
-        addsql = ("insert into work (author_id,type,title,content,wdescribe,"
-                  "cover,lable,copysign,teammates,time) values(%s,%s,%s,%s,%s,"
-                  "%s,%s,%s,%s,%s)")
-        self.db.execute(addsql, cuid, type, title, content, describe, cover,
-                        lable, copysign, teammates, at)
+        args = (cuid, type) + values + (at,)
+        WorkManager.new_work(*args)
         result = dict(status=1, code='')
         self.write(result)
 
@@ -289,25 +270,22 @@ class UserPostArticleworkHandler(BaseHandler):
     @tornado.web.authenticated
     def get(self):
         cuser = self.get_current_user()
-        url = self.get_argument("backurl", "/")
-        self.render('editor1.0beta/editor-work-4.html', cuser=cuser, url=url)
+        url = self.get_previous_url()
+        tips = self.get_tool_tips(('top', 'tip'))
+        self.render('editor1.0beta/editor-work-4.html', cuser=cuser, url=url,
+                    tips=tips)
 
     def post(self):
         cuid = self.get_secure_cookie("_yoez_uid")
-        title = self.get_argument("title")
-        content = self.get_argument("content")
-        describe = self.get_argument("describe", "")
-        teammates = self.get_argument("teammates", "")
-        lable = self.get_argument("lable")
-        cover = ""
         type = '3'
-        copysign = self.get_argument("copysign")
+        values = self.get_values(('title', 'content', ('describe', ''),
+                                  ('cover', ''), 'lable', 'copysign',
+                                  ('teammates', '')))
+        if not values:
+            return self.write({'status': 0, 'code': "missing argument."})
         at = time.strftime("%Y-%m-%d %X", time.localtime())
-        addsql = ("insert into work (author_id,type,title,content,wdescribe,"
-                  "cover,lable,copysign,teammates,time) values(%s,%s,%s,%s,%s,"
-                  "%s,%s,%s,%s,%s)")
-        self.db.execute(addsql, cuid, type, title, content, describe, cover,
-                        lable, copysign, teammates, at)
+        args = (cuid, type) + values + (at,)
+        WorkManager.new_work(*args)
         result = dict(status=1, code='')
         self.write(result)
 
@@ -316,25 +294,22 @@ class UserPostPictureworkHandler(BaseHandler):
     @tornado.web.authenticated
     def get(self):
         cuser = self.get_current_user()
-        url = self.get_argument("backurl", "/")
-        self.render('editor1.0beta/editor-work-1.html', cuser=cuser, url=url)
+        url = self.get_previous_url()
+        tips = self.get_tool_tips(('top', 'tip'))
+        self.render('editor1.0beta/editor-work-1.html', cuser=cuser, url=url,
+                    tips=tips)
 
     def post(self):
         cuid = self.get_secure_cookie("_yoez_uid")
-        title = self.get_argument("title")
-        content = self.get_argument("content")
-        describe = self.get_argument("describe", "")
-        teammates = self.get_argument("teammates", "")
-        lable = self.get_argument("lable")
-        cover = self.get_argument("cover")
         type = '2'
-        copysign = self.get_argument("copysign")
+        values = self.get_values(('title', 'content', ('describe', ''),
+                                  'cover', 'lable', 'copysign',
+                                  ('teammates', '')))
+        if not values:
+            return self.write({'status': 0, 'code': "missing argument."})
         at = time.strftime("%Y-%m-%d %X", time.localtime())
-        addsql = ("insert into work (author_id,type,title,content,wdescribe,"
-                  "cover,lable,copysign,teammates,time) values(%s,%s,%s,%s,%s,"
-                  "%s,%s,%s,%s,%s)")
-        self.db.execute(addsql, cuid, type, title, content, describe, cover,
-                        lable, copysign, teammates, at)
+        args = (cuid, type) + values + (at,)
+        WorkManager.new_work(*args)
         result = dict(status=1, code='')
         self.write(result)
 
@@ -344,7 +319,6 @@ class WorksPicuploadHandler(BaseHandler):
     @tornado.web.authenticated
     def post(self):
         cuser = self.get_current_user()
-        #print self.request
         workdir = os.path.dirname(sys.argv[0])
         for i in self.request.files:
             print i
@@ -394,9 +368,7 @@ class WorksMultiPicuploadHandler(BaseHandler):
         if uid is None:
             err_msg = "_yoez_uid argument missing from POST"
             raise tornado.web.HTTPError(403, err_msg)
-        user_sql = ("select account,uid,img,status,time from user "
-                    "where uid=%d") % int(uid)
-        cuser = self.db.get(user_sql)
+        cuser = UserManager.get_user_withid(uid)
         if cuser is None:
             raise tornado.web.HTTPError(403, "USER authenticated error!")
         workdir = os.path.dirname(sys.argv[0])
@@ -429,13 +401,9 @@ class WorkDeleteHandler(BaseHandler):
         cuid = int(self.get_secure_cookie("_yoez_uid"))
         wid = int(wid)
         idx = self.get_argument("index")
-        chksql = ("select wid from work where wid=%d and "
-                  "author_id=%d") % (wid, cuid)
-        chkrst = self.db.get(chksql)
-        hdlrst = {}
+        chkrst = WorkManager.check_user_work(cuid, wid)
         if chkrst:
-            delsql = "delete from work where wid=%d" % wid
-            self.db.execute(delsql)
+            WorkManager.del_work(wid)
             hdlrst = dict(status=1, index=idx, msg="delete success!")
         else:
             hdlrst = dict(status=0, msg="delete failure!")
@@ -445,6 +413,7 @@ class WorkDeleteHandler(BaseHandler):
 HandlerList = [
     (r"/works", WorksHandler),
     #(r"/worksearch",WorkSearchHandler),
+    (r"/([0-9]+)/works", UserWorksHandler),
     (r"/work/([0-9]+)", WorkDetailHandler),
     (r"/user/postwork/video", UserPostVideoworkHandler),
     (r"/user/postwork/music", UserPostMusicworkHandler),

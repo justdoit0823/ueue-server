@@ -13,7 +13,6 @@ import sys
 import smtplib
 import os
 import email.utils
-from tornado import database
 
 from email.mime.text import MIMEText
 
@@ -21,21 +20,44 @@ from getpass import getpass
 
 import PIL.Image
 
+import manage
 
-#mysql define
+import logging
 
 define("mysql_host", default="127.0.0.1:3306", help="ueue database host")
 define("mysql_database", default="yoez", help="ueue database name")
 define("mysql_user", default="justdoit", help="ueue database user")
-define("mysql_password", default=None, help="ueue database password")
+define("mysql_password", default='', help="ueue database password")
+define("dbsettings", default={}, help="ueue database settings", type=dict)
+define("noreply_password",
+       default='', help="signup email check account password")
 
+define("server_port0", default=10000, help="run on the given port", type=int)
+define("server_port1", default=10001, help="run on the given port", type=int)
+define("server_port2", default=10002, help="run on the given port", type=int)
+define("server_port3", default=10003, help="run on the given port", type=int)
+define("pidfile", default=None, help="pid file for the daemon process",
+       type=str)
+
+
+define("userstatus", default={}, help="user status dict", type=dict)
 # define site server hosts
+
+ROOT_HOST = "ueue.cc"
+
+ROOT_URL = "http://ueue.cc/"
 
 ADMIN_HOST = "siteadmin.ueue.cc"
 
+ADMIN_URL = "http://siteadmin.ueue.cc/"
+
 WEB_HOST = "www.ueue.cc"
 
+WWW_URL = "http://www.ueue.cc/"
+
 STATIC_HOST = "static.ueue.cc"
+
+STATIC_URL = "http://static.ueue.cc/"
 
 # define the userstatus table
 
@@ -61,6 +83,18 @@ userprofessions = {
     }
 
 
+# define tooltips
+
+TOOL_TIPS = {
+    'top': '<a href="#" title="回到顶部" id="ue-main-gotop"></a>',
+    'tip': '<a href="#" title="侵权举报" id="ue-main-tip"></a>',
+    'edit': '<a href="#" title="编辑" id="ue-main-edit"></a>',
+    'del': '<a href="#" title="删除" id="ue-main-del"></a>',
+    'open': '<a href="#" title="设置为公开" id="ue-main-open"></a>',
+    'close': '<a href="#" title="设置为保密" id="ue-main-close"></a>'
+    }
+
+
 # define authorize options
 
 AUTHORIZE_OPTIONS = {
@@ -73,49 +107,67 @@ AUTHORIZE_OPTIONS = {
 
 DEFAULT_TEXT = "未被授权显示"
 
-#rewrite requesthandler
+# define www cookie domain
 
-USER_CACHE = dict()
+WWW_COOKIE_DOMAIN = "www.ueue.cc"
+
+
+#rewrite requesthandler
 
 
 class BaseHandler(tornado.web.RequestHandler):
 
-    def initialize(self):
-
-        self.db = database.Connection(host=options.mysql_host,
-                                      user=options.mysql_user,
-                                      database=options.mysql_database,
-                                      password=options.mysql_password)
-
-    @property
-    def is_db_connected(self):
-
-        return self.db is not None
-
     def get_current_user(self):
 
         cuser = self.get_secure_cookie("_yoez_uid")
-        if(cuser):
-            user_sql = ("select account,uid,img,status,time from user "
-                        "where uid=%s")
-            user = self.db.get(user_sql, cuser)
-            #USER_CACHE[cuser]=user
+        if cuser:
+            user = manage.UserManager.get_user_withid(cuser)
             return user
         else:
             return None
 
     def clear_current_user(self):
 
-        self.clear_cookie("_yoez_uid")
+        self.clear_cookie("_yoez_uid", domain=WWW_COOKIE_DOMAIN)
 
-    def get_dynum(self, user):
-        dnum = 0
-        sql = ("select COUNT(id) as nid from dynamic where dyner='%s' "
-               "and handle=0")
-        dyn = self.db.get(sql, user)
-        if(dyn):
-            dnum = dyn.nid
-        return dnum
+    def get_values(self, names):
+
+        '''get values of item in names list.'''
+
+        values = []
+        for name in names:
+            kwargs = {}
+            if isinstance(name, tuple):
+                if len(name) > 1:
+                    kwargs['default'] = name[1]
+                arg = name[0]
+            else:
+                arg = name
+            try:
+                value = self.get_argument(arg, **kwargs)
+                values.append(value)
+                if 'default' in kwargs:
+                    kwargs.pop('default')
+            except:
+                logging.error("get argument %s's value error" % arg)
+                return ()
+        return tuple(values)
+
+    def get_previous_url(self, default=WWW_URL):
+
+        '''use the Referer in http header to indicate the previous url'''
+
+        url = self.request.headers.get("Referer", default)
+        if url.find(ROOT_HOST) == -1:
+            url = default
+        return url
+
+    def get_tool_tips(self, tiplist):
+
+        tl = []
+        for t in tiplist:
+            tl.append(TOOL_TIPS[t])
+        return '\n'.join(tl)
 
 
 #send email
@@ -144,13 +196,19 @@ def send(fr, to, sub, msg, passwd=None):
         print e
 
 
-#get the database password from the terminal
+def initconfig(path):
 
-def initdbpsw():
+    '''init the options with the config file'''
 
-    options.mysql_password = getpass("User database password:")
-    print "init database connection"
-    options.noreply_password = getpass("User noreply email password:")
+    tornado.options.parse_config_file(path)
+    tornado.options.parse_command_line()
+    options.dbsettings = {
+        'host': options.mysql_host,
+        'database': options.mysql_database,
+        'user': options.mysql_user,
+        'password': options.mysql_password,
+    }
+    options.userstatus = USER_STATUS
 
 
 #set image size

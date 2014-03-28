@@ -9,16 +9,16 @@
 <meta name="copyright" content="Copyright优意座标™" />
 <link rel="stylesheet" type="text/css" href="http://static.ueue.cc/www/css/common.css">
 <link rel="stylesheet" type="text/css" href="http://static.ueue.cc/www/css/index.css">
-<script type="text/javascript" src="http://static.ueue.cc/www/js/jquery-1.6.4.js"></script>
+<script type="text/javascript" src="http://static.ueue.cc/www/js/jquery-1.8.3.js"></script>
 <script type="text/javascript" src="http://static.ueue.cc/www/js/common.js"></script>
 <script type="text/javascript" src="http://static.ueue.cc/www/js/index.js"></script>
 <script type="text/javascript" src="http://static.ueue.cc/www/js/homepage.js"></script>
 </head>
 <body>
 <!--header begain-->
-{{modules.Header(cuser,request.uri)}}
+{{modules.Header(cuser, request.uri)}}
 <!--header end-->
-{{modules.HomepageContent(user,conrow,userself,followed)}}
+{{modules.HomepageContent(user, userself, followed)}}
 <!--TOP END-->
 <div class="yz-idx-body z cl">
 	<div class="wp1000 cl ue-all mgt60">
@@ -201,6 +201,6 @@ $(document).ready(function($) {
 
 
 </div>
-{{modules.BlackFooter(user)}}
+{{modules.BlackFooter(user,tips)}}
 </body>
 </html>

@@ -10,7 +10,7 @@
 				  {% for i in row.lable.split(",") %}<a href="/records?lable={{url_escape(i)}}" target="_blank">#{{i}}</a>{% end %}
                                 </p>
                                 <p class="yz-record-by">
-                                    <span>2013.03.24</span>
+                                    <span>{{row.time}}</span>
 				    {% if userself %}
 									<a href="#" class="hp-show-on z cl">设置为公开</a>
 									<a href="/record/delete?delrid={{row.eid}}" class="hp-show-del z cl">删除</a>

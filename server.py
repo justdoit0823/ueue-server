@@ -2,11 +2,11 @@
 
 '''
 The is a main server module,with some application settings
- to change server behaviour.After this,start the sever loop.
+to change server behaviour.After this,start the sever loop.
 
 '''
 
-
+from tornado.options import define, options
 import tornado.httpserver
 import tornado.ioloop
 import tornado.options
@@ -15,7 +15,7 @@ import sys
 import re
 import os
 import time
-from __init__ import BaseHandler, USER_STATUS
+from __init__ import BaseHandler, initconfig
 import works
 import events
 import userspace
@@ -25,14 +25,9 @@ import module
 import signal
 import logging
 
-from tornado.options import define, options
+from manage import WorkManager, RecordManager, ReviewManager
 
-define("server_port0", default=10000, help="run on the given port", type=int)
-define("server_port1", default=10001, help="run on the given port", type=int)
-define("server_port2", default=10002, help="run on the given port", type=int)
-define("server_port3", default=10003, help="run on the given port", type=int)
-define("pidfile", default=None, help="pid file for the daemon process",
-       type=str)
+from manage import UserManager
 
 #rewrite RequestHandler
 
@@ -41,31 +36,24 @@ BUF_READ_SIZE = 4096
 
 class HomeHandler(BaseHandler):
     def get(self):
-        print self.request
-        if self.is_db_connected is False:
-            return self.write("connect to mysql server failed.")
         cuser = self.get_current_user()
-        work_sql = ("select * from user join work on work.author_id=user.uid "
-                    "order by work.time desc")
-        rows = self.db.query(work_sql)
-        event_sql = ("select * from user join event on event.author_id="
-                     "user.uid order by event.time desc limit 0,4")
-        ls = self.db.query(event_sql)
-        review_sql = ("select * from user join eventreview on "
-                      "eventreview.reviewuid=user.uid order by "
-                      "eventreview.time desc limit 0,4")
-        rvls = self.db.query(review_sql)
-        kwargs = dict(cuser=cuser, sf=self, rows=rows, ls=ls, rvls=rvls)
+        rows = WorkManager.get_latest_works(30)
+        ls = RecordManager.get_latest_records(4)
+        rvls = ReviewManager.get_latest_reviews(4)
+        tips = self.get_tool_tips(('top', 'tip'))
+        kwargs = dict(cuser=cuser, sf=self, rows=rows, ls=ls, rvls=rvls,
+                      tips=tips)
         self.render("yoez1.0beta/index.html", **kwargs)
 
 
 class ProfessionalHandler(BaseHandler):
     def get(self):
         cuser = self.get_current_user()
-        usersql = ("select * from user join basicinfo on uid=bsc_id where "
-                   "status >= %s")
-        rows = self.db.query(usersql, USER_STATUS["infoset"])
-        self.render("yoez1.0beta/user-search.html", cuser=cuser, rows=rows)
+        rows = UserManager.get_pro_users()
+        users = UserManager.get_latest_users(30)
+        tips = self.get_tool_tips(('top', 'tip'))
+        self.render("yoez1.0beta/user-search.html", cuser=cuser, rows=rows,
+                    users=users, tips=tips)
 
 
 class ClubHandler(BaseHandler):
@@ -121,12 +109,6 @@ class StaticImgHandler(BaseHandler):
             self.write("img read error!")
 
 
-class UserStatementHandler(BaseHandler):
-
-    def get(self):
-        self.render("other1.0beta/other-1.html")
-
-
 #rewrite Application
 
 
@@ -137,7 +119,6 @@ class MyApplication(tornado.web.Application):
             (r"/index", IndexHandler),
             (r"/professional", ProfessionalHandler),
             (r"/vane", ClubHandler),
-            (r"/user/statement", UserStatementHandler),
             (r"/about/oneminute", AboutOneminHandler),
             (r"/about/partners", AboutPartnersHandler),
             #(r"/static/img/([a-zA-Z0-9.]+)", StaticImgHandler),
@@ -224,8 +205,7 @@ def registerserver(pidfile, pid):
 def main():
 
     config_file = os.path.join(os.path.dirname(sys.argv[0]), "server.conf")
-    tornado.options.parse_config_file(config_file)
-    tornado.options.parse_command_line()
+    initconfig(config_file)
     checkserver(options.pidfile)
     daemonize(False)
     signal.signal(signal.SIGQUIT, serverquit)

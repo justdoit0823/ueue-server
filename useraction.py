@@ -28,17 +28,29 @@ status for the user:
 
 '''
 
-from __init__ import BaseHandler, send, USER_STATUS, set_image_size
+from __init__ import BaseHandler, send, set_image_size
+from __init__ import WWW_COOKIE_DOMAIN
+
 import time
 import random
 import sys
 import os
 from hashlib import sha224, md5
 import tornado.web
+import logging
 from tornado.options import define, options
+
+from manage import UserManager, PropertyManager
+
+from manage import BasicManager, ContactManager, FollowManager
 
 define("noreply_account", default="noreply@ueue.cc",
        help="signup email check account")
+
+
+def check_password(input_psw, salt, check_psw):
+
+    return (sha224(input_psw + salt).hexdigest() == check_psw)
 
 
 class UserLoginHandler(BaseHandler):
@@ -49,26 +61,29 @@ class UserLoginHandler(BaseHandler):
     def post(self):
         email = self.get_argument("email")
         psw = self.get_argument("password")
-        psw = sha224(psw).hexdigest()
-        print psw
         go = self.get_argument("next", "/")
-        result = self.db.get(("select uid,account,status from user where "
-                              "email='%s' and password='%s'") % (email, psw))
-        print result
+        result = UserManager.get_user_withmail(email)
         json = {}
         if result:
-            if(result.status > USER_STATUS["unactive"]):
-                if(result.status == USER_STATUS["lock"]):
-                    json = dict(error=1, msg='你的帐号以被暂停使用，请联系客服', url=go)
+            salt = ""
+            check = check_password(psw, salt, result.password)
+            if check:
+                if(result.status > options.userstatus['unactive']):
+                    if(result.status == options.userstatus['lock']):
+                        json = dict(error=1, msg='你的帐号以被暂停使用，请联系客服', url=go)
+                    else:
+                        self.set_secure_cookie("_yoez_uid",
+                                               str(result.uid), expires_days=7,
+                                               domain=WWW_COOKIE_DOMAIN)
+                        json = dict(error=0, msg='', url=go)
                 else:
-                    self.set_secure_cookie("_yoez_uid",
-                                           str(result.uid), expires_days=7)
-                    json = dict(error=0, msg='', url=go)
+                    tip = "请完成邮箱激活"
+                    json = dict(error=1, msg=tip, url='/user/action/login')
             else:
-                tip = "请完成邮箱激活"
+                tip = "密码错误"
                 json = dict(error=1, msg=tip, url='/user/action/login')
         else:
-            tip = "用户名或密码错误"
+            tip = "用户不存在"
             json = dict(error=1, msg=tip, url='/user/action/login')
         self.write(json)
 
@@ -76,13 +91,13 @@ class UserLoginHandler(BaseHandler):
 class UserLogoutHandler(BaseHandler):
 
     def get(self):
-        cuser = self.get_current_user()
         self.clear_current_user()
         go = self.get_argument("next", "/")
         self.redirect(go)
 
 
 class UserSignupHandler(BaseHandler):
+
     def get(self):
         self.render("register1.0beta/register-1.html")
 
@@ -90,7 +105,6 @@ class UserSignupHandler(BaseHandler):
         act = self.get_argument("nick")
         mail = self.get_argument("email")
         psw = self.get_argument("password")
-        print psw
         psw = sha224(psw).hexdigest()
         num = random.randint(1, 10)
         img = "/static/img/common/avt"+str(num)+".jpg"
@@ -98,19 +112,16 @@ class UserSignupHandler(BaseHandler):
         uid = 0
         while(1):
             uid = random.randint(1000000, 10000000)
-            chk_sql = "select * from user where uid=%d" % uid
-            rt = self.db.get(chk_sql)
+            rt = UserManager.has_user(uid)
             if not rt:
                 break
         code = md5(str(uid)+reg_time).hexdigest()
-        sql = ("insert into user(uid,account,email,password,img,"
-               "time,code) values ('%d','%s','%s','%s','%s','%s',"
-               "'%s')") % (uid, act, mail, psw, img, reg_time, code)
         msg = self.render_string("register1.0beta/config_email.htm",
                                  act=act, co=code)
         sub = "请完成账号激活"
         send(options.noreply_account, mail, sub, msg)
-        self.db.execute(sql)
+        args = (uid, act, mail, psw, img, reg_time, code)
+        UserManager.new_user(*args)
         left, right = mail.split('@')
         rlft, rght = right.split('.')
         if rlft == "gmail":
@@ -124,8 +135,7 @@ class UserSignupHandler(BaseHandler):
 class UserResendmailHandler(BaseHandler):
     def get(self):
         code = self.get_argument('code')
-        user_sql = "select * from user where code='%s'" % code
-        rt = self.db.get(user_sql)
+        rt = UserManager.get_user_withcode(code)
         if not rt:
             msg = 'send error!pleae contact Customer Services.'
             kwargs = dict(status=0, msg=msg)
@@ -142,20 +152,15 @@ class UserActiveHandler(BaseHandler):
     def get(self):
         #cuid=int(self.get_secure_cookie("_yoez_uid"))
         code = self.get_argument("code")
-        check_sql = "select * from user where code='%s'" % code
-        result = self.db.get(check_sql)
+        result = UserManager.get_user_withcode(code)
         if(result):
-            if result.status == USER_STATUS["unactive"]:
-                self.set_secure_cookie("_yoez_uid", str(result.uid), 7)
-                active_sql = ("update user set status=%d where "
-                              "uid='%d'") % (USER_STATUS["uninit"], result.uid)
-                self.db.execute(active_sql)
-                print sys.argv[0]
-                print sys.argv
+            if result.status == options.userstatus['unactive']:
+                self.set_secure_cookie("_yoez_uid", str(result.uid), 7,
+                                       domain=WWW_COOKIE_DOMAIN)
+                UserManager.update_user_status(options.userstatus['uninit'],
+                                               result.uid)
                 workdir = os.path.dirname(sys.argv[0])
                 path = "%s/static/img/user/%d" % (workdir, result.uid)
-                print os.path.dirname(sys.argv[0])
-                print path
                 os.mkdir(path)
                 self.render("register1.0beta/register-3.html")
             else:
@@ -163,7 +168,7 @@ class UserActiveHandler(BaseHandler):
                             '''点此登陆</a>'''))
         else:
             self.write(('''验证错误，请检查地址有错误没。如果还是不行，请<a href='''
-                        '''"mailto:shareyou.net.cn@gmail.com">联系我们</a>,'''
+                        '''"mailto:noreply@ueue.cc">联系我们</a>,'''
                         '''我们会为你解决的。'''))
 
 
@@ -171,16 +176,16 @@ class UserConfirmHandler(BaseHandler):
     def post(self):
         data = self.get_argument("user_d", "")
         tp = self.get_argument("type", "")
-        sql = "SELECT * from user where %s='%s'" % (tp, data)
-        result = self.db.get(sql)
-        if result:
-            if tp == "email":
+        if tp == "email":
+            result = UserManager.get_user_withmail(data)
+            if result:
                 tip = "该邮箱已注册，请换一个!"
             else:
-                tip = "该用户名已存在，请换一个!"
-        else:
-            if tp == "email":
                 tip = "你可以使用该邮箱注册"
+        else:
+            result = UserManager.get_user_withuid(data)
+            if result:
+                tip = "该用户名已存在，请换一个!"
             else:
                 tip = "你可以使用该用户名"
         self.write(tip)
@@ -191,7 +196,7 @@ class UserInitializeHandler(BaseHandler):
     @tornado.web.authenticated
     def get(self):
         cuser = self.get_current_user()
-        if(cuser.status >= USER_STATUS["normal"]):
+        if(cuser.status >= options.userstatus['normal']):
             return self.redirect("/user/set-basic")
         self.render("user1.0beta/user-beginning-1.html", cuser=cuser)
 
@@ -201,20 +206,16 @@ class UserInitializeHandler(BaseHandler):
         sex = self.get_argument("sex", "0")
         img = self.get_argument("avatar")
         setrst = set_image_size((200, 200), img)
-        upd_sql = ("update user set img='%s',status=%d where "
-                   "uid=%d") % (img, USER_STATUS["normal"], cuid)
-        chk_sql = "select proper_id from  property where proper_id=%d" % cuid
-        chk = self.db.get(chk_sql)
+        chk = PropertyManager.get_property(cuid)
         if not chk:
-            pro_sql = ("insert into property(proper_id,ptype,sex) values "
-                       "(%d,'%s','%s')") % (cuid, usertype, sex)
-            bsc_sql = "insert into basicinfo(bsc_id) values(%d)" % (cuid)
-            con_sql = "insert into contactinfo(con_id) values(%d)" % (cuid)
-            self.db.execute(pro_sql)
-            self.db.execute(bsc_sql)
-            self.db.execute(con_sql)
+            args = [None] * 9
+            args[0] = cuid
+            PropertyManager.new_property(*(cuid, usertype, sex))
+            BasicManager.new_basic(*args)
+            ContactManager.new_contact(*args)
         if setrst:
-            self.db.execute(upd_sql)
+            kwargs = {'img': img, 'status': options.userstatus['normal']}
+            UserManager.update_user(cuid, **kwargs)
             result = dict(url="/"+str(cuid), status=1, code='')
         else:
             result = dict(url="/", status=0, code='set image error!')
@@ -228,38 +229,29 @@ class UserFollowHandler(BaseHandler):
 
     def follow(self, flwid):
         cuid = int(self.get_secure_cookie("_yoez_uid"))
-        chksql = "select * from follow where flwid=%d" % (flwid)
-        result = self.db.get(chksql)
+        result = FollowManager.get_user_relation(cuid, flwid)
         if result:
             if int(result.relation):
-                print "repeat follow"
+                logging.warn("repeat follow at UserFollowHandler")
             else:
-                updsql = ("update follow set relation='1' where fid=%d "
-                          "and flwid=%d") % (cuid, flwid)
-                self.db.execute(updsql)
+                FollowManager.update_user_relation(cuid, flwid)
         else:
-            addsql = ("insert into follow(fid,flwid,relation) values "
-                      "(%d,%d,'1')") % (cuid, flwid)
-            self.db.execute(addsql)
+            FollowManager.new_user_relation(cuid, flwid, 1)
 
     def cancel(self, flwid):
         cuid = int(self.get_secure_cookie("_yoez_uid"))
-        chksql = "select * from follow where flwid=%d" % flwid
-        result = self.db.get(chksql)
+        result = FollowManager.get_user_relation(cuid, flwid)
         if result:
             if int(result.relation):
-                updsql = ("update follow set relation='0' where fid=%d "
-                          "and flwid=%d") % (cuid, flwid)
-                self.db.execute(updsql)
+                FollowManager.update_user_relation(cuid, flwid, 0)
             else:
-                print "cancel error!"
+                logging.warn("don't need to cancel!")
         else:
-            print "cancel error!"
+            logging.warn("don't need to cancel!")
 
     def post(self):
         action = self.get_argument("action", None)
         flwid = int(self.get_argument("flwid", None))
-        result = {}
         if not action:
             result = dict(status=0, msg="unknow action!")
             return self.write(result)
