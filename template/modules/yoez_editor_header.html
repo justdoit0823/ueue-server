@@ -20,48 +20,7 @@
 <script type="text/javascript" src="http://static.ueue.cc/www/js/handlers.js"></script>
 </head>
 <body>
-	<div class="wp yz-hdbg">
-		<div class="wp yz-hdline"></div>
-		<div class="wp1202 yz-hd cl">
-			<a href="/"  class="logo"><span>回首页</span></a>
-			<div class="yz-idx-eventchoose"></div>
-			<ul class="yz-nav">
-				<li>
-					<a href="#" target="_blank" >作品云集</a><br>
-					<span class="en">Works Show</span>
-				</li>
-				<li>
-					<a href="#" target="_blank" >记录</a><br>
-					<span class="en">Recorder</span>
-				</li>
-				<li>
-					<a href="#" target="_blank" >机构&#38;人才</a><br>
-					<span class="en">Inc&#38;Professional</span>
-				</li>
-				<li>
-					<a href="#" target="_blank" >专辑</a><br>
-					<span class="en">Album</span>
-				</li>
-				<li>
-					<a href="#" target="_blank" >风向标</a><br>							
-					<span class="en">Ue Vane</span>
-				</li>
-			</ul>
-			<div class="yz-member mgt10 y cl">
-				<a href="#" class="z yz-avt">
-					<img src="../../static/img/common/avt.jpg"  width="46" height="46"/>
-				</a>
-				<div class="y yz-meb-btn cl">
-					<a href="#" class="yz-meb-btn1"></a>
-					<a href="#" class="yz-meb-btn2"></a>
-					<a href="#" class="yz-meb-btn3">
-					<span class="yz-newmsg">27</span>
-					</a>
-					<a href="#" class="yz-meb-btn4"></a>
-				</div>
-			</div>
-		</div>
-	</div>
+	{{modules.Header(cuser,request.uri)}}
 	<div class="ue-user-allbody">
 	</div>
     <div class="user-close-window" onclick="location.href='{{url}}';">
