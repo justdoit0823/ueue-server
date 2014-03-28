@@ -16,7 +16,7 @@
 </head>
 <body>
 <!--header begain-->
-{{modules.EditorHeader(url)}}
+{{modules.EditorHeader(cuser,url)}}
 <!--header end-->
 <div class="wp640 mgt100 yz-edbd cl">			
 			<div class="w640 y cl">
@@ -58,7 +58,7 @@
           else mates+=$(this).find(".editor-team-id").val()+"&"+$(this).find(".editor-team-work").val();
       })
       var settings={
-             url:"/user/postwork/article",
+             cuser,url:"/user/postwork/article",
              type:"post",
              dataType:"json",
              data:{

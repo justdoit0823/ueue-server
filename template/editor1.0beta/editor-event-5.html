@@ -22,7 +22,7 @@
 </head>
 <body>
 <!--header begain-->
-{{modules.EditorHeader(url)}}
+{{modules.EditorHeader(cuser,url)}}
 <!--header end-->
 <div class="wp yz-editorbody">
 	<div class="wp1000 yz-edbd cl">
@@ -130,7 +130,7 @@ $(document).ready(function(){
       alert(pic);
       //alert(type+time+place+lable+title+content);
       var settings={
-             url:"/user/postevent/media",
+             cuser,url:"/user/postevent/media",
              type:"post",
              dataType:"json",
              data:{

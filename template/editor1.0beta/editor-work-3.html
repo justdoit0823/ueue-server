@@ -16,7 +16,7 @@
 </head>
 <body>
 <!--header begain-->
-{{modules.EditorHeader(url)}}
+{{modules.EditorHeader(cuser,url)}}
 <!--header end-->
 	<div class="wp640 mgt100 yz-edbd cl">			
 			<div class="w640 y cl">
@@ -56,7 +56,7 @@
   select_item_on($(".ue-editor-btn a"),2,"active");
   $(".editor-sub-btn1").click(function(){
      var title=$(".editor-title input").val();
-     var content=$("#xiami-url").val();
+     var content=$("#xiami-cuser,url").val();
      var describe=$(".editor-desc-text").val();
      var sign=$(".editor-cc-on span").attr("snum");
      alert(title+describe+content+sign+lable);
@@ -65,7 +65,7 @@
           mates+=$(this).find(".editor-team-id").val()+"&"+$(this).find(".editor-team-work").val()+";";
      })
      var settings={
-             url:"/user/postwork/music",
+             cuser,url:"/user/postwork/music",
              type:"post",
              dataType:"json",
              data:{

@@ -20,7 +20,7 @@
 <script type="text/javascript" src="http://static.ueue.cc/www/js/handlers.js"></script>
 </head>
 <!--header begain-->
-{{modules.EditorHeader(cuser,url)}}
+{{modules.EditorHeader(cuser,cuser,url)}}
 <!--header end-->
 	<div class="wp640 mgt100 yz-edbd cl">
 		<div class="w640 y cl">
@@ -94,7 +94,7 @@ $(document).ready(function(){
       })
       alert(title+content+lable+cover+describe+sign);
       var settings={
-             url:"/user/postwork/picture",
+             cuser,url:"/user/postwork/picture",
              type:"post",
              dataType:"json",
              data:{
