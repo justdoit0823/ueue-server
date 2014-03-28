@@ -19,36 +19,211 @@
 <! --header begain -->
 {{modules.Header(cuser,request.uri)}}
 <! --TOP END -->
+<style>
+	.banner {
+	position: relative;
+	width: 100%;
+	overflow: auto;
 
-<div class="ue-index-search wp1000 cl">
-	<div class="ue-index-slide z cl">
-		<ul>
-			<li class="ue-index-slide-item">
-				<a href="#">
-					<img src="http://static.ueue.cc/www/img/common/adds3.jpg" alt="链接名称"/>
-				</a>
-			</li>
-			<li class="ue-index-slide-item" style="displsy: none">
-				<a href="#">
-					<img src="http://static.ueue.cc/www/img/common/adds4.jpg" alt="链接名称"/>
-				</a>
-			</li>
-			<li class="ue-index-slide-item" style="displsy: none">
-				<a href="#">
-					<img src="http://static.ueue.cc/www/img/common/adds5.jpg" alt="链接名称"/>
-				</a>
-			</li>
-		</ul>
-		<div class="ue-slide-scoll">
-			<a class="ue-slide-left z cl"></a>
-			<a class="ue-slide-right y cl"></a>
+	font-size: 18px;
+	line-height: 24px;
+	text-align: center;
+
+	color: rgba(255,255,255,.6);
+	text-shadow: 0 0 1px rgba(0,0,0,.05), 0 1px 2px rgba(0,0,0,.3);
+
+	background: #5b4d3d;
+	box-shadow: 0 1px 2px rgba(0,0,0,.25);
+}
+	.banner ul {
+		list-style: none;
+		width: 300%;
+	}
+	.banner ul li {
+		display: block;
+		float: left;
+		width: 33%;
+		min-height: 350px;
+
+		-o-background-size: 100% 100%;
+		-ms-background-size: 100% 100%;
+		-moz-background-size: 100% 100%;
+		-webkit-background-size: 100% 100%;
+		background-size: 100% 100%;
+
+		box-shadow: inset 0 -3px 6px rgba(0,0,0,.1);
+	}
+
+	.banner .inner {
+		padding: 160px 0 110px;
+	}
+
+	.banner h1, .banner h2 {
+		font-size: 40px;
+		line-height: 52px;
+
+		color: #fff;
+	}
+
+	.banner .btn {
+		display: inline-block;
+		margin: 25px 0 0;
+		padding: 9px 22px 7px;
+		clear: both;
+
+		color: #fff;
+		font-size: 12px;
+		font-weight: bold;
+		text-transform: uppercase;
+		text-decoration: none;
+
+		border: 2px solid rgba(255,255,255,.4);
+		border-radius: 5px;
+	}
+		.banner .btn:hover {
+			background: rgba(255,255,255,.05);
+		}
+		.banner .btn:active {
+			-webkit-filter: drop-shadow(0 -1px 2px rgba(0,0,0,.5));
+			-moz-filter: drop-shadow(0 -1px 2px rgba(0,0,0,.5));
+			-ms-filter: drop-shadow(0 -1px 2px rgba(0,0,0,.5));
+			-o-filter: drop-shadow(0 -1px 2px rgba(0,0,0,.5));
+			filter: drop-shadow(0 -1px 2px rgba(0,0,0,.5));
+		}
+
+	.banner .btn, .banner .dot {
+		-webkit-filter: drop-shadow(0 1px 2px rgba(0,0,0,.3));
+		-moz-filter: drop-shadow(0 1px 2px rgba(0,0,0,.3));
+		-ms-filter: drop-shadow(0 1px 2px rgba(0,0,0,.3));
+		-o-filter: drop-shadow(0 1px 2px rgba(0,0,0,.3));
+		filter: drop-shadow(0 1px 2px rgba(0,0,0,.3));
+	}
+
+	.banner .dots {
+		position: absolute;
+		left: 0;
+		right: 0;
+		bottom: 20px;
+	}
+		.banner .dots li {
+			display: inline-block;
+			width: 10px;
+			height: 10px;
+			margin: 0 4px;
+
+			text-indent: -999em;
+
+			border: 2px solid #fff;
+			border-radius: 6px;
+
+			cursor: pointer;
+			opacity: .4;
+
+			-webkit-transition: background .5s, opacity .5s;
+			-moz-transition: background .5s, opacity .5s;
+			transition: background .5s, opacity .5s;
+		}
+			.banner .dots li.active {
+				background: #fff;
+				opacity: 1;
+			}
+
+	.banner .arrows {
+		position: absolute;
+		bottom: 20px;
+		right: 20px;
+		color: #fff;
+	}
+		.banner .arrow {
+			display: inline;
+			padding-left: 10px;
+			cursor: pointer;
+		}
+</style>
+<div class="ue-index-search wp1000 cl mgt20">
+	<div class="banner">
+			<ul>
+				<li style="background-image: url('http://static.ueue.cc/www/img/sunset.jpg');">
+					<div class="inner">
+						<h1>The jQuery slider that just slides.</h1>
+						<p>No fancy effects or unnecessary markup, and it's less than 3kb.</p>
+
+						<a class="btn" href="#download">Download</a>
+					</div>
+				</li>
+
+				<li style="background-image: url('http://static.ueue.cc/www/img/wood.jpg');">
+					<div class="inner">
+						<h1>Fluid, flexible, fantastically minimal.</h1>
+						<p>Use any HTML in your slides, extend with CSS. You have full control.</p>
+
+						<a class="btn" href="#download">Download</a>
+					</div>
+				</li>
+
+				<li style="background-image: url('http://static.ueue.cc/www/img/subway.jpg');">
+					<div class="inner">
+						<h1>Open-source.</h1>
+						<p>Everything to do with Unslider is hosted on GitHub.</p>
+
+						<a class="btn" href="http://github.com/idiot/unslider">Contribute</a>
+					</div>
+				</li>
+
+				<li style="background-image: url('http://static.ueue.cc/www/img/shop.jpg');">
+					<div class="inner">
+						<h1>Uh, that's about it.</h1>
+						<p>I just wanted to show you another slide.</p>
+
+						<a class="btn" href="#download">Download</a>
+					</div>
+				</li>
+			</ul>
 		</div>
-	</div>
-	
+		<script src="http://stephband.info/jquery.event.move/js/jquery.event.move.js"></script>
+		<script src="http://stephband.info/jquery.event.swipe/js/jquery.event.swipe.js"></script>
+		<script src="http://unslider.com/unslider.min.js"></script>
+		<script>
+			if(window.chrome) {
+				$('.banner li').css('background-size', '100% 100%');
+			}
+
+			$('.banner').unslider({
+				arrows: true,
+				fluid: true,
+				dots: true
+			});
+
+//  Find any element starting with a # in the URL
+//  And listen to any click events it fires
+			$('a[href^="#"]').click(function() {
+//  Find the target element
+				var target = $($(this).attr('href'));
+
+//  And get its position
+				var pos = target.offset(); http:// fallback to scrolling to top || {left: 0, top: 0};
+
+//  jQuery will return false if there's no element
+//  and your code will throw errors if it tries to do .offset().left;
+				if(pos) {
+//  Scroll the page
+					$('html, body').animate({
+						scrollTop: pos.top,
+						scrollLeft: pos.left
+					}, 1000);
+				}
+
+//  Don't let them visit the url, we'll scroll you there
+				return false;
+			});
+
+			var GoSquared = {acct: 'GSN-396664-U'};
+		</script>
+		<script src="http://d1l6p2sc9645hc.cloudfront.net/tracker.js"></script>	
 </div>
 
 <div class="yz-idx-body z cl">
-	<div class="wp1000 cl ue-all mgt40">
+	<div class="wp1000 cl ue-all mgt20">
     	<div class="w200 z cl ue-left">
         	{{modules.UeDescribe()}}
         <div style="padding-top: 25px;border-top:1px solid #ccc;">
