@@ -77,31 +77,31 @@ $(document).ready(function(){
   })
 
   $(".editor-video-input").change(function(){
-      var videocuser,url=$(this).val();
-      if(videocuser,url.length > 0){
+      var videourl=$(this).val();
+      if(videourl.length > 0){
           /*var settings={
-              cuser,url:"https://openapi.youku.com/v2/videos/show_basic.json",
+              url:"https://openapi.youku.com/v2/videos/show_basic.json",
               type:"get",
               dataType:"json",
               contentType:"application/json",
               data:{
                     client_id:"ec78e9fdfd2d7e85",
-                    video_cuser,url:videocuser,url},
+                    video_url:videourl},
               error:function(xhr,status,error){alert(status+error)},
               success:function(result){
                         alert(result);
                         $("#editor-video-title").val(result.title);
-                        $("#editor-video-cuser,url").val(result.player);
+                        $("#editor-video-url").val(result.player);
                         $(".editor-video-pic-img img").attr("src",result.thumbnail);
                       }
           }
           $.ajax(settings);*/
           $.getJSON("https://openapi.youku.com/v2/videos/show_basic.json?callback=?",{
                     client_id:"ec78e9fdfd2d7e85",
-                    video_cuser,url:videocuser,url},function(result){
+                    video_url:videourl},function(result){
                         //alert(result.id);
                         $("#editor-video-title").val(result.title.substring(0,24));
-                        $("#editor-video-cuser,url").val(result.player);
+                        $("#editor-video-url").val(result.player);
                         $.getJSON("https://openapi.youku.com/v2/videos/show.json?callback=?",{
                                      client_id:"ec78e9fdfd2d7e85",
                                      video_id:result.id},function(data){
@@ -113,7 +113,7 @@ $(document).ready(function(){
 
   $(".editor-sub-btn1").click(function(){
       var title=$(".editor-title input").val();
-      var content=$("#editor-video-cuser,url").val();
+      var content=$("#editor-video-url").val();
       var cover=$(".editor-video-pic-img img").attr("src");
       var describe=$(".editor-desc-text").val();
       var sign=$(".editor-cc-on span").attr("snum");
@@ -123,7 +123,7 @@ $(document).ready(function(){
       })
       alert(title+content+lable+cover+describe+sign);
       var settings={
-             cuser,url:"/user/postwork/video",
+             url:"/user/postwork/video",
              type:"post",
              dataType:"json",
              data:{
