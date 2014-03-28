@@ -74,9 +74,10 @@ class SettingHeaderModule(tornado.web.UIModule):
 
 class UeEditorHeaderModule(tornado.web.UIModule):
 
-    def render(self, url='/'):
+    def render(self, cuser, url='/'):
 
-        return self.render_string('modules/yoez_editor_header.html', url=url)
+        return self.render_string('modules/yoez_editor_header.html',
+                                  cuser=cuser, url=url)
 
 
 class EventSearchliModule(tornado.web.UIModule):
