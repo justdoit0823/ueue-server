@@ -18,63 +18,32 @@
 <!--header begain-->
 {{modules.EditorHeader(url)}}
 <!--header end-->
-<div class="wp yz-editorbody">
-	<div class="wp1000 yz-edbd cl">
-	  <div class="y cl w200">
-			{{modules.Recentpost()}}
-		</div>
-		<div class="w640 y cl">
-			<div class="editor-title z cl w640 mgt40">
-				<input type="text" onKeyDown="if (event.keyCode==13) {}" onBlur="if(this.value=='')value='- 标题 - 最多24个汉字';" onFocus="if(this.value=='- 标题 - 最多24个汉字')value='';" value="- 标题 - 最多24个汉字"/>
+<div class="wp640 mgt100 yz-edbd cl">			
+			<div class="w640 y cl">
+			<div class="editor-title z cl mgt40">
+				<input type="text" onKeyDown="if (event.keyCode==13) {}" onBlur="if(this.value=='')value='最多24个汉字';" onFocus="if(this.value=='最多24个汉字')value='';" value="最多24个汉字"/>
+                {{ xsrf_form_html() }}
+				<span class="editor-title-tag">标题</span>
 			</div>
 			<div class="editor-description z cl w640 mgt40">
-				<div class="editor-desc-title z cl">
-					<p class="editor-desc-title-p z cl chs">正文内容<span> ( 10000字以内 )</span></p>
-				</div>
-				<div class="editor-desc-textarea z cl mgt20">
+				<span class="editor-title-tag">文字</span>
+				<div class="editor-desc-textarea z cl">
 					<textarea class="editor-desc-text z cl"></textarea>
 				</div>
-                                {{ xsrf_form_html() }}
 			</div>
-			<div class="editor-description z cl w640 mgt40">
-				<div class="editor-desc-title z cl">
-					<p class="editor-desc-title-p z cl chs">添加主创人员<span> ( 不要忘记您的团队哦~ )</span></p>
-				</div>
-				<div class="z cl mgt20 w640">
-					<ul class="editor-team z cl">
-						
-					</ul>
-
-					<div class="editor-team-add z cl">
-						<input type="button" class="editor-team-addbtn z cl" value="添加主创"/>
-						<p class="z cl chs">请填写主创人员账号名，未注册用户将不被授权显示。</p>
-					</div>
-				</div>
-			</div>
-			<div class="editor-sub z cl mgt40 w640">
-				<input type="submit" value="OK!" class="editor-sub-btn1 z cl chs1">
-				<input type="submit" value="CANCEL" class="editor-sub-btn2 z cl chs1">
-				<div class="y cl editor-post-opentype">
+        	{{modules.UeAddlable()}}
+			
+			<div class="editor-sub y cl mgt40 w640">
+				<div class="z cl editor-post-opentype">
 					<i></i>
 					<span class="editor-sub-btn4 y cl">公开发布</span>
 				</div>
+                {{modules.UeDocprotocol()}}
+				<input type="submit" value="OK!" class="editor-sub-btn1 y cl chs1">
+				
 			</div>
-		</div>
-		<div class="w336 z cl">
-			<div class="editor-user mgt40 z cl">
-				<a href="/{{cuser.uid}}" target="_blank" class="aditor-user-avt z cl">
-					<img src="{{cuser.img}}" height="26" width="26"/>
-				</a>
-				<p>
-					您正在使用的账号 : <a href="/{{cuser.uid}}" target="_blank">{{cuser.account}}</a>
-				</p>
-			</div>
-			{{modules.UeAddlable()}}
-			{{modules.UeDocprotocol()}}
 		</div>
 	</div>
-</div>
-
 <script type="text/javascript">
    select_item_on($(".ue-editor-btn a"),3,"active");
    $(".editor-sub-btn1").click(function(){
