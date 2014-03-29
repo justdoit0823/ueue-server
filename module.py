@@ -66,9 +66,9 @@ class UeHeaderModule(tornado.web.UIModule):
 
 class SettingHeaderModule(tornado.web.UIModule):
 
-    def render(self, cuser, url='/', dftmsg=0):
+    def render(self, cuser, dftmsg=0):
 
-        kwargs = dict(cuser=cuser, url=url, msg=dftmsg)
+        kwargs = dict(cuser=cuser, msg=dftmsg)
         return self.render_string('modules/setting_header.html', **kwargs)
 
 
