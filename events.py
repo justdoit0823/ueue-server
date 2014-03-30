@@ -387,23 +387,6 @@ class UserPostMediaeventHandler(BaseHandler):
         self.write(dict(status=1, code=''))
 
 
-class UserPostMediaeventHandler(BaseHandler):
-    @tornado.web.authenticated
-    def get(self):
-
-        cuser = self.get_current_user()
-        url = self.get_previous_url()
-        tips = self.get_tool_tips(('top', 'tip'))
-        kwargs = dict(cuser=cuser, eventxt=EVENTLIKEY[5], url=url, tips=tips)
-        self.render('editor1.0beta/editor-event-5.html', **kwargs)
-
-    def post(self):
-
-        cuid = self.get_secure_cookie("_yoez_uid")
-        do_record_add(self, '5')
-        self.write(dict(status=1, code=''))
-
-
 class UserPostExpeventHandler(BaseHandler):
     @tornado.web.authenticated
     def get(self):
