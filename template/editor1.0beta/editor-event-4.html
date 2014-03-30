@@ -22,7 +22,7 @@
 </head>
 <body>
 <!--header begain-->
-{{modules.EditorHeader(url)}}
+{{modules.EditorHeader(cuser,url)}}
 <!--header end-->
 <div class="wp yz-editorbody">
 	<div class="wp1000 yz-edbd cl">
@@ -79,8 +79,8 @@
 </div>
 <script type="text/javascript">
   var is_bind=false;
-$(document).ready(function() {
-  select_item_on($(".ue-editor-btn a"),8,"active");
+$(document).ready(function(){
+  select_item_on($(".ue-editor-btn a"),9,"active");
   var limit={size : 5 , num : 20};
   initflash(limit);
   $(".editor-pic-addbtn").bind("change",function(){
@@ -130,7 +130,7 @@ $(document).ready(function() {
       alert(pic);
       //alert(type+time+place+lable+title+content);
       var settings={
-             url:"/user/postevent/declare",
+             url:"/user/postevent/media",
              type:"post",
              dataType:"json",
              data:{
@@ -152,9 +152,8 @@ $(document).ready(function() {
        }
       $.ajax(settings);
   })
-
+  
 })
-      
 </script>
 <!--footer begain-->
 {{modules.BlackFooter(cuser,tips)}}

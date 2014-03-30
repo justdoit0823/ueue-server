@@ -1,22 +1,6 @@
-<div class="wp yz-hdbg ue-hdbg-editor">
-	<div class="wp yz-hdline ue-hdline"></div>
-		<div class="wp1000 yz-hd">
-			<div class="editor-logo z cl">
-			</div>
-			<div class="z cl ue-editor-btn">
-				<a href="/user/postwork/picture">图像作品</a>
-				<a href="/user/postwork/video">影像作品</a>
-				<a href="/user/postwork/music">音频作品</a>
-				<a href="/user/postwork/article">文字作品</a><br>
-				<a href="/user/postevent/pubwelfare">公益参与</a>
-				<a href="/user/postevent/job">通告媒体</a>
-				<a href="/user/postevent/award">获奖荣誉</a>
-				<a href="/user/postevent/recruit">机构招募</a>
-				<a href="/user/postevent/media">媒体报道</a>
-				<a href="/user/postevent/games">赛事活动</a>
-			</div>
-			<div class="editor-bk y cl ">
-				<a href="{{url}}" class="editor-back"></a>
-			</div>
-		</div>
-</div>
+<body>
+  {{modules.Header(cuser,request.uri)}}
+  <div class="ue-user-allbody">
+  </div>
+  <div class="user-close-window" onclick="location.href='{{url}}';">
+  </div>
