@@ -480,48 +480,7 @@
 	</div>
 
 <! --footer begain -->	
-
 {{modules.MainFooter(tips)}}
-
 <! --footer end -->
-
-
-<script type="text/javascript">
-  var indexurl=new Array();
-  indexurl[0]="/index?tab=works";
-  indexurl[1]="/index?tab=events";
-  indexurl[2]="/index?tab=professional";
-  indexurl[3]="/index?tab=album";
-
-  var classset={
-      "0":{"parent":"#ue-idx-work-list li","child":".ue-list-work-info","top1":'160',"top2":"251"},
-      "2":{"parent":"#ue-idx-member-list li","child":".ue-list-member-info","top1":'110',"top2":"201"}
-  }
-               
-$(document).ready(function(){          
-  $(".ue-banner-right").click(function(){
-      
-  })
-  $(".ue-banner-left").click(function(){
-      
-  })
-  $(".ue-nav a").click(function(){
-     var key=$(this).attr("index");
-     var idx=parseInt(key);
-     if(!$(this).hasClass("ue-nav-on")){
-         $(".ue-nav").find(".ue-nav-on").removeClass("ue-nav-on").addClass("ue-nav-off");
-         $(this).removeClass("ue-nav-off").addClass("ue-nav-on");
-         var settings={
-             url:indexurl[idx],
-             type:"get",
-             success:function(html){
-                        $("#idx-tab-content").html(html);
-                     }
-         }
-         $.ajax(settings);
-     }
-  })
-})
-</script>
 </body>
 </html>
