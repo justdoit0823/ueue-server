@@ -24,74 +24,222 @@
 <!--header begain-->
 {{modules.EditorHeader(cuser,url)}}
 <!--header end-->
-<div class="wp yz-editorbody">
-	<div class="wp1000 yz-edbd cl">
-	  <div class="y cl w200">
-	    {{modules.Recentpost()}}
-		</div>
+	<div class="wp640 mgt100 yz-edbd cl">
 		<div class="w640 y cl">
-			<div class="editor-title z cl w640 mgt40">
-				<input type="text" onKeyDown="if (event.keyCode==13) {}" onBlur="if(this.value=='')value='- 标题 - 最多24个汉字';" onFocus="if(this.value=='- 标题 - 最多24个汉字')value='';" value="- 标题 - 最多24个汉字" name="title" />
-				{{ xsrf_form_html() }}
-                        </div>
-			{{modules.EditorUploadpic("支持JPG, GIF, PNG, BMP格式图片，单张大小不超过5M，最多20张。")}}
-			{{modules.EditorUploadvideo()}}
-			<div class="editor-description z cl w640 mgt40">
-				<div class="editor-desc-title z cl">
-					<p class="editor-desc-title-p z cl chs">招募职位描述</p>
-					<input class="editor-zhaopin-name z cl" type="text" onKeyDown="if (event.keyCode==13) {}" onBlur="if(this.value=='')value='- 填写职位名称 -';" onFocus="if(this.value=='- 填写职位名称 -')value='';" value="- 填写职位名称 -"/>
-					<a class="editor-zhaopin-del y cl" title="删除该职位"></a>
+			<div class="editor-title z cl mgt40">
+				<input type="text" onKeyDown="if (event.keyCode==13) {}" onBlur="if(this.value=='')value='最多24个汉字';" onFocus="if(this.value=='最多24个汉字')value='';" value="最多24个汉字"/>
+                {{ xsrf_form_html() }}
+				<span class="editor-title-tag">标题</span>
+			</div>
+            <div class="editor-event-time z cl mgt40">
+            	<span class="editor-title-tag">截止日期</span>
+				<div class="z cl">
+					<div class="eve-time-1"> 
+                    	<p>2014/03/26</p>
+                    <div class="eidtor-calendar">
+<Script LANGUAGE="JavaScript">
+ var months = new Array("一", "二", "三","四", "五", "六", "七", "八", "九","十", "十一", "十二");
+ var daysInMonth = new Array(31, 28, 31, 30, 31, 30, 31, 31,30, 31, 30, 31);
+ var days = new Array("Su","Mo", "Tu", "We","Th", "Fr", "Sa");
+ var classTemp;
+ var today=new getToday();
+ var year=today.year;
+ var month=today.month;
+ var newCal; 
+
+ function getDays(month, year) {
+  if (1 == month) return ((0 == year % 4) && (0 != (year % 100))) ||(0 == year % 400) ? 29 : 28;
+  else return daysInMonth[month];
+ }
+
+ function getToday() {
+  this.now = new Date();
+  this.year = this.now.getFullYear();
+  this.month = this.now.getMonth();
+  this.day = this.now.getDate();
+ }
+
+ function Calendar() {
+  newCal = new Date(year,month,1);
+  today = new getToday();   
+  var day = -1;
+  var startDay = newCal.getDay();
+  var endDay=getDays(newCal.getMonth(), newCal.getFullYear());
+  var daily = 0;
+  if ((today.year == newCal.getFullYear()) &&(today.month == newCal.getMonth()))
+  {
+   day = today.day;
+  }
+  var caltable = document.all.caltable.tBodies.calendar;
+  var intDaysInMonth =getDays(newCal.getMonth(), newCal.getFullYear());
+
+  for (var intWeek = 0; intWeek < caltable.rows.length;intWeek++)
+   for (var intDay = 0;intDay < caltable.rows[intWeek].cells.length;intDay++)
+   {
+    var cell = caltable.rows[intWeek].cells[intDay];
+    var montemp=(newCal.getMonth()+1)<10?("0"+(newCal.getMonth()+1)):(newCal.getMonth()+1);         
+    if ((intDay == startDay) && (0 == daily)){ daily = 1;}
+    var daytemp=daily<10?("0"+daily):(daily);
+    var d="<"+newCal.getFullYear()+"-"+montemp+"-"+daytemp+">";
+    if(day==daily) cell.className="DayNow";
+    else if(intDay==6) cell.className = "DaySat";
+    else if (intDay==0) cell.className ="DaySun";
+    else cell.className="Day";
+    if ((daily > 0) && (daily <= intDaysInMonth))
+    {
+     cell.innerText = daily;
+     daily++;
+    } else
+    {
+     cell.className="CalendarTD";
+     cell.innerText = "";
+    }
+  }
+  document.all.year.value=year;
+  document.all.month.value=month+1;
+ }
+
+ function subMonth()
+ {
+  if ((month-1)<0)
+  {
+   month=11;
+   year=year-1;
+  } else
+  {
+   month=month-1;
+  }
+  Calendar();
+ }
+
+ function addMonth()
+ {
+  if((month+1)>11)
+  {
+   month=0;
+   year=year+1;
+  } else
+  {
+   month=month+1;
+  }
+  Calendar();
+ }
+
+ function setDate() 
+ {
+  if (document.all.month.value<1||document.all.month.value>12)
+  {
+   alert("月的有效范围在1-12之间!");
+   return;
+  }
+  year=Math.ceil(document.all.year.value);
+  month=Math.ceil(document.all.month.value-1);
+  Calendar();
+ }
+</Script>
+<table border="0" cellpadding="0" cellspacing="1" class="Calendar" id="caltable">
+<thead>
+     <tr align="center" valign="middle"> 
+  <td colspan="7" class="Title">
+   <a href="javaScript:subMonth();" title="上一月" Class="DayButton">&lt;</a> <input name="year" type="text" size="4" maxlength="4" onKeyDown="if (event.keyCode==13)" onKeyUp="this.value=this.value.replace(/[^0-9]/g,'')"  onpaste="this.value=this.value.replace(/[^0-9]/g,'')"> 年 <input name="month" type="text" size="1" maxlength="2" onKeyDown="if (event.keyCode==13)" onKeyUp="this.value=this.value.replace(/[^0-9]/g,'')"  onpaste="this.value=this.value.replace(/[^0-9]/g,'')"> 月 <a href="JavaScript:addMonth();" title="下一月" Class="DayButton">&gt;</a>
+  </td>
+ </tr>
+ <tr align="center" valign="middle"> 
+  <Script LANGUAGE="JavaScript">  
+   document.write("<TD class=DaySunTitle id=diary >" + days[0] + "</TD>"); 
+   for (var intLoop = 1; intLoop < days.length-1;intLoop++) 
+    document.write("<TD class=DayTitle id=diary>" + days[intLoop] + "</TD>"); 
+    document.write("<TD class=DaySatTitle id=diary>" + days[intLoop] + "</TD>"); 
+  </Script>
+ </TR> 
+</thead>
+<TBODY border=1 cellspacing="0" cellpadding="0" ID="calendar" ALIGN=CENTER ONCLICK="getDiary()">
+ <Script LANGUAGE="JavaScript">
+  for (var intWeeks = 0; intWeeks < 6; intWeeks++)
+  {
+   document.write("<TR style='cursor:hand'>");
+   for (var intDays = 0; intDays < days.length;intDays++) document.write("<TD class=CalendarTD onMouseover='buttonOver();' onMouseOut='buttonOut();'></TD>");
+   document.write("</TR>");
+  } 
+ </Script>
+</TBODY>
+</TABLE>
+<Script  LANGUAGE="JavaScript">
+ Calendar();
+</Script>
+						</div>
+                    </div>
 				</div>
-				<div class="editor-desc-textarea z cl mgt20">
+			</div>
+            <div class="editor-description z cl w640 mgt40">
+				<span class="editor-title-tag">招募信息</span>
+				<div class="editor-desc-textarea z cl">
+                	<div class="z cl editor-zhaomu">
+                    	<div class="editor-zhaomu-name z cl">
+                        	<p>
+                            	<span>
+                                	名称
+                                </span>
+                                <input type="text" onKeyDown="if (event.keyCode==13) {}" onBlur="if(this.value=='')value='请填写名称';" onFocus="if(this.value=='请填写名称')value='';" value="请填写名称"/>
+                            </p>
+                        </div>
+                        <div class="editor-zhaomu-choose">
+                        	<p>
+                            	<span>招募类型</span>
+                                <a>▼</a>
+                            </p>
+                            <ul>
+                            	<li>
+                                	<p>全职</p>
+                                </li>
+                                <li>
+                                	<p>兼职</p>
+                                </li>
+                                <li>
+                                	<p>项目合作</p>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="editor-zhaomu-choose">
+                        	<p>
+                            	<span>薪酬</span>
+                                <a>▼</a>
+                            </p>
+                             <ul>
+                            	<li>
+                                	<p>2K以下</p>
+                                </li>
+                                <li>
+                                	<p>2K-4K</p>
+                                </li>
+                                <li>
+                                	<p>4K-8K</p>
+                                </li>
+                                <li>
+                                	<p>8K-15K</p>
+                                </li>
+                                <li>
+                                	<p>15K-30K</p>
+                                </li>
+                                <li>
+                                	<p>30K以上</p>
+                                </li>
+                                <li>
+                                	<p>面议</p>
+                                </li>
+                            </ul>
+                        </div>                    	
+                    </div>
 					<textarea class="editor-desc-text z cl"></textarea>
 				</div>
 			</div>
-			<a href="#" class="editor-zhaopin-more z cl">
-				<p>新增职位 (最多发布5个职位)</p>
-			</a>
-			<div class="editor-description z cl w640 mgt40">
-			  <div class="editor-sub z cl mgt40 w640">
-				<input type="submit" value="OK!" class="editor-sub-btn1 z cl chs1">
-				<input type="submit" value="CANCEL" class="editor-sub-btn2 z cl chs1">
-				<div class="y cl editor-post-opentype">
-					<i></i>
-					<span class="editor-sub-btn4 y cl">公开发布</span>
-				</div>
+            {{modules.EditorUploadpic("支持JPG, GIF, PNG, BMP格式图片，单张大小不超过2M，最多8张。")}}
+            {{modules.UeAddlable()}}
+            <div class="editor-sub y cl mgt40 w640">
+				<input type="submit" value="OK!" class="editor-sub-btn1 y cl chs1">				
 			</div>
-        </div>
 		</div>
-		<div class="w336 z cl">
-			<div class="editor-user mgt40 z cl">
-				<a href="/{{cuser.uid}}" target="_blank" class="aditor-user-avt z cl">
-					<img src="{{cuser.img}}" height="26" width="26"/>
-				</a>
-				<p>
-					您正在使用的账号 : <a href="/{{cuser.uid}}" target="_blank">{{cuser.account}}</a>
-				</p>
-			</div>
-			{{modules.UeAddlable("(将工作地区添加到标签方便他人找)")}}
-			<div class="editor-description-left z cl">
-				<div class="editor-event-time z cl">
-					<span class="eve-time-ico z cl"></span>
-					<span class="eve-time-title z cl">时间</span>
-					<div class="z cl">
-						<input type="text" class="eve-time-1"> 年
-						<input type="text" class="eve-time-2"> 月
-						<input type="text" class="eve-time-2"> 日
-					</div>
-				</div>
-				<div class="editor-event-time z cl mgt20">
-					<span class="eve-email-ico z cl"></span>
-					<span class="eve-time-title z cl">邮件</span>					
-					<span class="eve-email-title z cl">(此邮箱仅作为接收简历使用)</span>
-					<div class="z cl">
-						<input type="text" class="eve-email" onKeyDown="if (event.keyCode==13) {}" onBlur="if(this.value=='')value='- 填写邮箱地址 -';" onFocus="if(this.value=='- 填写邮箱地址 -')value='';" value="- 填写邮箱地址 -"/>
-					</div>
-				</div>
-			</div>
-               </div>
 	</div>
-</div>
 <!--footer begain-->
 {{modules.BlackFooter(cuser,tips)}}
 <!--footer end-->
