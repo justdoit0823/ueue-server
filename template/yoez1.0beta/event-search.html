@@ -17,22 +17,7 @@
 <body>
 <!--header begain-->
 {{modules.Header(cuser,request.uri)}}
-<!--TOP BEGIN-->
-<div class="yz-idx-top wp1000 mgt40">
-		<div class="z cl">
-			<a href="#" target="_blank">
-				<img src="http://static.ueue.cc/www/img/common/adds1.jpg" alt="广告描述" width="460" height="90"/>
-			</a>
-		</div>
-		<div class="y cl">
-			<a href="#" target="_blank">
-				<img src="http://static.ueue.cc/www/img/common/addr.jpg" alt="BAIDU广告"/>
-			</a>
-		</div>
-</div>
-<!--TOP END-->
-<!--SEARCH BEGAIN-->
-
+{{modules.MainTopAd()}}
 <div class="yz-idx-search wp1000 cl">
 <div class="yz-idx-event-search-tag z cl">
 	<div class="ue-search-left z cl">
@@ -132,21 +117,10 @@
                     </ul>
 				</div>
 			</div>
-<!--AD-->
-<div class="z cl yz-ad-336-280 mgt20">
-<img src="http://static.ueue.cc/www/img/common/imgad.jpg">
-</div>
-<div class="z cl yz-ad-336-280 mgt20">
-<img src="http://static.ueue.cc/www/img/common/imgad (1).jpg">
-</div>
-<div class="z cl yz-ad-336-280 mgt20">
-<img src="http://static.ueue.cc/www/img/common/T1P8YZXb4fXXb1upjX.jpg">
-</div>
-<!--AD-->
+{{modules.MainRightAd()}}
 </div>
 </div>
 </div>
-<!--SHOW END-->
 <script type="text/javascript">
 
 var list={
@@ -257,41 +231,8 @@ var list={
 
 		$.ajax(settings);
 	}
-
       inittexts(list);
-
-  $(".yz-idx-event-search-tag li a").click(function(event){
-        event.preventDefault();
-        if($(".yz-idx-line").css('display') == 'none') $(".yz-idx-line").show();
-        if(!$(".yz-idx-line").find(".yz-idx-line-p").text()) $(".yz-idx-line").children().append("<div class='z cl yz-idx-line-p'></div>");
-        var url=$(this).attr("href");
-        var text=$(this).text();
-        var data=url.split("?")[1];
-        var which=data.split("=")[0];
-        var cls="yz-work-lable-"+which;
-        var ncls="."+cls;
-        if($(".yz-idx-line-p").find(ncls).text()){
-            $(ncls).text(text);
-            $(ncls).next().attr("data",data);
-            var numreg=new RegExp(which+"=([0-9]+)");
-            var txtreg=new RegExp("trade=([a-zA-Z0-9%]+)");
-            if((start=data.indexOf("trade=")) != -1) location.search=location.search.replace(txtreg,data.substring(0,start+6)+encodeURIComponent(data.substring(start+6)));
-            else location.search=location.search.replace(numreg,data);
-        }
-        else{
-            addlable(cls,text,data);
-            if(location.search.indexOf("?")==-1){
-	        if((start=data.indexOf("trade=")) != -1) location.search+="?"+data.substring(0,start+6)+encodeURIComponent(data.substring(start+6));
-	        else location.search+="?"+data;
-	    }
-            else{
-	        if((start=data.indexOf("trade=")) != -1) location.search+="&"+data.substring(0,start+6)+encodeURIComponent(data.substring(start+6));
-	        else location.search+="&"+data;
-	    }
-        }
-     })
 </script>
-
 <div class="cl"></div>
 <div class="ue-bottomnav wp1000">
 	<a href="/works">作品云集 / WORKS SHOW</a>
@@ -300,11 +241,7 @@ var list={
 	<a href="/album">专辑 / ALBUM</a>
 	<a href="/vane">风向标 / UE VANE</a>	
 </div>
-<!--footer begain-->
-
 {{modules.MainFooter(tips)}}
-
-<!--footer end-->
 <script src="http://tjs.sjs.sinajs.cn/open/api/js/wb.js" type="text/javascript" charset="utf-8"></script>
 </body>
 </html>

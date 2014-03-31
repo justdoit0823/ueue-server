@@ -15,18 +15,8 @@
 <script type="text/javascript" src="http://static.ueue.cc/www/js/content.js"></script>
 </head>
 <body>
-<!--header begain-->
 {{modules.Header(cuser,request.uri)}}
-<!--header end-->
-<!--TOP BEGAIN-->
-<div class="yz-idx-top wp1000 mgt40">
-	<div class="z cl">
-	<a href="#" target="_blank"><img src="http://static.ueue.cc/www/img/common/adds1.jpg" alt="广告描述" width="460" height="90"/></a>
-	</div>
-	<div class="y cl">
-	<a href="#" target="_blank"><img src="http://static.ueue.cc/www/img/common/addr.jpg" alt="BAIDU广告"/></a>
-	</div>
-</div>
+{{modules.MainTopAd()}}
 <!--TOP END-->
 <!--SEARCH BEGAIN-->
 <div class="yz-idx-showct wp1000">
@@ -188,17 +178,7 @@
                     </ul>
 				</div>
 			</div>
-<!--AD-->
-			<div class="z cl yz-ad-336-280 mgt20">
-				<img src="http://static.ueue.cc/www/img/common/imgad.jpg">
-			</div>
-			<div class="z cl yz-ad-336-280 mgt20">
-				<img src="http://static.ueue.cc/www/img/common/imgad (1).jpg">
-			</div>
-			<div class="z cl yz-ad-336-280 mgt20">
-				<img src="http://static.ueue.cc/www/img/common/T1P8YZXb4fXXb1upjX.jpg">
-			</div>
-<!--AD-->
+			{{modules.MainRightAd()}}
 		</div>
 	</div>
 </div>

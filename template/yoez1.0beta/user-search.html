@@ -16,26 +16,8 @@
 <script type="text/javascript" src="http://static.ueue.cc/www/js/common.js"></script>
 </head>
 <body>
-<!--header begain-->
 {{modules.Header(cuser,request.uri)}}
-<!--header end-->
-<!--TOP BEGAIN-->
-	<div class="yz-idx-top wp1000 mgt40">
-		<div class="z cl">
-			<a href="#" target="_blank">
-				<img src="http://static.ueue.cc/www/img/common/adds1.jpg" alt="广告描述" width="460" height="90"/>
-			</a>
-		</div>
-		<div class="y cl">
-			<a href="#" target="_blank">
-				<img src="http://static.ueue.cc/www/img/common/addr.jpg" alt="BAIDU广告"/>
-			</a>
-		</div>
-	</div>
-</div>
-<!--TOP END-->
-<!--SEARCH BEGAIN-->
-
+{{modules.MainTopAd()}}
 <div class="yz-idx-search wp1000">
 <div class="yz-idx-user-search-tag z cl">
 	<div class="ue-search-user-left z cl">
@@ -110,8 +92,6 @@
 		</div>
 	</div>
 </div>
-<!--SEARCH LINE END-->
-<!--SHOW BEGAIN-->
 <div class="yz-idx-body z cl">
 	<div class="wp1000 cl ue-all mgt40">
 	  <div class="w200 z cl ue-left">
@@ -156,26 +136,13 @@
 				</div>
 			</div>
 				<!--AD-->
-			<div class="z cl yz-ad-336-280 mgt20">
-				<img src="http://static.ueue.cc/www/img/common/imgad.jpg">
-			</div>
-			<div class="z cl yz-ad-336-280 mgt20">
-				<img src="http://static.ueue.cc/www/img/common/imgad (1).jpg">
-			</div>
-			<div class="z cl yz-ad-336-280 mgt20">
-				<img src="http://static.ueue.cc/www/img/common/T1P8YZXb4fXXb1upjX.jpg">
-			</div>
+			{{modules.MainRightAd()}}
 				<!--AD-->
 			</div>
 		</div>
 	</div>
 </div>
-
-
-
-
 <!--SHOW END-->
-
 <div class="cl"></div>
 <div class="ue-bottomnav wp1000">
 	<a href="/works">作品云集 / WORKS SHOW</a>
@@ -183,55 +150,8 @@
 	<a href="/professional">机构&amp;人才 / Inc.&amp;PRO.</a>
 	<a href="/album">专辑 / ALBUM</a>
 	<a href="/vane">风向标 / UE VANE</a>
-	
-	</div>
-<!--footer begain-->
-{{modules.MainFooter(tips)}}		
-<!--footer end-->
-
-<script type="text/javascript">
-
-$(".yz-idx-show-search-tag li a").click(function(event){
-        event.preventDefault();
-        $(".yz-idx-line").show();
-        if(!$(".yz-idx-line").find(".yz-idx-line-p").text()) $(".yz-idx-line").children().append("<div class='z cl yz-idx-line-p'></div>");
-        var url=$(this).attr("href");
-        var text=$(this).text();
-        var data=url.split("?")[1];
-        var which=data.split("=")[0];
-        var cls="yz-work-lable-"+which;
-        var ncls="."+cls;
-        if($(".yz-idx-line-p").find(ncls).text()){
-            $(ncls).text(text);
-            $(ncls).next().attr("data",data);
-            eventrqturl=eventrqturl.replace(which+"=([0-9]+)",data);
-        }
-        else{
-            var lable="<p>\
-		                <span class='"+cls+"'>"+text+"</span>\
-				<a data='"+data+"'></a>\
-		       </p>";
-            $(lable).appendTo(".yz-idx-line-p");
-            $(".yz-idx-line-p p a").last().bind("click",labledel);
-            if(eventrqturl.indexOf("?")==-1) eventrqturl+="?"+data;
-            else eventrqturl+="&"+data;
-        }
-        var settings={
-            url:eventrqturl,
-            type:"get",
-            dataType:"json",
-            success:function(result){
-                     if(result.status){
-                       $(".yz-work-ul").html(result.data);
-                     }
-                     else alert("加载失败，请重试");
-                     }
-        }
-        $.ajax(settings);
-     })
-
-
-</script>
+</div>
+{{modules.MainFooter(tips)}}
 <script src="http://tjs.sjs.sinajs.cn/open/api/js/wb.js" type="text/javascript" charset="utf-8"></script>
 </body>
 </html>

@@ -32,6 +32,20 @@ MESSAGES = ("系统消息", "回复通知", "商业消息")
 MESSAGECLASS = ("system", "reply", "other")
 
 
+class MainTopAdModule(tornado.web.UIModule):
+
+    def render(self):
+
+        return self.render_string('modules/main_top_ad.html')
+
+
+class MainRightAdModule(tornado.web.UIModule):
+
+    def render(self):
+
+        return self.render_string('modules/main_right_ad.html')
+
+
 class UserModule(tornado.web.UIModule):
 
     def render(self, cuser, wh='/', dftmsg=0):
@@ -311,4 +325,6 @@ modules = dict(
     SettingHeader=SettingHeaderModule,
     IndexRecordli=IndexRecordliModule,
     IndexReviewli=IndexReviewliModule,
+    MainTopAd=MainTopAdModule,
+    MainRightAd=MainRightAdModule,
     )

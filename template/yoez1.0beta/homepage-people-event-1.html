@@ -16,11 +16,8 @@
 <script type="text/javascript" src="http://static.ueue.cc/www/js/homepage.js"></script>
 </head>
 <body>
-<!--header begain-->
 {{modules.Header(cuser, request.uri)}}
-<!--header end-->
 {{modules.HomepageContent(user, userself)}}
-<!--TOP END-->
 <div class="yz-idx-body z cl">
 	<div class="wp1000 cl">
     	<div class="w200 z cl ue-left">
@@ -157,19 +154,7 @@ function itemactive(){
   var item=location.pathname.substring(location.pathname.lastIndexOf('/')+1);
   $(".ue-hp-nav a").eq(itemindex[item]).addClass("active");
 }
-$(document).ready(function($) {
-	$('a[href="#top"]').click(function(){
-        $('html, body').animate({scrollTop: 0}, 'slow');
-        return false;
-	});
-        itemactive();
-        $(".yz-hp-event-switch").click(function(){
-            if($(this).hasClass("yz-hp-event-off")) $(this).removeClass("yz-hp-event-off").addClass("yz-hp-event-on");
-            else $(this).removeClass("yz-hp-event-on").addClass("yz-hp-event-off");
-        })
-});
 </script>
-
 <div class="cl"></div>
 <!--footer begain-->
 {{modules.BlackFooter(user, tips)}}

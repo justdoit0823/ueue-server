@@ -15,20 +15,8 @@
 <script type="text/javascript" src="http://static.ueue.cc/www/js/content.js"></script>
 </head>
 <body>
-<!--header begain-->
 {{modules.Header(cuser,request.uri)}}
-<!--header end-->
-<!--TOP BEGAIN-->
-<div class="yz-idx-top wp1000 mgt40">
-	<div class="z cl">
-		<a href="#" target="_blank"><img src="http://static.ueue.cc/www/img/common/adds1.jpg" alt="广告描述" width="460" height="90"/></a>
-	</div>
-	<div class="y cl">
-		<a href="#" target="_blank"><img src="http://static.ueue.cc/www/img/common/addr.jpg" alt="BAIDU广告"/></a>
-	</div>
-</div>
-<!--TOP END-->
-<!--SEARCH BEGAIN-->
+{{modules.MainTopAd()}}
 <div class="yz-idx-showct wp1000">
 	<div class="z cl mgt40 ue-maintitle">
 		<a href="/{{row.uid}}" class="z cl yz-idx-showct-name chs">{{row.account}}</a><span class="z cl yz-idx-showct-title chs">{{type}}</span>
@@ -273,21 +261,10 @@
                     </ul>
 				</div>
 			</div>
-<!--AD-->
-			<div class="z cl yz-ad-336-280 mgt20">
-				<img src="http://static.ueue.cc/www/img/common/imgad.jpg">
-			</div>
-			<div class="z cl yz-ad-336-280 mgt20">
-				<img src="http://static.ueue.cc/www/img/common/imgad (1).jpg">
-			</div>
-			<div class="z cl yz-ad-336-280 mgt20">
-				<img src="http://static.ueue.cc/www/img/common/T1P8YZXb4fXXb1upjX.jpg">
-			</div>
-<!--AD-->
+			{{modules.MainRightAd()}}
 		</div>
 	</div>
 </div>
-<!--SHOW END-->
 <script type="text/javascript">
 	$(document).ready(function(){
                         $(".yz-idx-module-discus-sub").attr('disabled','');
@@ -308,7 +285,6 @@
                             $(".ue-idx-report").fadeOut(200);
                         });
                         $("#ue-report-chooseback").click(function(){
-                            //$(".ue-idx-report").fadeOut(200);
                             $("#ue-report-confirm").fadeOut(200);
                             $("#ue-report-choose").fadeIn(200);
                         });
@@ -320,7 +296,6 @@
                             if(cuid==undefined) location.href='/user/action/login?next='+escape(location.href);
                             else{
                                var eid=location.href.match('([0-9]+)')[0];
-                               //alert(eid);
                                var settings={
                                        url:'/events/'+eid+'/agree',
                                        type:'post',
@@ -344,13 +319,7 @@
        
 	});
 </script>
-
 <div class="cl"></div>
-<!--footer begain-->
-
 {{modules.MainFooter(tips)}}
-
-<!--footer end-->
-
 </body>
 </html>
