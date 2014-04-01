@@ -21,8 +21,21 @@
 {{modules.HomepageContent(user, userself, followed)}}
 <!--TOP END-->
 <div class="yz-idx-body z cl">
-	<div class="wp1000 cl ue-all mgt60">
+	<div class="wp1000 cl">
     	<div class="w200 z cl ue-left">
+        	<div class="ue-left-up">
+            	<div class="ue-left-title w200">
+					<p class="z cl chs">Link</p>
+				</div>
+                <div class="ue-left-text w200">
+                	<p>
+                    	<a href="/{{user.uid}}/works">作品展示</a></br>
+                        <a href="/{{user.uid}}/records">记录通告</a></br>
+                        <a href="/{{user.uid}}/profile">联络&amp;资料</a></br>
+                        {% if userself %}<a href="/user/focus">我记住的</a>{% end %}
+                    </p>
+                </div>
+            </div>
         	<div>
             	<div class="ue-left-title w200">
 					<p class="z cl chs">作品展示分类</p>
