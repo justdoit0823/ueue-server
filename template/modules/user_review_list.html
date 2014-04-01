@@ -1,0 +1,19 @@
+<div>
+  {% if num %}
+  <ul class="yz-idx-module-discus-ul z cl mgt40">
+    {% for one in lists %}
+      {{modules.UserReview(one)}}				
+    {% end %}
+    {% if ismore %}
+      <a href="#" class="yz-idx-module-discus-more z cl">
+	<p>更多评论</p>
+	<span></span>
+      </a>
+    {% end %}
+  </ul>
+  {% else %}
+  <div class="yz-idx-module-discus-none z cl mgt40">
+    <i class="en1">No Comments</i>
+  </div>
+  {% end %}
+</div>
