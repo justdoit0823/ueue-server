@@ -8,7 +8,7 @@
 <meta name="author" content="优意座标™|YOEZ.CC团队" />
 <meta name="copyright" content="Copyright优意座标™" />
 <link rel="stylesheet" type="text/css" href="http://static.ueue.cc/www/css/common.css">
-<link rel="stylesheet" type="text/css" href="http://static.ueue.cc/www/CSS/index.css">
+<link rel="stylesheet" type="text/css" href="http://static.ueue.cc/www/css/index.css">
 <script type="text/javascript" src="http://static.ueue.cc/www/js/jquery-1.8.3.js"></script>
 <script type="text/javascript" src="http://static.ueue.cc/www/js/common.js"></script>
 <script type="text/javascript" src="http://static.ueue.cc/www/js/index.js"></script>
@@ -29,6 +29,19 @@ $(document).ready(function(){
 <div class="yz-idx-body z cl">
 	<div class="wp1000 cl ue-all mgt60">
     	<div class="w200 z cl ue-left">
+        	<div class="ue-left-up">
+            	<div class="ue-left-title w200">
+					<p class="z cl chs">Link</p>
+				</div>
+                <div class="ue-left-text w200">
+                	<p>
+                    	<a href="/{{user.uid}}/works">作品展示</a></br>
+                        <a href="/{{user.uid}}/records">记录通告</a></br>
+                        <a href="/{{user.uid}}/profile">联络&amp;资料</a></br>
+                        {% if userself %}<a href="/user/focus" class="active">我记住的</a>{% end %}
+                    </p>
+                </div>
+            </div>
         	<div class="ue-left-up">
             	<div class="ue-left-title w200">
 					<p class="z cl chs">我的记忆</p>
