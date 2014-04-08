@@ -102,24 +102,8 @@
 					<span class="yz-idx-module-discus-wn">还可以输入<i class="en">140</i>个字</span>
 					<input type="submit" value="发言" class="yz-idx-module-discus-sub br5 mgt10 y cl">
 				</div>
-{% if not reviews %}
-                                <div class="yz-idx-module-discus-none z cl mgt40">
-					<p class="mgt40">Ta在等待来自你的第一条评论哦!</p><br>
-					<i class="en">Waiting for your opinion</i>
-				</div>
-                                {% else %}
-				<ul class="yz-idx-module-discus-ul z cl mgt40">
-                                 {% for one in reviews %}
-				    {{modules.UserReview(one)}}				
-				 {% end %}
-				</ul>
-                                {% end %}
+				    {{modules.UserReviewList(reviews)}}
 			</div>
-			<a href="#" class="yz-idx-module-discus-more z cl">
-				<p>更多评论</p>
-				<span></span>
-			</a>
-			
 		</div>
 <!--右侧边栏-->
 		<div class="w336 y cl">

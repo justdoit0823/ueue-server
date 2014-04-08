@@ -31,6 +31,8 @@ MESSAGES = ("系统消息", "回复通知", "商业消息")
 
 MESSAGECLASS = ("system", "reply", "other")
 
+DEFITEMNUM = 5
+
 
 class MainTopAdModule(tornado.web.UIModule):
 
@@ -130,6 +132,19 @@ class UserReviewliModule(tornado.web.UIModule):
     def render(self, one):
 
         return self.render_string('modules/user_review_content.html', one=one)
+
+
+class UserReviewListModule(tornado.web.UIModule):
+
+    def render(self, lists):
+
+        if lists is None:
+            num = 0
+        else:
+            num = len(lists)
+        ismore = num > DEFITEMNUM
+        return self.render_string('modules/user_review_list.html', num=num,
+                                  ismore=ismore, lists=lists)
 
 
 class EventHomepageliModule(tornado.web.UIModule):
@@ -305,6 +320,7 @@ modules = dict(
     UserEvent=UserEventliModule,
     UserSearch=UserSearchliModule,
     UserReview=UserReviewliModule,
+    UserReviewList=UserReviewListModule,
     UserMeaage=UserMessageModule,
     WorkSearch=WorkSearchliModule,
     WorkHomepage=WorkHomepageliModule,

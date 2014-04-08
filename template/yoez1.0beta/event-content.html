@@ -177,17 +177,7 @@
 					<input type="submit" value="发言" class="yz-idx-module-discus-sub br5 mgt10 y cl">
                                     </form>
 				</div>
-                                {% if not reviews %}
-                                <div class="yz-idx-module-discus-none z cl mgt40">
-				  <i class="en1">No Comments</i>
-				</div>
-                                {% else %}
-				<ul class="yz-idx-module-discus-ul z cl mgt40">
-                                 {% for one in reviews %}
-				    {{modules.UserReview(one)}}				
-				 {% end %}
-				</ul>
-                                {% end %}
+				{{modules.UserReviewList(reviews)}}
 			</div>
 		</div>
 <!--右侧边栏-->
