@@ -222,7 +222,23 @@ class RecordManager:
 
         sql = ("select U.uid,U.account,E.eid,E.title,E.type,E.time from user "
                "as U join event as E on U.uid=E.author_id order by E.time "
-               "limit %s")
+               "desc limit %s")
+        if offset is not None:
+
+            args.insert(0, offset)
+            sql = ','.join((sql, '%s'))
+        return do_query_request(sql, *args)
+
+    @staticmethod
+    def get_records(limit, offset=None):
+
+        '''Get latest records'''
+
+        args = [limit]
+
+        sql = ("select U.uid,U.account,U.img,E.eid,E.title,E.picture,E.type,"
+               "E.lable,E.time from user as U join event as E on "
+               "U.uid=E.author_id order by E.time desc limit %s")
         if offset is not None:
 
             args.insert(0, offset)

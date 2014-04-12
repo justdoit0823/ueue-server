@@ -100,8 +100,6 @@ class EventSearchliModule(tornado.web.UIModule):
 
     def render(self, row):
         type = EVENTLIKEY[int(row.type)]
-        if int(row.type) == 3:
-            row.place = row.place.split("&")[1]
         if row.picture:
             row.picture = row.picture.split(";")
             j = min(len(row.picture), 2)

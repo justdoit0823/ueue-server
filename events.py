@@ -99,69 +99,70 @@ def do_record_add(request, rtype):
 class RecordHandler(BaseHandler):
 
     def get(self):
-        schargs = self.request.uri.split("?")
-        if(len(schargs) < 2):
-            schcond = []
-        else:
-            schcond = [l for l in schargs[1].split("&") if l]
-        schsql = ""
-        usrsql = ""
-        rcdwhcond = ""
-        usrwhcond = ""
-        ordcond = ""
-        args1 = []
-        args2 = []
-        for i in schcond:
-            left, right = i.split("=")
-            if left == "type":
-                if int(right) > -1:
-                    if not rcdwhcond:
-                        rcdwhcond = "  "+CONDITIONS[left]
-                    else:
-                        rcdwhcond += " and "+CONDITIONS[left]
-                    args2.append(right)
-            elif left == "user":
-                if int(right) > -1:
-                    if not usrwhcond:
-                        usrwhcond = " where "+CONDITIONS[left]
-                    else:
-                        usrwhcond += " and "+CONDITIONS[left]
-                    args1.append(right)
-            elif left == "trade":
-                right = tornado.escape.url_unescape(right)
-                right = u"%" + right + u"%"
-                #print right
-                if not usrwhcond:
-                    usrwhcond = " where "+CONDITIONS[left]
-                else:
-                    usrwhcond += " and "+CONDITIONS[left]
-                args1.append(right)
-            elif left == "lable":
-                right = tornado.escape.url_unescape(right)
-                right = u"%" + right + u"%"
-                #print right
-                if not rcdwhcond:
-                    rcdwhcond = "  "+CONDITIONS[left]
-                else:
-                    rcdwhcond += " and "+CONDITIONS[left]
-                args2.append(right)
-            elif left == "hotsort":
-                ordcond = " order by event."+ORDERS[int(right)-1]+" desc"
-        if not ordcond:
-            ordcond = " order by event.time desc"
-        usrsql = USERSEARCH+usrwhcond
-        if not usrwhcond:
-            if rcdwhcond:
-                rcdwhcond = " where "+rcdwhcond
-        else:
-            if rcdwhcond:
-                rcdwhcond = " where user.uid in ("+usrsql+") and "+rcdwhcond
-            else:
-                rcdwhcond = " where user.uid in ("+usrsql+") "
-        schsql = SAERCHBASE+rcdwhcond+ordcond
-        print schsql, args1+args2
-        rows = []  # self.db.query(schsql, *(args1+args2))
+        #schargs = self.request.uri.split("?")
+        #if(len(schargs) < 2):
+         #   schcond = []
+        #else:
+         #   schcond = [l for l in schargs[1].split("&") if l]
+        #schsql = ""
+        #usrsql = ""
+        #rcdwhcond = ""
+        #usrwhcond = ""
+        #ordcond = ""
+        #args1 = []
+        #args2 = []
+        #for i in schcond:
+         #   left, right = i.split("=")
+          #  if left == "type":
+           #     if int(right) > -1:
+           #         if not rcdwhcond:
+           #             rcdwhcond = "  "+CONDITIONS[left]
+           #         else:
+           #             rcdwhcond += " and "+CONDITIONS[left]
+           #         args2.append(right)
+           # elif left == "user":
+           #     if int(right) > -1:
+           #         if not usrwhcond:
+           #             usrwhcond = " where "+CONDITIONS[left]
+           #         else:
+           #             usrwhcond += " and "+CONDITIONS[left]
+           #         args1.append(right)
+           # elif left == "trade":
+           #     right = tornado.escape.url_unescape(right)
+           #     right = u"%" + right + u"%"
+           #     #print right
+           #     if not usrwhcond:
+           #         usrwhcond = " where "+CONDITIONS[left]
+           #     else:
+           #         usrwhcond += " and "+CONDITIONS[left]
+           #     args1.append(right)
+           # elif left == "lable":
+           #     right = tornado.escape.url_unescape(right)
+           #     right = u"%" + right + u"%"
+           #     #print right
+           #     if not rcdwhcond:
+           #         rcdwhcond = "  "+CONDITIONS[left]
+           #     else:
+           #         rcdwhcond += " and "+CONDITIONS[left]
+           #     args2.append(right)
+           # elif left == "hotsort":
+           #     ordcond = " order by event."+ORDERS[int(right)-1]+" desc"
+        #if not ordcond:
+        #    ordcond = " order by event.time desc"
+        #usrsql = USERSEARCH+usrwhcond
+        #if not usrwhcond:
+        #    if rcdwhcond:
+        #        rcdwhcond = " where "+rcdwhcond
+        #else:
+        #    if rcdwhcond:
+        #        rcdwhcond = " where user.uid in ("+usrsql+") and "+rcdwhcond
+        #    else:
+        #        rcdwhcond = " where user.uid in ("+usrsql+") "
+        #schsql = SAERCHBASE+rcdwhcond+ordcond
+        #print schsql, args1+args2
+        #rows = []  # self.db.query(schsql, *(args1+args2))
         cuser = self.get_current_user()
+        rows = RecordManager.get_records(40)
         tips = self.get_tool_tips(('top', 'tip'))
         self.render("yoez1.0beta/event-search.html", cuser=cuser, rows=rows,
                     tips=tips)

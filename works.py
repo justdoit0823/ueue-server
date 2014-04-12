@@ -77,7 +77,7 @@ status for the work:
 class WorksHandler(BaseHandler):
 
     def get(self):
-        schargs = self.request.uri.split("?")
+        '''schargs = self.request.uri.split("?")
         if len(schargs) < 2:
             schcond = []
         else:
@@ -140,8 +140,9 @@ class WorksHandler(BaseHandler):
                 wrkwhcond = " where user.uid in ("+usrsql+") "
         schsql = SAERCHBASE+wrkwhcond+ordcond
         print schsql, args1+args2
-        rows = []  # self.db.query(schsql, *(args1+args2))
+        rows = []  # self.db.query(schsql, *(args1+args2))'''
         cuser = self.get_current_user()
+        rows = WorkManager.get_latest_works(40)
         tips = self.get_tool_tips(('top', 'tip'))
         self.render("yoez1.0beta/work-search.html", cuser=cuser, rows=rows,
                     tips=tips)
