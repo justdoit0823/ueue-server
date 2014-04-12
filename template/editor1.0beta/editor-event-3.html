@@ -87,12 +87,12 @@
     else cell.className="Day";
     if ((daily > 0) && (daily <= intDaysInMonth))
     {
-     cell.innerText = daily;
+     cell.innerHTML = daily;
      daily++;
     } else
     {
      cell.className="CalendarTD";
-     cell.innerText = "";
+     cell.innerHTML = "";
     }
   }
   document.all.year.value=year;
@@ -141,7 +141,7 @@
 <thead>
      <tr align="center" valign="middle"> 
   <td colspan="7" class="Title">
-   <a href="javaScript:subMonth();" title="上一月" Class="DayButton">&lt;</a> <input name="year" type="text" size="4" maxlength="4" onKeyDown="if (event.keyCode==13)" onKeyUp="this.value=this.value.replace(/[^0-9]/g,'')"  onpaste="this.value=this.value.replace(/[^0-9]/g,'')"> 年 <input name="month" type="text" size="1" maxlength="2" onKeyDown="if (event.keyCode==13)" onKeyUp="this.value=this.value.replace(/[^0-9]/g,'')"  onpaste="this.value=this.value.replace(/[^0-9]/g,'')"> 月 <a href="JavaScript:addMonth();" title="下一月" Class="DayButton">&gt;</a>
+   <a href="javaScript:subMonth();" title="上一月" class="DayButton">&lt;</a> <input name="year" type="text" size="4" maxlength="4" onKeyDown="if (event.keyCode==13)" onKeyUp="this.value=this.value.replace(/[^0-9]/g,'')"  onpaste="this.value=this.value.replace(/[^0-9]/g,'')"> 年 <input name="month" type="text" size="1" maxlength="2" onKeyDown="if (event.keyCode==13)" onKeyUp="this.value=this.value.replace(/[^0-9]/g,'')"  onpaste="this.value=this.value.replace(/[^0-9]/g,'')"> 月 <a href="JavaScript:addMonth();" title="下一月" Class="DayButton">&gt;</a>
   </td>
  </tr>
  <tr align="center" valign="middle"> 
