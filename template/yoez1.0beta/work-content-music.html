@@ -17,29 +17,6 @@
 <body>
 {{modules.Header(cuser,request.uri)}}
 {{modules.MainTopAd()}}
-<div class="yz-idx-showct wp1000">
-<div class="z cl mgt40">
-	<a href="/{{row.uid}}" class="z cl yz-idx-showct-name chs">{{row.account}}</a><span class="z cl yz-idx-showct-title chs">作品展示</span>
-</div>
-<div class="yz-search y cl mgt40">
-		<div class="z cl">
-			<ul class="yz-search-type z cl">
-				<li  style="top: 0px;">
-					<a class="yz-search-type-wk" title="搜作品"></a>
-				</li>
-				<li  style="top: 30px;">
-					<a class="yz-search-type-rcd" title="搜记录"></a>
-				</li>
-				<li  style="top: 60px;">
-					<a class="yz-search-type-usr" title="搜用户"></a>
-				</li>
-			</ul>
-			<input class="yz-search-text z cl" type="text" onKeyDown="if (event.keyCode==13) {}" onBlur="if(this.value=='')value='- 搜搜你感兴趣的标签 -';" onFocus="if(this.value=='- 搜搜你感兴趣的标签 -')value='';" value="- 搜搜你感兴趣的标签 -"/>
-			<input class="yz-search-sub z cl" type="submit" value="">
-		</div>
-	</div>
-</div>
-<!--SEARCH LINE END-->
 <!--SHOW BEGAIN-->
 <div class="yz-idx-body z cl">
 	  <div class="wp1000 cl ue-all mgt40">
@@ -93,7 +70,6 @@
 					<div class="yz-idx-module-discus-ta z cl">
 					<textarea class="inputtxtnum z cl" onKeyDown="if (event.keyCode==13) {}" onBlur="if(this.value=='')value='GOOD JOB!';" onFocus="if(this.value=='GOOD JOB!')value='';" value="GOOD JOB!" id="review-content-tx" name="rcontent">GOOD JOB!</textarea>
 					</div>
-					<span class="yz-idx-module-discus-wn">还可以输入<i class="en">140</i>个字</span>
 					<input type="submit" value="发言" class="yz-idx-module-discus-sub br5 mgt10 y cl">
                                    </form>
 				</div>

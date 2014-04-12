@@ -12,7 +12,6 @@
 		{% if user.job %}<p>{{user.job}}</p>{% end %}
 		<p>Member Since {{user.time[:4]}}.{{user.time[5:7]}}.{{user.time[8:10]}}</p>
 		{% if userself %}
-		<input type="button" class="ue-people-post" value="新发布 / NEW"/>
 		{% elif followed %}
 		<input type="button" class="ue-people-unfollow" value="已记忆，忘记TA"/>
 		{% else %}
