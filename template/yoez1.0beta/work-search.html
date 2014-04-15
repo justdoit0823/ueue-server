@@ -17,6 +17,139 @@
 <script src="http://tjs.sjs.sinajs.cn/open/api/js/wb.js" type="text/javascript" charset="utf-8"></script>
 </head>
 <body>
+<!--TAGS BEGAIN 建议模块一下-->
+<div class="ue-stag" style="display: none;">
+	<div class="ue-stag-box">
+		<a class="ue-stag-close"></a>
+        <div class="z cl">
+            <p class="ue-stag-maintitle">选择行业标签</p>
+            <div class="ue-stag-hot z cl">
+                <p class="z cl ue-stag-title">热门标签 / HOT TAGS</p>
+                <ul class="z cl">
+                    <li>
+                        <a href="/">#建筑</a>                 
+                    </li>
+                    <li>
+                        <a href="/">#音乐</a>
+                    </li>
+                    <li>
+                        <a href="/">#电影</a>
+                    </li>
+                    <li>
+                        <a href="/">#平面设计</a>                 
+                    </li>
+                    <li>
+                        <a href="/">#工业设计</a>
+                    </li>
+                    <li>
+                        <a href="/">#摄影</a>
+                    </li>
+                     <li>
+                        <a href="/">#模特儿</a>
+                    </li>
+                    <li>
+                        <a href="/">#广告</a>
+                    </li>
+                     <li>
+                        <a href="/">#新闻</a>
+                    </li>
+                     <li>
+                        <a href="/">#表演艺术</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="ue-stag-normal y cl">
+            	<div class="z cl">
+                	<div class="z cl">
+						<span>设计创意</span>
+                        <a href="/">平面设计</a>
+                        <a href="/">工业设计</a>
+                        <a href="/">建筑</a>     
+                        <a href="/">交互设计</a>  
+                        <a href="/">漫画</a>
+                        <a href="/">服装设计</a>
+                        <a href="/">手绘</a>
+                        <a href="/">家具设计</a>
+                        <a href="/">游戏设计</a>
+                        <a href="/">涂鸦</a>
+                        <a href="/">插画</a>
+                        <a href="/">室内设计</a>
+                        <a href="/">产品设计</a>
+                        <a href="/">纺织品设计</a>
+                        <a href="/">玩具设计</a>
+                        <a href="/">用户体验设计</a> 
+                        <a href="/">图标设计</a>
+                        <a href="/">珠宝设计</a>    
+                        <a href="/">图案设计</a>     
+                        <a href="/">创意相关</a>                	
+                    </div>
+                    <div class="z cl">
+						<span>演员&amp;模特</span>
+                        <a href="/">演唱</a>
+                        <a href="/">模特儿</a>
+                        <a href="/">表演艺术</a>     
+                        <a href="/">舞蹈</a>  
+                        <a href="/">魔术</a>
+                        <a href="/">曲艺</a>                            	
+                    </div>
+                    <div class="z cl">
+						<span>影视幕后</span>
+                        <a href="/">导演</a>
+                        <a href="/">动画</a>
+                        <a href="/">场景设计</a>     
+                        <a href="/">编剧</a>  
+                        <a href="/">电影</a>
+                        <a href="/">美术</a>
+                        <a href="/">摄像</a>
+                        <a href="/">配音</a>                                	
+                    </div>
+                   
+                </div>
+                <div class="z cl">
+                	<div class="z cl">
+						<span>摄影&amp;造型</span>
+                        <a href="/">摄影</a>
+                        <a href="/">新闻摄影</a>
+                        <a href="/">图片后期</a>     
+                        <a href="/">造型</a>                          	
+                    </div>   
+                     <div class="z cl">
+						<span>音乐&amp;制作</span>
+                        <a href="/">艺术指导</a>
+                        <a href="/">编曲</a>
+                        <a href="/">音乐</a>     
+                        <a href="/">词曲</a>                          	
+                    </div>           
+                    <div class="z cl">
+						<span>广告传媒</span>
+                        <a href="/">品牌</a>
+                        <a href="/">视觉传达</a>
+                        <a href="/">网页设计</a>     
+                        <a href="/">美术编辑</a>  
+                        <a href="/">广告</a>
+                        <a href="/">策展</a>
+                        <a href="/">文案</a>     
+                        <a href="/">新闻</a>                        	
+                    </div>
+                    <div class="z cl">
+						<span>更多行业</span>
+                        <a href="/">花艺</a>
+                        <a href="/">烹饪艺术</a>
+                        <a href="/">书法</a>     
+                        <a href="/">写作</a>  
+                        <a href="/">时尚</a>
+                        <a href="/">雕刻</a>
+                        <a href="/">工艺品</a>     
+                        <a href="/">绘画</a>  
+                        <a href="/">街头艺术</a>     
+                        <a href="/">时尚风格</a>                        	
+                    </div>
+                </div>
+            </div>
+		</div>
+	</div>
+</div>
+<!--TAGS END-->
 {{modules.Header(cuser,request.uri)}}
 {{modules.MainTopAd()}}
 <!--SHOW BEGAIN-->
@@ -32,6 +165,7 @@
 			<div class="yz-idx-body-body  w640 z cl">
 				<div class="yz-idx-body-title w640 z cl">
 					<p class="yz-idx-body-title-p z cl chs">作品云集</p>
+                    <i class="search-tag" title="换个标签"></i>
 				</div>
 				<ul class="z cl yz-work-ul">
                                         {% for one in rows %}{{ modules.WorkSearch(one) }}{% end %}
