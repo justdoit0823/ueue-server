@@ -310,6 +310,12 @@ class EditorUploadvideoModule(tornado.web.UIModule):
                                   is_change=is_change)
 
 
+class SearchTagModule(tornado.web.UIModule):
+
+    def render(self):
+
+        return self.render_string('modules/search_tag.html')
+
 modules = dict(
     User=UserModule,
     Header=UeHeaderModule,
@@ -341,4 +347,5 @@ modules = dict(
     IndexReviewli=IndexReviewliModule,
     MainTopAd=MainTopAdModule,
     MainRightAd=MainRightAdModule,
+    SearchTag=SearchTagModule,
     )
