@@ -39,7 +39,7 @@ class HomeHandler(BaseHandler):
         cuser = self.get_current_user()
         rows = WorkManager.get_latest_works(30)
         ls = RecordManager.get_latest_records(4)
-        rvls = ReviewManager.get_latest_reviews(4)
+        rvls = ReviewManager.get_latest_workreviews(4)
         tips = self.get_tool_tips(('top', 'tip'))
         kwargs = dict(cuser=cuser, sf=self, rows=rows, ls=ls, rvls=rvls,
                       tips=tips)

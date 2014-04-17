@@ -85,23 +85,10 @@
 				</div>
 				<div class="mgt10 yz-idx-more">
 					<ul class="cl">
-                    	<li>
-                        	<span><a href="#" target="_blank">余森斌</a> @ 2012.03.04 评论说</span></br>
-                            <p><a href="#">非常棒的作品</a></p>
-                        </li>
-                        <li>
-                        	<span><a href="#" target="_blank">新浪网</a> @ 2012.03.04 评论说</span></br>
-                            <p><a href="#">这简直是惨无人道啊</a></p>
-                        </li>
-						<li>
-                        	<span><a href="#" target="_blank">晴天</a> @ 2012.03.04 评论说</span></br>
-                            <p><a href="#">NICE WORK!</a></p>
-                        </li>
-                        <li>
-                        	<span><a href="#" target="_blank">人人网</a> @ 2012.03.04 评论说</span></br>
-                            <p><a href="#">旺晴天说的是神马玩意~</a></p>
-                        </li>
-                    </ul>
+					  {% for j in rvls %}
+					  {{ modules.IndexReviewli(j,'work') }}
+					  {% end %}
+					</ul>
 				</div>
 			</div>
 				<!--AD-->
