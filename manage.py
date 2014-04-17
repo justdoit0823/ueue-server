@@ -389,13 +389,26 @@ class UserManager:
 class ReviewManager:
 
     @staticmethod
-    def get_latest_reviews(limit, offset=None):
+    def get_latest_workreviews(limit, offset=None):
 
         args = [limit]
 
-        sql = ("select U.uid,U.account,ER.content,ER.time from eventreview as "
-               "ER join user as U on ER.reviewuid=U.uid order by ER.time desc "
-               "limit %s")
+        sql = ("select U.uid,U.account,WR.reviewwid as wid,WR.content,WR.time "
+               "from workreview as WR join user as U on WR.reviewuid=U.uid "
+               "order by WR.time desc limit %s")
+        if offset is not None:
+            sql = ','.join((sql, '%s'))
+            args.insert(0, offset)
+        return do_query_request(sql, *args)
+
+    @staticmethod
+    def get_latest_recordreviews(limit, offset=None):
+
+        args = [limit]
+
+        sql = ("select U.uid,U.account,ER.revieweid as rid,ER.content,ER.time "
+               "from eventreview as ER join user as U on ER.reviewuid=U.uid "
+               "order by ER.time desc limit %s")
         if offset is not None:
             sql = ','.join((sql, '%s'))
             args.insert(0, offset)

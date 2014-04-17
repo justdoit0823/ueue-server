@@ -60,15 +60,10 @@
 				</div>
 				<div class="mgt10 yz-idx-more">
 					<ul class="cl">
-                    	<li>
-                        	<span><a href="#" target="_blank">余森斌</a> @ 2012.03.04 评论说</span></br>
-                            <p><a href="#">非常棒的作品</a></p>
-                        </li>
-                        <li>
-                        	<span><a href="#" target="_blank">新浪网</a> @ 2012.03.04 评论说</span></br>
-                            <p><a href="#">这简直是惨无人道啊</a></p>
-                        </li>
-                    </ul>
+					  {% for j in rvls %}
+					  {{ modules.IndexReviewli(j,'record') }}
+					  {% end %}
+					</ul>
 				</div>
 			</div>
 {{modules.MainRightAd()}}

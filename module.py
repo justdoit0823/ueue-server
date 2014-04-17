@@ -67,9 +67,15 @@ class IndexRecordliModule(tornado.web.UIModule):
 
 class IndexReviewliModule(tornado.web.UIModule):
 
-    def render(self, rvl):
+    def render(self, rvl, type):
 
-        return self.render_string("modules/index_review_li.html", rvl=rvl)
+        if type == 'work':
+            url = '/work/' + str(rvl.wid)
+        elif type == 'record':
+            url = '/record/' + str(rvl.rid)
+
+        return self.render_string("modules/index_review_li.html", rvl=rvl,
+                                  url=url)
 
 
 class UeHeaderModule(tornado.web.UIModule):

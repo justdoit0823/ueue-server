@@ -143,9 +143,10 @@ class WorksHandler(BaseHandler):
         rows = []  # self.db.query(schsql, *(args1+args2))'''
         cuser = self.get_current_user()
         rows = WorkManager.get_latest_works(40)
+        rvls = ReviewManager.get_latest_workreviews(4)
         tips = self.get_tool_tips(('top', 'tip'))
         self.render("yoez1.0beta/work-search.html", cuser=cuser, rows=rows,
-                    tips=tips)
+                    rvls=rvls, tips=tips)
 
 
 class UserWorksHandler(BaseHandler):
