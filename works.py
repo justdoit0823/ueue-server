@@ -325,14 +325,16 @@ class WorksPicuploadHandler(BaseHandler):
         for i in self.request.files:
             print i
             fname, ext = os.path.splitext(self.request.files[i][0]["filename"])
+            if ext:
+                ext = ext[1:]
             if ext.lower() not in SUPORT_IMAGES:
                 result = dict(status=0, code="unsupport image type")
                 print result
                 return self.write(result)
             timestamp = time.strftime("%Y%m%d%X", time.localtime())
-            fname = fname.encode("utf-8") + ext
+            fname = fname.encode("utf-8") + timestamp
             fname = md5(fname).hexdigest()
-            fname += "."+ext
+            fname += ext
             path = "%s/static/img/user/%d/%s" % (workdir, cuser.uid, fname)
             try:
                 f = file(path, "wb+")
@@ -380,7 +382,7 @@ class WorksMultiPicuploadHandler(BaseHandler):
                 timestamp = time.strftime("%Y%m%d%X", time.localtime())
                 fname = fname.encode("utf-8") + timestamp
                 fname = md5(fname).hexdigest()
-                fname += "."+ext
+                fname += ext
                 path = "%s/static/img/user/%d/%s" % (workdir, cuser.uid, fname)
                 try:
                     f = file(path, "wb+")

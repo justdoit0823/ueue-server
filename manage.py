@@ -290,7 +290,7 @@ class UserManager:
         '''check the user exists'''
 
         sql = "select uid from user where uid=%s"
-        return do_get_request(con, uid)
+        return do_get_request(sql, uid)
 
     @staticmethod
     def update_user(uid, **kwargs):

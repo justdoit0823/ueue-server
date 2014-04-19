@@ -183,7 +183,7 @@ class UserConfirmHandler(BaseHandler):
             else:
                 tip = "你可以使用该邮箱注册"
         else:
-            result = UserManager.get_user_withuid(data)
+            result = UserManager.get_user_withid(data)
             if result:
                 tip = "该用户名已存在，请换一个!"
             else:
