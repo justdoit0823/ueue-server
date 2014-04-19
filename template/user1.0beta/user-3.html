@@ -129,7 +129,7 @@ $(document).ready(function(){
              dataType:"json",
              data:{agent:"",phone:phone,mail:email,address:address,sina:sina,tqq:tqq,qq:qq,qzone:qzone,renren:renren,douban:douban,_xsrf:$("input[name='_xsrf']").val()},
              error:function(jq,data,errorThrow){
-                     if(date) alert(data);
+                     if(data) alert(data);
                    },
              success:function(result){
                         if(result.status){

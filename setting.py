@@ -141,7 +141,7 @@ class SetContactHandler(BaseHandler):
         args = list(self.get_values((("agent", 0), ("phone", ""),
                                      ("mail", ""), ("address", ""),
                                      ("sina", ""), ("tqq", ""),
-                                     ("qq", ""), ("qzone", ""), ("renren", "")
+                                     ("qq", ""), ("qzone", ""), ("renren", ""),
                                      ("douban", ""))))
         domain = str(cuid)
         is_contact_set = ContactManager.check_contact(cuid)
