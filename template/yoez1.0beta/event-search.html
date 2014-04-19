@@ -72,6 +72,7 @@
 </div>
 <script type="text/javascript">
 	var daysInMonth = new Array(31, 28, 31, 30, 31, 30, 31, 31,30, 31, 30, 31);
+	var allMonth = new Array('Jan.', 'Feb.', 'Mar.', 'Apr.', 'May.', 'Jun.', 'Jul.', 'Aug.', 'Sep.', 'Oct.', 'Nov.', 'Dec.');
 	var today = new getToday();
 	var year = today.year;
 	var month = today.month;
@@ -124,16 +125,18 @@
 			mon-=1;
 		}
 
-		replach_with = year.toString() + '.' + mon.toString();
+		month = mon < 10 ? '0' + mon.toString() : mon;
+		replach_with = year.toString() + '.' + month;
 		node.html(replach_with);
-		calendar(year, month);
+		$(".yz-idx-calendar-year-en").html(allMonth[month - 1]);
+		calendar(year, mon - 1);
 	}
 
 	function calendar_right() {
 		var node = $(".yz-idx-calendar-year");
 		var ym = node.text().split('.');
 		var year = parseInt(ym[0]);
-		var mon=ym[1];
+		var mon = ym[1];
 
 		mon = parseInt(mon < '10' ? mon[1] : mon);
 
@@ -144,23 +147,25 @@
 			mon+=1;
 		}
 
-		replach_with = year.toString() + '.' + mon.toString();
+		month = mon < 10 ? '0' + mon.toString() : mon;
+		replach_with = year.toString() + '.' + month;
 		node.html(replach_with);
-		calendar(year, month);
+		$(".yz-idx-calendar-year-en").html(allMonth[month - 1]);
+		calendar(year, mon - 1);
 
-        var settings={
-            url:"/events/calendar",
-            type:"get",
-            data:{
-                year:year,
-                month:mon
-            },
-            success:function(html) {
-                $(".yz-idx-calendar-srch").prev().replaceWith(html);
-            }
-        };
+        // var settings={
+        //     url:"/events/calendar",
+        //     type:"get",
+        //     data:{
+        //         year:year,
+        //         month:mon
+        //     },
+        //     success:function(html) {
+        //         $(".yz-idx-calendar-srch").prev().replaceWith(html);
+        //     }
+        // };
 
-        $.ajax(settings);
+        // $.ajax(settings);
 	}
 </script>
 <div class="cl"></div>
@@ -172,6 +177,11 @@
 	<a href="/vane">风向标 / UE VANE</a>	
 </div>
 {{modules.MainFooter(tips)}}
-<script src="http://tjs.sjs.sinajs.cn/open/api/js/wb.js" type="text/javascript" charset="utf-8"></script>
+<script src="http://tjs.sjs.sinajs.cn/open/api/js/wb.js" type="text/javascript" charset="utf-8">
+	$(document).ready(function() {
+		var today = new Date();
+		calendar(today.getFullYear(), today.getMonth());
+	})
+</script>
 </body>
 </html>
