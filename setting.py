@@ -138,11 +138,8 @@ class SetContactHandler(BaseHandler):
 
     def post(self):
         cuid = int(self.get_secure_cookie("_yoez_uid"))
-        args = list(self.get_values((("agent", 0), ("phone", ""),
-                                     ("mail", ""), ("address", ""),
-                                     ("sina", ""), ("tqq", ""),
-                                     ("qq", ""), ("qzone", ""), ("renren", ""),
-                                     ("douban", ""))))
+        args = list(self.get_values((("phone", ""), ("mail", ""),
+                                     ("address", ""))))
         domain = str(cuid)
         is_contact_set = ContactManager.check_contact(cuid)
         if is_contact_set:

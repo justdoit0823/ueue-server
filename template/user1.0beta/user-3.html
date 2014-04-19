@@ -39,7 +39,7 @@ $(document).ready(function(){
                                      <input type="text" id="user-phone" class="z cl user-normal" value="{% if info.telphone and info.telphone[0] %}{{info.telphone[0]}}{% end %}"/>
                                      <span>- Telphone -</span>
                                 </div>
-				<p class="y cl user-secrecy bs" style="z-index: 3">
+				<p id="user-phone-option" class="y cl user-secrecy bs" style="z-index: 3">
                                         {% if info.telphone and info.telphone[1] %}
 					<b class="auth-val" option="{{info.telphone[1]}}">{{options[info.telphone[1]]}}</b> ▼
                                         {% else %}
@@ -62,7 +62,7 @@ $(document).ready(function(){
 				     <input type="text" id="user-email" class="z cl user-normal" onKeyDown="if (event.keyCode==13) {}" value="{% if info.conmail and info.conmail[0] %}{{info.conmail[0]}}{% end %}"/>
                                      <span>- Email -</span>
                                 </div>
-				<p class="y cl user-secrecy bs" style="z-index: 2">
+				<p id="user-email-option" class="y cl user-secrecy bs" style="z-index: 2">
                                         {% if info.conmail and info.conmail[0] %}
 					<b class="auth-val" option="{{info.conmail[1]}}">{{options[info.conmail[1]]}}</b> ▼
                                         {% else %}
@@ -113,21 +113,14 @@ $(document).ready(function(){
 </div>
 <script type="text/javascript">
   $(".user-button input").click(function(){
-      var agent=$("#user-agent").val()+"&"+$("#user-agent").next().find(".auth-val").attr("option");
-      var phone=$("#user-phone").val()+"&"+$("#user-phone").next().find(".auth-val").attr("option");
-      var email=$("#user-email").val()+"&"+$("#user-email").next().find(".auth-val").attr("option");
+      var phone=$("#user-phone").val()+"&"+$("#user-phone-option").find(".auth-val").attr("option");
+      var email=$("#user-email").val()+"&"+$("#user-email-option").find(".auth-val").attr("option");
       var address=$("#user-address").val()+"&"+$(".user-addressbox").next().find(".auth-val").attr("option");
-      var sina=$("#user-sina").val()+"&"+$(".user-shequ-sina").next().find(".auth-val").attr("option");
-      var tqq=$("#user-tqq").val()+"&"+$(".user-shequ-tencent").next().find(".auth-val").attr("option");
-      var qq=$("#user-qq").val()+"&"+$(".user-shequ-qq").next().find(".auth-val").attr("option");
-      var qzone=$("#user-qzone").val()+"&"+$(".user-shequ-zone").next().find(".auth-val").attr("option");
-      var renren=$("#user-renren").val()+"&"+$(".user-shequ-rr").next().find(".auth-val").attr("option");
-      var douban=$("#user-douban").val()+"&"+$(".user-shequ-douban").next().find(".auth-val").attr("option");
       var settings={
              url:"/user/set-contact",
              type:"post",
              dataType:"json",
-             data:{agent:"",phone:phone,mail:email,address:address,sina:sina,tqq:tqq,qq:qq,qzone:qzone,renren:renren,douban:douban,_xsrf:$("input[name='_xsrf']").val()},
+             data:{agent:"",phone:phone,mail:email,address:address,_xsrf:$("input[name='_xsrf']").val()},
              error:function(jq,data,errorThrow){
                      if(data) alert(data);
                    },

@@ -10,7 +10,6 @@
 <link rel="stylesheet" type="text/css" href="http://static.ueue.cc/www/css/common.css">
 <link rel="stylesheet" type="text/css" href="http://static.ueue.cc/www/css/index.css">
 <script type="text/javascript" src="http://static.ueue.cc/www/js/jquery-1.8.3.js"></script>
-<script type="text/javascript" src="http://static.ueue.cc/www/js/jquery.form-2.67.js"></script>
 <script type="text/javascript" src="http://static.ueue.cc/www/js/common.js"></script>
 <script type="text/javascript" src="http://static.ueue.cc/www/js/content.js"></script>
 </head>
@@ -145,14 +144,12 @@
 					<p class="yz-idx-body-title-p z cl chs">COMMENTS</p>
 				</div>
 				<div class="z cl yz-idx-module-discusbox">
-                                    <form method="post" action="" id="event-review-f">
                                         {{xsrf_form_html()}}
 					<div class="yz-idx-module-discus-ta z cl">
 					<textarea class="inputtxtnum z cl" onKeyDown="if (event.keyCode==13) {}" onBlur="if(this.value=='')value='NICE';" onFocus="if(this.value=='NICE')value='';" value="NICE" maxlength=140 id="review-content-tx" name="rcontent" />NICE</textarea>
 					</div>
 					<span class="yz-idx-module-discus-wn">还可以输入<i class="en">140</i>个字</span>
 					<input type="submit" value="发言" class="yz-idx-module-discus-sub br5 mgt10 y cl">
-                                    </form>
 				</div>
 				{{modules.UserReviewList(reviews)}}
 			</div>
@@ -234,17 +231,6 @@
 </div>
 <script type="text/javascript">
 	$(document).ready(function(){
-                        $(".yz-idx-module-discus-sub").attr('disabled','');
-			$("#event-img a img").click(function(){
-			    if($("#event-img").hasClass("eventct-ct-img1")) $("#event-img").removeClass("eventct-ct-img1").addClass("eventct-ct-img2");
-		            else $("#event-img").removeClass("eventct-ct-img2").addClass("eventct-ct-img1");
-			});
-                        $("#event-img a").click(function(event){
-				var href = $(this).attr("href");
-				var pos = $(href).offset().top;
-				$("html,body").animate({scrollTop: pos}, 1000);
-				event.preventDefault();
-			});
                         $(".ue-report-close").click(function(){
                             $(".ue-idx-report").fadeOut(200);
                         });
