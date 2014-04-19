@@ -64,13 +64,11 @@
 					<p class="yz-idx-body-title-p z cl chs">COMMENTS</p>
 				</div>
 				<div class="z cl yz-idx-module-discusbox">
-                                    <form method="post" action="" id="event-review-f">
                                         {{xsrf_form_html()}}
 					<div class="yz-idx-module-discus-ta z cl">
 					<textarea class="inputtxtnum z cl" onKeyDown="if (event.keyCode==13) {}" onBlur="if(this.value=='')value='GOOD JOB!';" onFocus="if(this.value=='GOOD JOB!')value='';" value="GOOD JOB!" id="review-content-tx" name="rcontent">GOOD JOB!</textarea>
 					</div>
 					<input type="submit" value="发言" class="yz-idx-module-discus-sub br5 mgt10 y cl">
-                                    </form>
 				</div>
                                 {{modules.UserReviewList(reviews)}}
 			</div>

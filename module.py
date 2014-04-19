@@ -16,7 +16,7 @@ from __init__ import DEFAULT_TEXT, USER_STATUS
 MonthList = ("Jan", "Feb", "Mar", "Apr", "May", "Jun",
              "Jul", "Aug", "Sep", "Oct", "Nov", "Dec")
 
-WORKLICONTENT = ("<img src='cover' width='298' height='185'><span></span>",
+WORKLICONTENT = ("<span></span>",
                  "<span></span>", "<img src='cover' width='298' height='185'>",
                  "<p>content</p>")
 
