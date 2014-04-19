@@ -218,7 +218,7 @@ class EventDetailHandler(BaseHandler):
             if(cuser.uid == row.uid):
                 is_follow = True
             else:
-                flwrst = FollowManager.get_follow_uid(*(cuser.uid, row.uid))
+                flwrst = FollowManager.get_user_relation(*(cuser.uid, row.uid))
                 is_follow = flwrst and int(flwrst.relation)
         piclist = []
         j = 0
@@ -250,7 +250,7 @@ class EventDetailHandler(BaseHandler):
         at = time.strftime("%Y-%m-%d %X", time.localtime())
         args = (eid, cuser.uid, content, at)
         ReviewManager.new_record_review(*args)
-        ReviewManager.update_record_review(eid, 1)
+        RecordManager.update_record_review(eid, 1)
         one = dict(uid=cuser.uid, img=cuser.img, account=cuser.account,
                    content=content.replace("\'", "'"), time=at)
         rmsg = self.render_string("modules/user_review_content.html", one=one)

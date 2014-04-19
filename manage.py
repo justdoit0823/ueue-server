@@ -417,7 +417,7 @@ class ReviewManager:
     @staticmethod
     def new_record_review(*args):
 
-        sql = ("insert into eventreview (revieweid,reviewuid,content,time "
+        sql = ("insert into eventreview (revieweid,reviewuid,content,time) "
                "values(%s,%s,%s,%s)")
 
         return do_execute_request(sql, *args)
@@ -466,7 +466,7 @@ class ViewManager:
     @staticmethod
     def new_record_view(*args):
 
-        sql = ("insert into workview (viewwid,viewuid,time) values(%s,%s,%s)")
+        sql = ("insert into eventview (vieweid,viewuid,time) values(%s,%s,%s)")
 
         return do_execute_request(sql, *args)
 
@@ -569,9 +569,8 @@ class ContactManager:
     @staticmethod
     def get_contact(cid):
 
-        sql = ("select agent_id,telphone,conmail,conaddress,sinawb,qqwb,qq,"
-               "qzone,renren,douban,psldomain from contactinfo where "
-               "con_id=%s")
+        sql = ("select telphone,conmail,conaddress,psldomain from "
+               "contactinfo where con_id=%s")
         return do_get_request(sql, cid)
 
     @staticmethod
