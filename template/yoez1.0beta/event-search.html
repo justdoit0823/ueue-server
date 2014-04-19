@@ -71,11 +71,49 @@
 </div>
 </div>
 <script type="text/javascript">
+	var daysInMonth = new Array(31, 28, 31, 30, 31, 30, 31, 31,30, 31, 30, 31);
+	var today = new getToday();
+	var year = today.year;
+	var month = today.month;
+	var newCal;
+
+	function getDays(month, year) {
+		if (1 == month) return ((0 == year % 4) && (0 != (year % 100 ))) || (0 == year % 400) ? 29 : 28;
+		else return daysInMonth[month];
+	}
+
+	function getToday() {
+		this.now = new Date();
+		this.year = this.now.getFullYear();
+		this.month = this.now.getMonth();
+		this.day = this.now.getDate();
+	}
+
+	function calendar(year, month) {
+		newCal = new Date(year, month, 1);
+		today = new getToday();
+		var day = -1;
+		var startDay = newCal.getDay();
+		var endDay = getDays(newCal.getMonth(), newCal.getFullYear());
+		var daily = 0;
+		if ((today.year == newCal.getFullYear()) && (today.month == newCal.getMonth())) {
+			day = today.day;
+		}
+		date_string = "";
+		for (i = 0; i < startDay; i++) {
+			date_string += '<a href="#"></a>\n';
+		}
+		for (i = 1; i <= endDay; i++) {
+			date_string += '<a class="date-have">' + i + '</a>\n';
+		}
+		$(".yz-idx-calendar-date").html(date_string);
+	}
 
 	function calendar_left () {
-		var ym = $(".yz-idx-calendar-year").text();
-		var year = parseInt(ym.split(".")[0]);
-		var mon=ym.split(".")[1];
+		var node = $(".yz-idx-calendar-year");
+		var ym = node.text().split('.');
+		var year = parseInt(ym[0]);
+		var mon=ym[1];
 
 		mon = parseInt(mon < '10' ? mon[1] : mon);
 
@@ -86,25 +124,16 @@
 			mon-=1;
 		}
 
-		var settings={
-			url:"/events/calendar",
-			type:"get",
-	        data:{
-	        	year:year,
-				month:mon
-			},
-			success:function(html){
-	        	$(".yz-idx-calendar-srch").prev().replaceWith(html);
-	        }
-		}
-
-		$.ajax(settings);
+		replach_with = year.toString() + '.' + mon.toString();
+		node.html(replach_with);
+		calendar(year, month);
 	}
 
 	function calendar_right() {
-		var ym = $(".yz-idx-calendar-year").text();
-		var year = parseInt(ym.split(".")[0]);
-		var mon = ym.split(".")[1];
+		var node = $(".yz-idx-calendar-year");
+		var ym = node.text().split('.');
+		var year = parseInt(ym[0]);
+		var mon=ym[1];
 
 		mon = parseInt(mon < '10' ? mon[1] : mon);
 
@@ -115,19 +144,23 @@
 			mon+=1;
 		}
 
-		var settings={
-			url:"/events/calendar",
-			type:"get",
-			data:{
-				year:year,
+		replach_with = year.toString() + '.' + mon.toString();
+		node.html(replach_with);
+		calendar(year, month);
+
+        var settings={
+            url:"/events/calendar",
+            type:"get",
+            data:{
+                year:year,
                 month:mon
             },
-			success:function(html) {
-				$(".yz-idx-calendar-srch").prev().replaceWith(html);
+            success:function(html) {
+                $(".yz-idx-calendar-srch").prev().replaceWith(html);
             }
-     	};
+        };
 
-		$.ajax(settings);
+        $.ajax(settings);
 	}
 </script>
 <div class="cl"></div>
