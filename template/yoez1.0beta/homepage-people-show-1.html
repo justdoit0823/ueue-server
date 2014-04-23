@@ -156,7 +156,7 @@ $(document).ready(function($) {
               url:"/user/action/follow",
               type:"post",
               dataType:"json",
-              data:{action:supactions[$(this).attr("id")],_xsrf:$("input=[name='_xsrf']").val(),flwid:$(this).attr("followid")},
+              data:{action:supactions[$(this).attr("id")],_xsrf:$("input[name='_xsrf']").val(),flwid:$(this).attr("followid")},
               error:function(jq,data,errorThrow){
                      alert(data);
                    },
@@ -170,20 +170,6 @@ $(document).ready(function($) {
                       }
             }
         $.ajax(settings);
-    })
-    $("#editor-button").click(function(){
-        $("#hphead").animate({"height":0},500);
-        $(".editor").animate({"height":142},500);
-        //$("body").fadeOut(2000);
-        $(".hpcontent").fadeOut(200);
-        //location.href="/user/action/post";
-        $("#editor-choose").fadeIn(200);
-    })
-    $(".editor-back").click(function(){
-        $("#hphead").animate({"height":142},500);
-        $(".editor").animate({"height":0},500);
-        $(".hpcontent").fadeIn(200);
-        $("#editor-choose").fadeOut(200);
     })
     $(".yz-hp-control-del").click(function(e){
         e.preventDefault();
@@ -209,11 +195,6 @@ $(document).ready(function($) {
 </script>
 
 <div class="cl"></div>
-
-<!--footer begain-->
-
-
-</div>
 {{modules.BlackFooter(user,tips)}}
 </body>
 </html>

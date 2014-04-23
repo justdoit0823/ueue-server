@@ -76,11 +76,13 @@
 					<a href="/{{row.uid}}" class="z cl yz-idx-by1">{{row.account}}</a>
 					<span class="z cl yz-idx-by2">人像摄影+广告摄影+图片后期</span>
 					<p class="z cl yz-idx-by-ver">Professional Org.</p>
-				</div>	
+				</div>
+				{% if not is_follow %}
 				<div class="z cl">
 					<a href="#" class="z cl yz-idx-right-button ue-remember-people" title="记住Ta">
 					</a>
-				</div>		
+				</div>
+				{% end %}
 			</div>
 			
 			<div class="z cl yz-idx-right">

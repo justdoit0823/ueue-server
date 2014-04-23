@@ -222,9 +222,6 @@ class UserInitializeHandler(BaseHandler):
         self.write(result)
 
 
-# SUPPORT_ACTIONS = dict(follow=follow, cancel=cancel)
-
-
 class UserFollowHandler(BaseHandler):
 
     def follow(self, flwid):
@@ -258,7 +255,10 @@ class UserFollowHandler(BaseHandler):
         if not flwid:
             result = dict(status=0, msg="argument action!")
             return self.write(result)
-        UserFollowHandler.SUPPORT_ACTIONS[action](self, flwid)
+        if action == 'follow':
+            self.follow(flwid)
+        else:
+            self.cancel(flwid)
         result = dict(status=1, msg="action success!")
         self.write(result)
 
