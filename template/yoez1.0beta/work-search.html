@@ -9,11 +9,12 @@
 <meta name="copyright" content="Copyright优意座标™" />
 <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8"> 
 <link rel="stylesheet" type="text/css" href="http://static.ueue.cc/www/css/common.css">
-<link rel="stylesheet" type="text/css" href="http://static.ueue.cc/www/css/index.css">
-<script type="text/javascript" src="http://static.ueue.cc/www/js/jquery-1.8.3.js"></script>
+<link rel="stylesheet" type="text/css" href="../../../ueue-static/www/css/index.css">
+<script type="text/javascript" src="../../../ueue-static/www/js/jquery-1.8.3.js"></script>
 <script type="text/javascript" src="http://static.ueue.cc/www/js/jquery.form-2.67.js"></script>
 <script type="text/javascript" src="http://static.ueue.cc/www/js/common.js"></script>
 <script type="text/javascript" src="http://static.ueue.cc/www/js/index.js"></script>
+<script type="text/javascript" src="../../../ueue-static/www/js/miniSlider.js"></script>
 </head>
 <body>
 {{modules.SearchTag()}}
@@ -46,14 +47,14 @@
 			</div>
 		</div>
 		<div class="w336 y cl">
-			<div class="z cl yz-idx-goodwork w336">
+			<div id="main" class="z cl yz-idx-goodwork w336">
 				<div class="w336 yz-idx-title z cl">
 					<p class="z cl en1">GOOD JOB</p>
-                                        	<input type="button" class="yz-idx-calendar-left">
-			<input type="button" class="yz-idx-calendar-right">
+            		<input type="button" class="yz-idx-slider-left">
+					<input type="button" class="yz-idx-slider-right">
 				</div>
-				<div class="yz-idx-goodwork-box z cl">
-					<ul class="yz-idx-goodwork-ul" style=" left: 0px;">
+				<div id="main-inner" class="yz-idx-goodwork-box z cl">					
+					<ul id="slider" class="yz-idx-goodwork-ul" style=" left: 0px;">						
 						<li>
 							<div class="yz-idx-gw-pic z cl">
 								<a href="#" class="yz-idx-gw1 z cl">
@@ -65,18 +66,67 @@
 								来自<a href="#" target="_blank">Face.工作室</a>
 							</p>	
 							<p class="yz-idx-gw-title z cl">
+								<a href="#">望青天作品打成</a>
+							</p>
+						</li>
+						<li>
+							<div class="yz-idx-gw-pic z cl">
+								<a href="#" class="yz-idx-gw1 z cl">
+									<img src="http://static.ueue.cc/www/img/linshi/work5.jpg" alt="作品名" width="296"/>
+								</a>
+								<span></span>
+							</div>
+							<p class="yz-idx-gw-by z cl">
+								来自<a href="#" target="_blank">Wong.工作室</a>
+							</p>	
+							<p class="yz-idx-gw-title z cl">
+								<a href="#">展示阿斯顿发多少发送到发送到</a>
+							</p>
+						</li>
+						<li>
+							<div class="yz-idx-gw-pic z cl">
+								<a href="#" class="yz-idx-gw1 z cl">
+									<img src="http://static.ueue.cc/www/img/linshi/work4.jpg" alt="作品名" width="296"/>
+								</a>
+								<span></span>
+							</div>
+							<p class="yz-idx-gw-by z cl">
+								来自<a href="#" target="_blank">Yu.工作室</a>
+							</p>	
+							<p class="yz-idx-gw-title z cl">
 								<a href="#">展示作品的名称在这里显示长度大概是这样的</a>
 							</p>
 						</li>
+						<li>
+							<div class="yz-idx-gw-pic z cl">
+								<a href="#" class="yz-idx-gw1 z cl">
+									<img src="http://static.ueue.cc/www/img/linshi/work3.jpg" alt="作品名" width="296"/>
+								</a>
+								<span></span>
+							</div>
+							<p class="yz-idx-gw-by z cl">
+								来自<a href="#" target="_blank">Face.工作室</a>
+							</p>	
+							<p class="yz-idx-gw-title z cl">
+								<a href="#">望青天作品打成</a>
+							</p>
+						</li>
+						<li>
+							<div class="yz-idx-gw-pic z cl">
+								<a href="#" class="yz-idx-gw1 z cl">
+									<img src="http://static.ueue.cc/www/img/linshi/work2.jpg" alt="作品名" width="296"/>
+								</a>
+								<span></span>
+							</div>
+							<p class="yz-idx-gw-by z cl">
+								来自<a href="#" target="_blank">Wong.工作室</a>
+							</p>	
+							<p class="yz-idx-gw-title z cl">
+								<a href="#">展示阿斯顿发多少发送到发送到</a>
+							</p>
+						</li>					 
 					</ul>
 				</div>
-				<ul class="yz-idx-goodwork-point">
-					<li class="gw-pton"></li>
-					<li></li>
-					<li></li>
-					<li></li>
-					<li></li>
-				</ul>
 			</div>
 			<div class="z cl yz-idx-right">
 				<div class="w336 yz-idx-title">
@@ -116,6 +166,12 @@
   })
 </script>
 <script src="http://tjs.sjs.sinajs.cn/open/api/js/wb.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+$(document).ready(function () {
+	$('#slider').miniSlider();
+	$('.current-pagination').addClass('gw-pton');
+})
+</script>
 <div class="cl"></div>
 	<div class="ue-bottomnav wp1000">
 	<a href="/works">作品云集 / WORKS SHOW</a>
