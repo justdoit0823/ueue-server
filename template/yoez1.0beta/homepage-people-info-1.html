@@ -46,7 +46,7 @@
 						<span>{% if contact.telphone %}{{contact.telphone.split("&")[0]}}{% else %}{{deftxt}}{% end %}</span><br>
 						<hr>
 						<span>邮箱</span><br>
-						<span>{% if contact.conmail %}{{contact.conmail.split("&")[0]}}{% else %}{{deftxt}}{% end %}</span><br>
+3						<span>{% if contact.conmail %}{{contact.conmail.split("&")[0]}}{% else %}{{deftxt}}{% end %}</span><br>
 						<hr>
 						<span>联络地址</span><br>
 						<span>{% if contact.conaddress %}{{contact.conaddress.split("&")[0]}}{% else %}{{deftxt}}{% end %}</span><br>
@@ -58,6 +58,7 @@
 			<div class="yz-idx-body-body w640 z cl">
 				<div class="yz-idx-body-title w640">
 					<p class="yz-idx-body-title-p chs">资料</p>
+					{{xsrf_form_html()}}
 				</div>
 				<div class="ue-hp-info">
 					<p>

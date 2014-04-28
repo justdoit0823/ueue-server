@@ -13,9 +13,9 @@
 		<p>Member Since {{user.time[:4]}}.{{user.time[5:7]}}.{{user.time[8:10]}}</p>
 		{% if userself %}
 		{% elif followed %}
-		<input type="button" id="unfollow" class="ue-people-unfollow" followid="{{user.uid}}" value="已记忆，忘记TA"/>
+		<input type="button" id="unfollow" class="ue-people-unfollow ue-people-action" followid="{{user.uid}}" value="已记忆，忘记TA"/>
 		{% else %}
-		<input type="button" id="follow" class="ue-people-follow" followid="{{user.uid}}" value="+ 记住TA"/>
+		<input type="button" id="follow" class="ue-people-follow ue-people-action" followid="{{user.uid}}" value="+ 记住TA"/>
 		{% end %}
 	</div>
 	<div class="y cl ue-people-v">

@@ -11,7 +11,9 @@ import tornado.web
 import time
 import calendar
 
-from __init__ import DEFAULT_TEXT, USER_STATUS
+from __init__ import DEFAULT_TEXT
+
+from tornado.options import options
 
 MonthList = ("Jan", "Feb", "Mar", "Apr", "May", "Jun",
              "Jul", "Aug", "Sep", "Oct", "Nov", "Dec")
@@ -51,7 +53,7 @@ class MainRightAdModule(tornado.web.UIModule):
 class UserModule(tornado.web.UIModule):
 
     def render(self, cuser, wh='/', dftmsg=0):
-        init = cuser and (cuser.status >= USER_STATUS["normal"])
+        init = cuser and (cuser.status >= options.userstatus["normal"])
         #print init
         kwargs = dict(cuser=cuser, wh=wh, msg=dftmsg, level=init)
         return self.render_string('modules/yoez_user.html', **kwargs)
@@ -90,7 +92,11 @@ class SettingHeaderModule(tornado.web.UIModule):
 
     def render(self, cuser, dftmsg=0):
 
-        kwargs = dict(cuser=cuser, msg=dftmsg)
+        if cuser.status >= options.userstatus['normal']:
+            bkurl = "/" + str(cuser.uid)
+        else:
+            bkurl = "/"
+        kwargs = dict(cuser=cuser, msg=dftmsg, bkurl=bkurl)
         return self.render_string('modules/setting_header.html', **kwargs)
 
 

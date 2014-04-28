@@ -139,38 +139,8 @@ function itemactive(){
   var index=itemindex[item] != undefined ? itemindex[item] : 0; 
   $(".ue-hp-nav a").eq(index).addClass("active");
 }
-$(document).ready(function($) {
-	$('a[href="#top"]').click(function(){
-        $('html, body').animate({scrollTop: 0}, 'slow');
-        return false;
-	})
+$(document).ready(function($){
     itemactive();
-    var supactions={follow:"follow",unfollow:"unfollow"};
-    var typeidx;
-    if(location.href.indexOf("?") == -1) typeidx=0;
-    else typeidx=parseInt(location.href.match(/type=([0-9]+)/)[1])+1;
-    $(".yz-hp-focusnav li a").removeClass("yz-hp-focusnavon");
-    $(".yz-hp-focusnav li").eq(typeidx).find("a").addClass("yz-hp-focusnavon");
-    $(".ue-people-follow").click(function(){
-        var settings={
-              url:"/user/action/follow",
-              type:"post",
-              dataType:"json",
-              data:{action:supactions[$(this).attr("id")],_xsrf:$("input[name='_xsrf']").val(),flwid:$(this).attr("followid")},
-              error:function(jq,data,errorThrow){
-                     alert(data);
-                   },
-              success:function(result){
-                        if(result.status){
-                            alert(result.msg);
-                        }
-                        else{
-                            alert(result.msg);
-                        }
-                      }
-            }
-        $.ajax(settings);
-    })
     $(".yz-hp-control-del").click(function(e){
         e.preventDefault();
         if(confirm("你确定要删除此篇作品？")){

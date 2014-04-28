@@ -17,7 +17,7 @@
 </head>
 <body>
 {{modules.Header(cuser, request.uri)}}
-{{modules.HomepageContent(user, userself)}}
+{{modules.HomepageContent(user, userself, followed)}}
 <div class="yz-idx-body z cl">
 	<div class="wp1000 cl">
     	<div class="w200 z cl ue-left">
@@ -88,7 +88,7 @@
 					<p><a href="#" class="ue-readmore">阅读更多</a></p>
 				</div>
 			</div>
-		
+			{{xsrf_form_html()}}
 			<div class="z cl yz-idx-right">
 				<div class="w336 yz-idx-title">
 					<p class="z cl en1">USER DATE</p>
