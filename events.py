@@ -182,9 +182,12 @@ class UserEventsHandler(BaseHandler):
             one.contet = one.content.replace("\'", "'")
         userself = cuser and (uid == cuser.uid)
         followed = False
+        if not userself and cuser:
+            flwrst = FollowManager.get_user_relation(*(cuser.uid, uid))
+            followed = flwrst and int(flwrst.relation)
         tips = self.get_tool_tips(('top', 'tip'))
         kwargs = dict(cuser=cuser, user=user, rows=rows, userself=userself,
-                      tips=tips)
+                      tips=tips, followed=followed)
         self.render("yoez1.0beta/homepage-people-event-1.html", **kwargs)
 
 
