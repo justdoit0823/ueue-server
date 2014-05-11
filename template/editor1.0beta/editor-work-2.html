@@ -79,23 +79,6 @@ $(document).ready(function(){
   $(".editor-video-input").change(function(){
       var videourl=$(this).val();
       if(videourl.length > 0){
-          /*var settings={
-              url:"https://openapi.youku.com/v2/videos/show_basic.json",
-              type:"get",
-              dataType:"json",
-              contentType:"application/json",
-              data:{
-                    client_id:"ec78e9fdfd2d7e85",
-                    video_url:videourl},
-              error:function(xhr,status,error){alert(status+error)},
-              success:function(result){
-                        alert(result);
-                        $("#editor-video-title").val(result.title);
-                        $("#editor-video-url").val(result.player);
-                        $(".editor-video-pic-img img").attr("src",result.thumbnail);
-                      }
-          }
-          $.ajax(settings);*/
           $.getJSON("https://openapi.youku.com/v2/videos/show_basic.json?callback=?",{
                     client_id:"ec78e9fdfd2d7e85",
                     video_url:videourl},function(result){
