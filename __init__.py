@@ -59,6 +59,10 @@ STATIC_HOST = "static.ueue.cc"
 
 STATIC_URL = "http://static.ueue.cc/"
 
+IMAGE_HOST = "iamge1.ueue.cc"
+
+IMAGE_URL = "http://image1.ueue.cc/"
+
 # define the userstatus table
 
 USER_STATUS = {
