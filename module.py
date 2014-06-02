@@ -328,6 +328,14 @@ class SearchTagModule(tornado.web.UIModule):
 
         return self.render_string('modules/search_tag.html')
 
+
+class EditorTagModule(tornado.web.UIModule):
+
+    def render(self):
+
+        return self.render_string('modules/editor_tag.html')
+
+
 modules = dict(
     User=UserModule,
     Header=UeHeaderModule,
@@ -360,4 +368,5 @@ modules = dict(
     MainTopAd=MainTopAdModule,
     MainRightAd=MainRightAdModule,
     SearchTag=SearchTagModule,
+    EditorTag=EditorTagModule,
     )

@@ -208,10 +208,10 @@ class UserInitializeHandler(BaseHandler):
         setrst = set_image_size((200, 200), img)
         chk = PropertyManager.get_property(cuid)
         if not chk:
-            args = [None] * 9
+            args = [None] * 12
             args[0] = cuid
             PropertyManager.new_property(*(cuid, usertype, sex))
-            BasicManager.new_basic(*args)
+            BasicManager.new_basic(*(args[:9]))
             ContactManager.new_contact(*args)
         if setrst:
             kwargs = {'img': img, 'status': options.userstatus['normal']}

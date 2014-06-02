@@ -297,7 +297,7 @@ class UserManager:
 
         sql_prefix, args = formate_update_sql('user', **kwargs)
         whcase = 'where uid=%s'
-        sql = ' '.join(sql, whcase)
+        sql = ' '.join(sql_prefix, whcase)
         args.append(uid)
         return do_execute_request(sql, *args)
 

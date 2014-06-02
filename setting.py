@@ -189,7 +189,7 @@ class SetDomainHandler(BaseHandler):
             cuid = int(self.get_secure_cookie("_yoez_uid"))
             is_domain_set = ContactManager(cuid)
             if not is_domain_set:
-                args = [None] * 9
+                args = [None] * 12
                 args[0] = cuid
                 args[11] = domain
                 ContactManager.new_contact(*args)
