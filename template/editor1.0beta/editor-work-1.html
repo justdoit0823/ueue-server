@@ -90,8 +90,9 @@ $(document).ready(function(){
       })
       var cover=$(".editor-pic-front").parents(".editor-pic-ul li").find(".editor-pic-img img").attr("src");
       var describe=$(".editor-desc-text").val();
-      var sign=$(".editor-cc-on span").attr("snum");
+      var sign=$(".editor-cc p").attr("snum");
       var mates="";
+      var lable=gettags(",");
       $(".editor-team li").each(function(index){
           if(index) mates+=";"+$(this).find(".editor-team-id").val()+"&"+$(this).find(".editor-team-work").val();
           else mates+=$(this).find(".editor-team-id").val()+"&"+$(this).find(".editor-team-work").val();
