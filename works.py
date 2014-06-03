@@ -367,6 +367,9 @@ class WorksMultiPicuploadHandler(BaseHandler):
             raise tornado.web.HTTPError(403, err_msg)
 
     def post(self):
+
+        from storage import get_rootpath, validate_image, uploadToUpyun
+
         uid_value = self.get_argument("_yoez_uid", None)
         uid = self.get_secure_cookie("_yoez_uid", value=uid_value)
         if uid is None:
@@ -375,26 +378,14 @@ class WorksMultiPicuploadHandler(BaseHandler):
         cuser = UserManager.get_user_withid(uid)
         if cuser is None:
             raise tornado.web.HTTPError(403, "USER authenticated error!")
-        workdir = os.path.dirname(sys.argv[0])
         for i in self.request.files:
             for j in self.request.files[i]:
-                fname, ext = os.path.splitext(j["filename"])
-                timestamp = time.strftime("%Y%m%d%X", time.localtime())
-                fname = fname.encode("utf-8") + timestamp
-                fname = md5(fname).hexdigest()
-                fname += ext
-                path = "%s/static/img/user/%d/%s" % (workdir, cuser.uid, fname)
-                try:
-                    f = file(path, "wb+")
-                    f.write(j["body"])
-                    f.close()
-                except:
+                rootpath = get_rootpath("work")
+                upres = uploadToUpyun(uid, j['body'], rootpath, j["filename"])
+                if upres:
+                    result = dict(status=1, path=upres)
+                else:
                     result = dict(status=0, code="upload error!")
-                finally:
-                    if f:
-                        f.close()
-                src = "/static/img/user/%d/%s" % (cuser.uid, fname)
-                result = dict(status=1, path=src)
                 self.write(result)
 
 

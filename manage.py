@@ -41,7 +41,7 @@ def formate_update_sql(tb, **kwargs):
     _val = []
     _sql = ['update', tb, 'set']
     for k in kwargs:
-        _str.appned(k + '=%s')
+        _str.append(k + '=%s')
         _val.append(kwargs[k])
     _sql .append(','.join(_str))
     return (' '.join(_sql), _val)
@@ -297,7 +297,7 @@ class UserManager:
 
         sql_prefix, args = formate_update_sql('user', **kwargs)
         whcase = 'where uid=%s'
-        sql = ' '.join(sql_prefix, whcase)
+        sql = ' '.join((sql_prefix, whcase))
         args.append(uid)
         return do_execute_request(sql, *args)
 
@@ -433,7 +433,7 @@ class ReviewManager:
     @staticmethod
     def new_work_review(*args):
 
-        sql = ("insert into workreview (reviewwid,reviewuid,content,time "
+        sql = ("insert into workreview (reviewwid,reviewuid,content,time) "
                "values(%s,%s,%s,%s)")
 
         return do_execute_request(sql, *args)

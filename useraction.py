@@ -205,7 +205,6 @@ class UserInitializeHandler(BaseHandler):
         usertype = self.get_argument("type", "0")
         sex = self.get_argument("sex", "0")
         img = self.get_argument("avatar")
-        setrst = set_image_size((200, 200), img)
         chk = PropertyManager.get_property(cuid)
         if not chk:
             args = [None] * 12
@@ -213,12 +212,9 @@ class UserInitializeHandler(BaseHandler):
             PropertyManager.new_property(*(cuid, usertype, sex))
             BasicManager.new_basic(*(args[:9]))
             ContactManager.new_contact(*args)
-        if setrst:
-            kwargs = {'img': img, 'status': options.userstatus['normal']}
-            UserManager.update_user(cuid, **kwargs)
-            result = dict(url="/"+str(cuid), status=1, code='')
-        else:
-            result = dict(url="/", status=0, code='set image error!')
+        kwargs = {'img': img, 'status': options.userstatus['normal']}
+        UserManager.update_user(cuid, **kwargs)
+        result = dict(url=img, status=1)
         self.write(result)
 
 
@@ -278,6 +274,32 @@ class UserAuthbindHandler(BaseHandler):
         self.render("register1.0beta/register-4.html")
 
 
+class UserAvatarUploadHandler(BaseHandler):
+
+    def post(self):
+
+        from storage import get_rootpath, validate_image, uploadToUpyun
+
+        imgcontent = self.request.files['file'][0]['body']
+        val = validate_image(imgcontent, (200, 200))
+        if(val == 1):
+            result = dict(status=0, code="image size is too small")
+        elif(val == -1):
+            result = dict(status=0, code="upload image error")
+        else:
+            rootpath = get_rootpath("user")
+            imgname = self.request.files['file'][0]["filename"]
+            cuser = self.get_current_user()
+            headers = {'x-gmkerl-type': 'fix_both',
+                       'x-gmkerl-value': '200x200'}
+            upres = uploadToUpyun(cuser.uid, imgcontent, rootpath, imgname,
+                                  headers)
+            if upres:
+                result = dict(status=1, path=upres)
+            else:
+                result = dict(status=0, code='upload error')
+        self.write(result)
+
 HandlerList = [
     (r"/user/action/login", UserLoginHandler),
     (r"/user/action/logout", UserLogoutHandler),
@@ -289,4 +311,5 @@ HandlerList = [
     (r"/user/action/follow", UserFollowHandler),
     (r"/user/action/post", UserPostHandler),
     (r"/user/action/authbind", UserAuthbindHandler),
+    (r"/user/avatar/upload", UserAvatarUploadHandler),
     ]

@@ -55,7 +55,7 @@
 					<img src="http://static.ueue.cc/www/img/noava.png" class="user-1-avr-move" style="position:relative;"/>
                                         <div class="user-1-avr-hover"></div>
 				</div>
-                                <form id="editor-form-pic" action="/user/works/picupload" method="POST" enctype="multipart/form-data" name="file">
+                                <form id="editor-form-pic" action="/user/avatar/upload" method="POST" enctype="multipart/form-data" name="file">
                                         {{ xsrf_form_html() }}
 					<a class="editor-add-pic z cl">
 						修改
@@ -151,9 +151,7 @@ $(document).ready(function(){
       },
       success:function(result){
           if(result.status){
-               //alert(result.path);
                $(".user-1-avr-move").attr("src",result.path);
-               //$(".user-1-avr-btn1").show();
                $(".user-1-avr-text span").text("恭喜您 ! 拥有了一枚新的头像 ^.^");
           }
           else{

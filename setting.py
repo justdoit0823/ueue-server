@@ -63,17 +63,10 @@ class SetAvatarHandler(BaseHandler):
         return self.render("user1.0beta/user-1.html", cuser=cuser, url=url)
 
     def post(self):
-        cuser = self.get_current_user()
+        cuid = self.get_user_cookie("_yoez_uid")
         img = self.get_argument("avatar")
-        setrst = set_image_size((200, 200), img)
-        if setrst:
-            oldimg = cuser.img
-            UserManager.update_user(cuser.uid, **{'img': img})
-            path = os.path.dirname(sys.argv[0])+oldimg
-            os.remove(path)
-            result = dict(url="/"+str(cuid), status=1, code='')
-        else:
-            result = dict(url="/", status=0, code='set image error!')
+        UserManager.update_user(cuid, **{'img': img})
+        result = dict(status=1, code='')
         self.write(result)
 
 

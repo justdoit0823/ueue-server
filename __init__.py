@@ -121,9 +121,13 @@ WWW_COOKIE_DOMAIN = "www.ueue.cc"
 
 class BaseHandler(tornado.web.RequestHandler):
 
+    def get_user_cookie(self, cookie):
+
+        return self.get_secure_cookie(cookie)
+
     def get_current_user(self):
 
-        cuser = self.get_secure_cookie("_yoez_uid")
+        cuser = self.get_user_cookie("_yoez_uid")
         if cuser:
             user = manage.UserManager.get_user_withid(cuser)
             return user
