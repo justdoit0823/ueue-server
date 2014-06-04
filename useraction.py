@@ -280,7 +280,8 @@ class UserAvatarUploadHandler(BaseHandler):
 
         from storage import get_rootpath, validate_image, uploadToUpyun
 
-        imgcontent = self.request.files['file'][0]['body']
+        requestform = self.request.files.values()[0]
+        imgcontent = requestform[0]['body']
         val = validate_image(imgcontent, (200, 200))
         if(val == 1):
             result = dict(status=0, code="image size is too small")
@@ -288,7 +289,7 @@ class UserAvatarUploadHandler(BaseHandler):
             result = dict(status=0, code="upload image error")
         else:
             rootpath = get_rootpath("user")
-            imgname = self.request.files['file'][0]["filename"]
+            imgname = requestform[0]["filename"]
             cuser = self.get_current_user()
             headers = {'x-gmkerl-type': 'fix_both',
                        'x-gmkerl-value': '200x200'}

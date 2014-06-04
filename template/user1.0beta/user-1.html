@@ -39,7 +39,7 @@
 					<img src="{{cuser.img}}" class="user-1-avr-move" style="position:relative;"/>
                                         <!--<div class="user-1-avr-hover"></div>-->
 				</div>
-                                <form id="editor-form-pic" action="/user/works/picupload" method="POST" enctype="multipart/form-data" name="file">
+                                <form id="editor-form-pic" action="/user/avatar/upload" method="POST" enctype="multipart/form-data" name="file">
                                         {{ xsrf_form_html() }}
 					<input type="file" id="user-1-avr-btn1" title="上传头像" name="avrfile" style="display:none;"/>
 					<input type="button" value="更改头像" class="user-1-avr-btn1"/>
