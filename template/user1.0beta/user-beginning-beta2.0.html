@@ -77,7 +77,7 @@
 	.user-1-done { display: block;width: 101px;height: 100px;position: absolute; bottom: 40px;right: 100px;background: url(http://static.ueue.cc/www/img/drawright.png) -22px -874px no-repeat;cursor: pointer;}
 	.user-1-done:hover { background: url(http://static.ueue.cc/www/img/drawright.png) -157px -874px no-repeat;}
 </style>
-    <div class="z cl user-begin" style="left: -1000px;">
+    <div class="z cl user-begin" style="left: 0px;">
     	<div class="user-1-bd z cl mgt100">
         	
 			<div class="user-left z cl mgt40" style="height: 398px;">
@@ -109,10 +109,10 @@
 			<div class="user-left z cl mgt40" style="height: 398px;">
 				<div class="user-1-type z cl">
 					<p class="z cl user-1-tt">账户性质</p>
-					<div class="z cl user-1-chooseoff" id="user-1-id1">
+					<div class="z cl user-1-chooseon" id="user-1-id1">
 						个人
 					</div>
-					<div class="z cl user-1-chooseon" id="user-1-id2">
+					<div class="z cl user-1-chooseoff" id="user-1-id2">
 						机构
 					</div>
 					<p class="user-1-explain z cl">
@@ -121,10 +121,10 @@
 				</div>
 				<div class="user-1-sex z cl">
 					<p class="z cl user-1-tt">我的性别</p>
-					<div class="z cl user-1-chooseoff" id="user-1-id1">
+					<div class="z cl user-1-chooseoff" id="user-1-id3">
 						男 / Male
 					</div>
-					<div class="z cl user-1-chooseon" id="user-1-id2">
+					<div class="z cl user-1-chooseon" id="user-1-id4">
 						女 / Female
 					</div>
 					<p class="user-1-explain z cl">
@@ -135,8 +135,12 @@
 					<span class="user-1-avr-span" style="border: 1px solid #FFF;">
 						<img src="../../static/img/noava.png" height="200" width="200"/>
 					</span>
+					
+					<form id="editor-form-pic" action="/user/avatar/upload" method="POST" enctype="multipart/form-data" name="file">
+					  {{ xsrf_form_html() }}
 					<input type="file" id="user-1-avr-btn1" title="上传头像" style="display: none;"/>
 					<input type="button" value="更改头像" class="user-1-avr-btn1"/>
+				      </form>
 					<div class="user-1-avr-text">
 						<!--<span>这张图片小了一些，换一张试试看吧 ^.^</span><br>-->
 						<span>恭喜您 ! 拥有了一枚新的头像 ^.^</span><br>
@@ -155,5 +159,91 @@
         </div>
 		<p class="user-copyright y cl">&copy; UEUE.CC | 优意座标™</p>
 	</div>
+<script type="text/javascript">
+$(document).ready(function(){
+  $("#user-1-id1").click(function(){
+    $("#user-1-id2").removeClass("user-1-chooseon").addClass("user-1-chooseoff");
+    $(this).addClass("user-1-chooseon");
+    $(".user-1-sex").show();
+  })
+  $("#user-1-id2").click(function(){
+    $("#user-1-id1").removeClass("user-1-chooseon").addClass("user-1-chooseoff");
+    $(this).addClass("user-1-chooseon");
+    $(".user-1-sex").hide();
+  })
+  $("#user-1-id3").click(function(){
+    $("#user-1-id4").removeClass("user-1-chooseon").addClass("user-1-chooseoff");
+    $(this).addClass("user-1-chooseon");
+  })
+  $("#user-1-id4").click(function(){
+    $("#user-1-id3").removeClass("user-1-chooseon").addClass("user-1-chooseoff");
+    $(this).addClass("user-1-chooseon");
+  })
+  $(".user-1-next").click(function(){
+      $(".user-begin").css({'left': -1000});
+  })
+  $(".user-1-prev").click(function(){
+      $(".user-begin").css({'left': 0});
+  })
+  $(".user-1-done").click(function(){
+      var userchar=$(".user-1-type .user-1-chooseon").attr("type");
+      var usersex=$(".user-1-sex .user-1-chooseon").attr("type");
+      var img=$(".user-1-avr-move").attr("src").split("?")[0];
+      //alert(userchar+","+usersex+","+img);
+      if($("#user-1-id1").hasClass("user-1-chooseon")){
+        if(!$("#user-1-id3").hasClass("user-1-chooseon") && !$("#user-1-id4").hasClass("user-1-chooseon")) return;
+      }
+      else{
+        if(!$("#user-1-id2").hasClass("user-1-chooseon")) return;
+      }
+      var settings={
+                url:"/user/action/init",
+                type:"post",
+                dataType:"json",
+                data:{"type":userchar,"sex":usersex,"avatar":img,"_xsrf":$("input[name='_xsrf']").val()},
+                error:function(jq,data,errorThrow){
+                     alert(data);
+                },
+                success:function(result){
+                          if(result.status){
+                              $(".user-1-next").hide();
+                              $(".editor-add-pic").hide();
+                              $(".user-1-draw").animate({right:"0px"},500);
+                              $(".user-1-draw").attr("href",result.url);
+                          }
+                          else{
+                              alert("保存出错:"+result.code);   
+                          }
+                        }
+                          
+          }
+      $.ajax(settings);
+  })
+  $(".user-1-avr-btn1").bind("change",function(){ 
+      $("#editor-form-pic").ajaxSubmit({
+      dataType:"json",
+      beforeSubmit:function(a,f,o){
+          var file=$("#user-1-avr-btn1").val();
+          if(!file){
+            alert("请先选择要上传的文件");
+            return false;
+          }
+      },
+      error:function(jq,data,errorThrow){
+                     alert(data);
+      },
+      success:function(result){
+          if(result.status){
+               $(".user-1-avr-move").attr("src",result.path);
+               $(".user-1-avr-text span").text("恭喜您 ! 拥有了一枚新的头像 ^.^");
+          }
+          else{
+               alert(result.code);
+          }
+      }
+   })
+  })
+})
+</script>
 </body>
 </html>

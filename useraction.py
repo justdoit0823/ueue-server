@@ -198,7 +198,7 @@ class UserInitializeHandler(BaseHandler):
         cuser = self.get_current_user()
         if(cuser.status >= options.userstatus['normal']):
             return self.redirect("/user/set-basic")
-        self.render("user1.0beta/user-beginning-1.html", cuser=cuser)
+        self.render("user1.0beta/user-beginning-beta2.0.html", cuser=cuser)
 
     def post(self):
         cuid = int(self.get_secure_cookie("_yoez_uid"))
