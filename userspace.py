@@ -37,7 +37,7 @@ class UserSpaceHandler(BaseHandler):
         worklist = {'-1': 0, '0': 0, '1': 0, '2': 0, '3': 0}
         user = UserManager.get_user_basic(uid)
         if not user:
-            return self.write('sorry!the page you request does not exists.')
+            return self.html404()
         rows = WorkManager.get_user_works(uid)
         worklist['-1'] = len(rows)
         for one in rows:
@@ -62,10 +62,10 @@ class UserPsldomainHandler(BaseHandler):
         cuser = self.get_current_user()
         conrow = None
         if not conrow:
-            return self.write('sorry!the page you request does not exists.')
+            return self.html404()
         user = UserManager.get_user_withid(conrow.con_id)
         if not user:
-            return self.write('sorry!the page you request does not exists.')
+            return self.html404()
         rows = WorkManager.get_user_works(user.uid)
         userself = cuser and (cuser.uid == user.uid)
         worklist = {'-1': 0, '0': 0, '1': 0, '2': 0, '3': 0}
@@ -114,7 +114,7 @@ class UserProfileHandler(BaseHandler):
         uid = int(id)
         user = UserManager.get_full_basic(uid)
         if not user:
-            return self.write('sorry!the page you request does not exists.')
+            return self.html404()
         cuser = self.get_current_user()
         userself = cuser and (user.uid == cuser.uid)
         contact = UserManager.get_contact_property(uid)

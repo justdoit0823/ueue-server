@@ -176,7 +176,7 @@ class UserEventsHandler(BaseHandler):
         cuser = self.get_current_user()
         user = UserManager.get_user_basic(uid)
         if user is None:
-            return self.write("sorry!the page you request does not exists.")
+            return self.html404()
         rows = RecordManager.get_user_records(uid, type)
         for one in rows:
             one.contet = one.content.replace("\'", "'")
@@ -202,7 +202,7 @@ class EventDetailHandler(BaseHandler):
             is_support = False
         row = RecordManager.get_record_byid(eid)
         if row is None:
-            return self.write("sorry!the page you request does not exists.")
+            return self.html404()
         row.contet = row.content.replace("\'", "'")
         reviews = ReviewManager.get_record_reviews(eid)
         for i in reviews:

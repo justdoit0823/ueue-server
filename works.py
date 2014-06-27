@@ -158,7 +158,7 @@ class UserWorksHandler(BaseHandler):
         worklist = {'-1': 0, '0': 0, '1': 0, '2': 0, '3': 0}
         user = UserManager.get_user_basic(uid)
         if user is None:
-            return self.write("sorry!the page you request does not exists.")
+            return self.html404()
         rows = WorkManager.get_user_works(uid, type)
         worklist['-1'] = len(rows)
         for one in rows:
@@ -184,7 +184,7 @@ class WorkDetailHandler(BaseHandler):
         WorkManager.update_work_view(wid, 1)
         row = WorkManager.get_work_byid(wid)
         if row is None:
-            return self.write("sorry!the page you request does not exists.")
+            return self.html404()
         row.contet = row.content.replace("\'", "'")
         copysign = SUPORT_WORK_MARKS[int(row.copysign)]
         if(row.type == '1'):

@@ -59,13 +59,19 @@ class ProfessionalHandler(BaseHandler):
 class ClubHandler(BaseHandler):
     def get(self):
         #cuser=self.get_current_user()
-        self.write("Sorry!The page you request does not exist.Wait a moment!")
+        self.html404()
 
 
-class IndexHandler(BaseHandler):
+class AlbumHandler(BaseHandler):
     def get(self):
-        tab = self.get_argument("tab", "works")
-        self.render("yoez1.0beta/index-"+tab+".html")
+        cuser = self.get_current_user()
+        rows = WorkManager.get_latest_works(30)
+        ls = RecordManager.get_latest_records(4)
+        rvls = ReviewManager.get_latest_workreviews(4)
+        tips = self.get_tool_tips(('top', 'tip'))
+        kwargs = dict(cuser=cuser, sf=self, rows=rows, ls=ls, rvls=rvls,
+                      tips=tips)
+        self.render("yoez1.0beta/album-search.html", **kwargs)
 
 
 class AboutOneminHandler(BaseHandler):
@@ -116,9 +122,9 @@ class MyApplication(tornado.web.Application):
     def __init__(self):
         HandlerList = [
             (r"/", HomeHandler),
-            (r"/index", IndexHandler),
             (r"/professional", ProfessionalHandler),
             (r"/vane", ClubHandler),
+            (r"/album", AlbumHandler),
             (r"/about/oneminute", AboutOneminHandler),
             (r"/about/partners", AboutPartnersHandler),
             #(r"/static/img/([a-zA-Z0-9.]+)", StaticImgHandler),

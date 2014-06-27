@@ -121,6 +121,17 @@ WWW_COOKIE_DOMAIN = "www.ueue.cc"
 
 class BaseHandler(tornado.web.RequestHandler):
 
+    def html404(self):
+
+        cuser = self.get_current_user()
+        rows = manage.WorkManager.get_latest_works(30)
+        ls = manage.RecordManager.get_latest_records(4)
+        rvls = manage.ReviewManager.get_latest_workreviews(4)
+        tips = self.get_tool_tips(('top', 'tip'))
+        kwargs = dict(cuser=cuser, sf=self, rows=rows, ls=ls, rvls=rvls,
+                      tips=tips)
+        self.render("yoez1.0beta/404.html", **kwargs)
+
     def get_user_cookie(self, cookie):
 
         return self.get_secure_cookie(cookie)
